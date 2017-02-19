@@ -16,6 +16,10 @@
 		4F1147FD1E5904A900346A1D /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F1147FC1E5904A900346A1D /* Realm.framework */; };
 		4F1147FF1E5904AC00346A1D /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F1147FE1E5904AC00346A1D /* RealmSwift.framework */; };
 		4F1148041E5A1E8D00346A1D /* GoalsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1148031E5A1E8D00346A1D /* GoalsViewController.swift */; };
+		4F1148071E5A207900346A1D /* GoalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1148051E5A207900346A1D /* GoalCollectionViewCell.swift */; };
+		4F1148081E5A207900346A1D /* GoalCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F1148061E5A207900346A1D /* GoalCollectionViewCell.xib */; };
+		4F11480A1E5A2B7F00346A1D /* AddGoal.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F1148091E5A2B7F00346A1D /* AddGoal.storyboard */; };
+		4F11480C1E5A2E8E00346A1D /* GoalNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F11480B1E5A2E8E00346A1D /* GoalNameViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +55,10 @@
 		4F1147FC1E5904A900346A1D /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = ../Carthage/Build/iOS/Realm.framework; sourceTree = "<group>"; };
 		4F1147FE1E5904AC00346A1D /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = ../Carthage/Build/iOS/RealmSwift.framework; sourceTree = "<group>"; };
 		4F1148031E5A1E8D00346A1D /* GoalsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalsViewController.swift; sourceTree = "<group>"; };
+		4F1148051E5A207900346A1D /* GoalCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalCollectionViewCell.swift; sourceTree = "<group>"; };
+		4F1148061E5A207900346A1D /* GoalCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GoalCollectionViewCell.xib; sourceTree = "<group>"; };
+		4F1148091E5A2B7F00346A1D /* AddGoal.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AddGoal.storyboard; sourceTree = "<group>"; };
+		4F11480B1E5A2E8E00346A1D /* GoalNameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalNameViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,7 +114,11 @@
 			children = (
 				4F1147CD1E58F71700346A1D /* AppDelegate.swift */,
 				4F1148031E5A1E8D00346A1D /* GoalsViewController.swift */,
+				4F1148051E5A207900346A1D /* GoalCollectionViewCell.swift */,
+				4F11480B1E5A2E8E00346A1D /* GoalNameViewController.swift */,
+				4F1148061E5A207900346A1D /* GoalCollectionViewCell.xib */,
 				4F1147D11E58F71700346A1D /* Main.storyboard */,
+				4F1148091E5A2B7F00346A1D /* AddGoal.storyboard */,
 				4F1147D41E58F71700346A1D /* Assets.xcassets */,
 				4F1147D61E58F71700346A1D /* LaunchScreen.storyboard */,
 				4F1147D91E58F71700346A1D /* Info.plist */,
@@ -253,7 +265,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F11480A1E5A2B7F00346A1D /* AddGoal.storyboard in Resources */,
 				4F1147D81E58F71700346A1D /* LaunchScreen.storyboard in Resources */,
+				4F1148081E5A207900346A1D /* GoalCollectionViewCell.xib in Resources */,
 				4F1147D51E58F71700346A1D /* Assets.xcassets in Resources */,
 				4F1147D31E58F71700346A1D /* Main.storyboard in Resources */,
 			);
@@ -312,6 +326,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F1147CE1E58F71700346A1D /* AppDelegate.swift in Sources */,
+				4F1148071E5A207900346A1D /* GoalCollectionViewCell.swift in Sources */,
+				4F11480C1E5A2E8E00346A1D /* GoalNameViewController.swift in Sources */,
 				4F1148041E5A1E8D00346A1D /* GoalsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
