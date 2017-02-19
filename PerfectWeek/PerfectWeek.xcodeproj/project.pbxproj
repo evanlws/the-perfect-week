@@ -14,6 +14,8 @@
 		4F1147D81E58F71700346A1D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F1147D61E58F71700346A1D /* LaunchScreen.storyboard */; };
 		4F1147E31E58F71700346A1D /* PerfectWeekTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1147E21E58F71700346A1D /* PerfectWeekTests.swift */; };
 		4F1147EE1E58F71700346A1D /* PerfectWeekUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1147ED1E58F71700346A1D /* PerfectWeekUITests.swift */; };
+		4F1147FD1E5904A900346A1D /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F1147FC1E5904A900346A1D /* Realm.framework */; };
+		4F1147FF1E5904AC00346A1D /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F1147FE1E5904AC00346A1D /* RealmSwift.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +49,8 @@
 		4F1147E91E58F71700346A1D /* PerfectWeekUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PerfectWeekUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F1147ED1E58F71700346A1D /* PerfectWeekUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerfectWeekUITests.swift; sourceTree = "<group>"; };
 		4F1147EF1E58F71700346A1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4F1147FC1E5904A900346A1D /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = ../Carthage/Build/iOS/Realm.framework; sourceTree = "<group>"; };
+		4F1147FE1E5904AC00346A1D /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = ../Carthage/Build/iOS/RealmSwift.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +58,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F1147FD1E5904A900346A1D /* Realm.framework in Frameworks */,
+				4F1147FF1E5904AC00346A1D /* RealmSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,6 +87,7 @@
 				4F1147E11E58F71700346A1D /* PerfectWeekTests */,
 				4F1147EC1E58F71700346A1D /* PerfectWeekUITests */,
 				4F1147CB1E58F71600346A1D /* Products */,
+				4F1147FB1E5904A900346A1D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -125,6 +132,15 @@
 			path = PerfectWeekUITests;
 			sourceTree = "<group>";
 		};
+		4F1147FB1E5904A900346A1D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4F1147FE1E5904AC00346A1D /* RealmSwift.framework */,
+				4F1147FC1E5904A900346A1D /* Realm.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -135,6 +151,7 @@
 				4F1147C61E58F71600346A1D /* Sources */,
 				4F1147C71E58F71600346A1D /* Frameworks */,
 				4F1147C81E58F71600346A1D /* Resources */,
+				4F1148001E5904D600346A1D /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -256,6 +273,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4F1148001E5904D600346A1D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Realm.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RealmSwift.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		4F1147C61E58F71600346A1D /* Sources */ = {
@@ -416,6 +451,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 7ZE54HDXZR;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SRCROOT)/Carthage/Build/iOS",
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = PerfectWeek/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.evanlewis.PerfectWeek;
@@ -429,6 +468,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 7ZE54HDXZR;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SRCROOT)/Carthage/Build/iOS",
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = PerfectWeek/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.evanlewis.PerfectWeek;
