@@ -13,6 +13,7 @@ class GoalsViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     var goals: Results<Goal>?
+    let realm = try! Realm()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +25,6 @@ class GoalsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        let realm = try! Realm()
         goals = realm.objects(Goal.self)
     }
 
@@ -37,8 +37,13 @@ extension GoalsViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: GoalCollectionViewCell.self), for: indexPath) as? GoalCollectionViewCell else { return UICollectionViewCell() }
-        if indexPath.row != goals?.count {
-            cell.goalLabel.text = goals?[indexPath.row].name
+
+        if indexPath.row != goals?.count, let goal = goals?[indexPath.row] {
+            cell.goalLabel.text = goal.name
+            cell.goalLabel.textColor = goal.completed ? .green : .black
+        } else {
+            cell.goalLabel.text = "I guess add a goal"
+            cell.goalLabel.textColor = UIColor.black
         }
 
         return cell
@@ -47,11 +52,28 @@ extension GoalsViewController: UICollectionViewDataSource {
 
 extension GoalsViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let addGoalStoryboard = UIStoryboard(name: "AddGoal", bundle: nil)
-        if let addGoalViewController = addGoalStoryboard.instantiateInitialViewController() {
-            present(addGoalViewController, animated: true) {
-                self.collectionView.reloadData()
+
+        if indexPath.row == goals?.count {
+            let addGoalStoryboard = UIStoryboard(name: "AddGoal", bundle: nil)
+            if let addGoalViewController = addGoalStoryboard.instantiateInitialViewController() {
+                present(addGoalViewController, animated: true) {
+                    self.collectionView.reloadData()
+                }
+            }
+        } else {
+            if let goal = goals?[indexPath.row] {
+                do {
+                    defer {
+                        collectionView.reloadData()
+                    }
+                    try realm.write {
+                        goal.completed = true
+                    }
+                } catch {
+                    print("Could not update")
+                }
             }
         }
+
     }
 }

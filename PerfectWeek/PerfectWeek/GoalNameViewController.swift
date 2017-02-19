@@ -19,6 +19,7 @@ class GoalNameViewController: UIViewController {
         guard let goalText = goalNameTextField.text else { return }
         let goal = Goal()
         goal.name = goalText
+        goal.completed = false
 
         do {
             try realm.write {
@@ -42,4 +43,5 @@ extension GoalNameViewController: UITextFieldDelegate {
 
 class Goal: Object {
     dynamic var name: String = ""
+    dynamic var completed: Bool = false
 }
