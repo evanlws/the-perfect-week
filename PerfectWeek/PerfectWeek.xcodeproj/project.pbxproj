@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		4F1147CE1E58F71700346A1D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1147CD1E58F71700346A1D /* AppDelegate.swift */; };
-		4F1147D01E58F71700346A1D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1147CF1E58F71700346A1D /* ViewController.swift */; };
 		4F1147D31E58F71700346A1D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F1147D11E58F71700346A1D /* Main.storyboard */; };
 		4F1147D51E58F71700346A1D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F1147D41E58F71700346A1D /* Assets.xcassets */; };
 		4F1147D81E58F71700346A1D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F1147D61E58F71700346A1D /* LaunchScreen.storyboard */; };
@@ -16,6 +15,7 @@
 		4F1147EE1E58F71700346A1D /* PerfectWeekUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1147ED1E58F71700346A1D /* PerfectWeekUITests.swift */; };
 		4F1147FD1E5904A900346A1D /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F1147FC1E5904A900346A1D /* Realm.framework */; };
 		4F1147FF1E5904AC00346A1D /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F1147FE1E5904AC00346A1D /* RealmSwift.framework */; };
+		4F1148041E5A1E8D00346A1D /* GoalsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1148031E5A1E8D00346A1D /* GoalsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,7 +38,6 @@
 /* Begin PBXFileReference section */
 		4F1147CA1E58F71600346A1D /* PerfectWeek.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PerfectWeek.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F1147CD1E58F71700346A1D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		4F1147CF1E58F71700346A1D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		4F1147D21E58F71700346A1D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4F1147D41E58F71700346A1D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4F1147D71E58F71700346A1D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -51,6 +50,7 @@
 		4F1147EF1E58F71700346A1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4F1147FC1E5904A900346A1D /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = ../Carthage/Build/iOS/Realm.framework; sourceTree = "<group>"; };
 		4F1147FE1E5904AC00346A1D /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = ../Carthage/Build/iOS/RealmSwift.framework; sourceTree = "<group>"; };
+		4F1148031E5A1E8D00346A1D /* GoalsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,7 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				4F1147CD1E58F71700346A1D /* AppDelegate.swift */,
-				4F1147CF1E58F71700346A1D /* ViewController.swift */,
+				4F1148031E5A1E8D00346A1D /* GoalsViewController.swift */,
 				4F1147D11E58F71700346A1D /* Main.storyboard */,
 				4F1147D41E58F71700346A1D /* Assets.xcassets */,
 				4F1147D61E58F71700346A1D /* LaunchScreen.storyboard */,
@@ -311,8 +311,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F1147D01E58F71700346A1D /* ViewController.swift in Sources */,
 				4F1147CE1E58F71700346A1D /* AppDelegate.swift in Sources */,
+				4F1148041E5A1E8D00346A1D /* GoalsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
