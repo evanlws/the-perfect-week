@@ -42,7 +42,7 @@ extension GoalsViewController: UICollectionViewDataSource {
             cell.goalLabel.text = goal.name
             cell.goalLabel.textColor = goal.completed ? .green : .black
         } else {
-            cell.goalLabel.text = "I guess add a goal"
+            cell.goalLabel.text = "Add a goal"
             cell.goalLabel.textColor = UIColor.black
         }
 
