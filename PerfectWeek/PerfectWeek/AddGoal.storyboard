@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -21,44 +20,8 @@
                     <view key="view" contentMode="scaleToFill" id="Nf3-u7-7YF">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter a name for this goal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PDg-JC-aJd">
-                                <rect key="frame" x="89" y="289" width="196" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Nnf-Kv-uaF">
-                                <rect key="frame" x="16" y="318" width="343" height="30"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <outlet property="delegate" destination="Uqb-o8-jzX" id="l5S-81-nd7"/>
-                                </connections>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gcW-2n-dPr">
-                                <rect key="frame" x="170" y="555" width="34" height="30"/>
-                                <state key="normal" title="Save"/>
-                                <connections>
-                                    <action selector="didTapWithSender:" destination="Uqb-o8-jzX" eventType="touchUpInside" id="6Gi-09-XQc"/>
-                                </connections>
-                            </button>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="Nnf-Kv-uaF" firstAttribute="centerX" secondItem="gcW-2n-dPr" secondAttribute="centerX" id="B8M-4N-TYI"/>
-                            <constraint firstItem="PDg-JC-aJd" firstAttribute="centerX" secondItem="Nnf-Kv-uaF" secondAttribute="centerX" id="EPF-Lg-bx4"/>
-                            <constraint firstItem="Nnf-Kv-uaF" firstAttribute="trailing" secondItem="Nf3-u7-7YF" secondAttribute="trailingMargin" id="Pen-HA-EdY"/>
-                            <constraint firstItem="Nnf-Kv-uaF" firstAttribute="leading" secondItem="Nf3-u7-7YF" secondAttribute="leadingMargin" id="ffZ-Tv-tHb"/>
-                            <constraint firstItem="CaL-WG-Gd2" firstAttribute="top" secondItem="gcW-2n-dPr" secondAttribute="bottom" constant="82" id="meg-Og-iJY"/>
-                            <constraint firstItem="Nnf-Kv-uaF" firstAttribute="top" secondItem="PDg-JC-aJd" secondAttribute="bottom" constant="8" symbolic="YES" id="ote-ZM-v6G"/>
-                            <constraint firstItem="Nnf-Kv-uaF" firstAttribute="centerY" secondItem="Nf3-u7-7YF" secondAttribute="centerY" id="p4I-fA-JVM"/>
-                        </constraints>
                     </view>
-                    <connections>
-                        <outlet property="goalNameTextField" destination="Nnf-Kv-uaF" id="d9f-ze-XOn"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yob-9w-CzW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

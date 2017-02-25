@@ -20,6 +20,7 @@
 		4F1148081E5A207900346A1D /* GoalCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F1148061E5A207900346A1D /* GoalCollectionViewCell.xib */; };
 		4F11480A1E5A2B7F00346A1D /* AddGoal.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F1148091E5A2B7F00346A1D /* AddGoal.storyboard */; };
 		4F11480C1E5A2E8E00346A1D /* GoalNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F11480B1E5A2E8E00346A1D /* GoalNameViewController.swift */; };
+		4F44D9751E60E8A400ABF5B3 /* AddGoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F44D9741E60E8A400ABF5B3 /* AddGoalViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,7 @@
 		4F1148061E5A207900346A1D /* GoalCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GoalCollectionViewCell.xib; sourceTree = "<group>"; };
 		4F1148091E5A2B7F00346A1D /* AddGoal.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AddGoal.storyboard; sourceTree = "<group>"; };
 		4F11480B1E5A2E8E00346A1D /* GoalNameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalNameViewController.swift; sourceTree = "<group>"; };
+		4F44D9741E60E8A400ABF5B3 /* AddGoalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddGoalViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +118,7 @@
 				4F1148031E5A1E8D00346A1D /* GoalsViewController.swift */,
 				4F1148051E5A207900346A1D /* GoalCollectionViewCell.swift */,
 				4F11480B1E5A2E8E00346A1D /* GoalNameViewController.swift */,
+				4F44D9741E60E8A400ABF5B3 /* AddGoalViewController.swift */,
 				4F1148061E5A207900346A1D /* GoalCollectionViewCell.xib */,
 				4F1147D11E58F71700346A1D /* Main.storyboard */,
 				4F1148091E5A2B7F00346A1D /* AddGoal.storyboard */,
@@ -327,6 +330,7 @@
 			files = (
 				4F1147CE1E58F71700346A1D /* AppDelegate.swift in Sources */,
 				4F1148071E5A207900346A1D /* GoalCollectionViewCell.swift in Sources */,
+				4F44D9751E60E8A400ABF5B3 /* AddGoalViewController.swift in Sources */,
 				4F11480C1E5A2E8E00346A1D /* GoalNameViewController.swift in Sources */,
 				4F1148041E5A1E8D00346A1D /* GoalsViewController.swift in Sources */,
 			);
@@ -487,7 +491,7 @@
 				);
 				INFOPLIST_FILE = PerfectWeek/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.evanlewis.PerfectWeek;
+				PRODUCT_BUNDLE_IDENTIFIER = com.evanlewis.perfectweek;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -504,7 +508,7 @@
 				);
 				INFOPLIST_FILE = PerfectWeek/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.evanlewis.PerfectWeek;
+				PRODUCT_BUNDLE_IDENTIFIER = com.evanlewis.perfectweek;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -587,6 +591,7 @@
 				4F1147F41E58F71700346A1D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4F1147F51E58F71700346A1D /* Build configuration list for PBXNativeTarget "PerfectWeekTests" */ = {
 			isa = XCConfigurationList;
@@ -595,6 +600,7 @@
 				4F1147F71E58F71700346A1D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4F1147F81E58F71700346A1D /* Build configuration list for PBXNativeTarget "PerfectWeekUITests" */ = {
 			isa = XCConfigurationList;
@@ -603,6 +609,7 @@
 				4F1147FA1E58F71700346A1D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

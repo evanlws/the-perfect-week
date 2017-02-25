@@ -20,6 +20,7 @@ class GoalNameViewController: UIViewController {
         let goal = Goal()
         goal.name = goalText
         goal.completed = false
+        goal.dueDate = Date().nextSunday()
 
         do {
             try realm.write {
@@ -44,4 +45,18 @@ extension GoalNameViewController: UITextFieldDelegate {
 class Goal: Object {
     dynamic var name: String = ""
     dynamic var completed: Bool = false
+    dynamic var dueDate: Date? = nil
+}
+
+class TimePreferences: Object {
+    dynamic var weeklyDueDate: Date? = nil
+}
+
+extension Date {
+    func nextSunday() -> Date {
+        guard let nextWeek = Calendar.current.date(byAdding: .day, value: 7, to: self) else { fatalError() }
+        guard let sunday = Calendar.current.date(bySetting: .weekday, value: 1, of: nextWeek) else { fatalError() }
+        let cal = Calendar(identifier: .gregorian)
+        return cal.startOfDay(for: sunday)
+    }
 }

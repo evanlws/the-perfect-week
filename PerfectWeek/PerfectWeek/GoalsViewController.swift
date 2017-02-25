@@ -13,21 +13,37 @@ class GoalsViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     var goals: Results<Goal>?
+    var timePreferences: TimePreferences?
     let realm = try! Realm()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         let goalCollectionViewNib = UINib(nibName: String(describing: GoalCollectionViewCell.self), bundle: nil)
         collectionView.register(goalCollectionViewNib, forCellWithReuseIdentifier: String(describing: GoalCollectionViewCell.self))
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
         goals = realm.objects(Goal.self)
+        if let timePreferences = realm.objects(TimePreferences.self).first {
+            if let weeklyDueDate = timePreferences.weeklyDueDate, let goals = goals {
+                if weeklyDueDate < Date() {
+                    for goal in goals {
+                        try! realm.write {
+                            goal.completed = false
+                        }
+                    }
+                }
+            }
+        } else {
+            timePreferences = TimePreferences()
+            timePreferences?.weeklyDueDate = Date().nextSunday()
+            try! realm.write {
+                realm.add(timePreferences!)
+            }
+        }
+        collectionView.reloadData()
     }
-
 }
 
 extension GoalsViewController: UICollectionViewDataSource {
@@ -54,12 +70,16 @@ extension GoalsViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
         if indexPath.row == goals?.count {
-            let addGoalStoryboard = UIStoryboard(name: "AddGoal", bundle: nil)
-            if let addGoalViewController = addGoalStoryboard.instantiateInitialViewController() {
-                present(addGoalViewController, animated: true) {
-                    self.collectionView.reloadData()
-                }
+            let addGoalVC = AddGoalViewController()
+            present(addGoalVC, animated: true) {
+                self.collectionView.reloadData()
             }
+//            let addGoalStoryboard = UIStoryboard(name: "AddGoal", bundle: nil)
+//            if let addGoalViewController = addGoalStoryboard.instantiateInitialViewController() {
+//                present(addGoalViewController, animated: true) {
+//                    self.collectionView.reloadData()
+//                }
+//            }
         } else {
             if let goal = goals?[indexPath.row] {
                 do {
