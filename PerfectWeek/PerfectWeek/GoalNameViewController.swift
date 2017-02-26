@@ -33,7 +33,6 @@ class GoalNameViewController: UIViewController {
 
         dismiss(animated: true, completion: nil)
     }
-
 }
 
 extension GoalNameViewController: UITextFieldDelegate {
@@ -46,6 +45,14 @@ class Goal: Object {
     dynamic var name: String = ""
     dynamic var completed: Bool = false
     dynamic var dueDate: Date? = nil
+    dynamic var timesFinished: Int16 = 0
+    dynamic var timesPer: Int16 = 0
+    dynamic var goalType: Int16 = 0
+    let days = List<Weekday>()
+}
+
+class Weekday: Object {
+    dynamic var name: String = ""
 }
 
 class TimePreferences: Object {

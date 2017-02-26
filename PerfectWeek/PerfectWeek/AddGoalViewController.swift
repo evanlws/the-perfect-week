@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class AddGoalViewController: UIViewController {
 
@@ -188,16 +189,19 @@ class AddGoalViewController: UIViewController {
         saturday = UIButton()
 
         guard let sunday = sunday, let monday = monday, let tuesday = tuesday, let wednesday = wednesday, let thursday = thursday, let friday = friday, let saturday = saturday, let onTheseDaysLabel = onTheseDaysLabel else { fatalError(#function) }
-        sunday.setTitle("S", for: .normal)
+        sunday.setTitle("Su", for: .normal)
         monday.setTitle("M", for: .normal)
-        tuesday.setTitle("T", for: .normal)
+        tuesday.setTitle("Tu", for: .normal)
         wednesday.setTitle("W", for: .normal)
-        thursday.setTitle("T", for: .normal)
+        thursday.setTitle("Th", for: .normal)
         friday.setTitle("F", for: .normal)
-        saturday.setTitle("S", for: .normal)
+        saturday.setTitle("Sa", for: .normal)
 
         for button in [sunday, monday, tuesday, wednesday, thursday, friday, saturday] {
-            button.backgroundColor = .gray
+            button.backgroundColor = .purple
+            button.tag = 2
+            button.addTarget(self, action: #selector(toggleWeekday(_:)), for: .touchUpInside)
+
             view.addSubview(button)
             button.translatesAutoresizingMaskIntoConstraints = false
             button.widthAnchor.constraint(equalToConstant: 35).isActive = true
@@ -212,12 +216,12 @@ class AddGoalViewController: UIViewController {
         thursday.leftAnchor.constraint(equalTo: wednesday.rightAnchor, constant: 5).isActive = true
         friday.leftAnchor.constraint(equalTo: thursday.rightAnchor, constant: 5).isActive = true
         saturday.leftAnchor.constraint(equalTo: friday.rightAnchor, constant: 5).isActive = true
-
     }
 
     fileprivate func setupSaveButton() {
         saveButton.setTitle("Save", for: .normal)
         saveButton.backgroundColor = .purple
+        saveButton.addTarget(self, action: #selector(saveGoal(_:)), for: .touchUpInside)
         view.addSubview(saveButton)
 
         saveButton.translatesAutoresizingMaskIntoConstraints = false
@@ -260,10 +264,74 @@ class AddGoalViewController: UIViewController {
         }
         setupSaveButton()
     }
+
+    func toggleWeekday(_ sender: UIButton) {
+        if sender.tag == 1 {
+            sender.tag = 2
+            sender.backgroundColor = .purple
+        } else {
+            sender.tag = 1
+            sender.backgroundColor = .gray
+        }
+    }
+
+    func saveGoal(_ sender: UIButton) {
+        let realm = try! Realm()
+
+        guard let goalText = goalNameTextField.text else { return }
+        let goal = Goal()
+        goal.name = goalText
+        goal.completed = false
+        goal.dueDate = Date().nextSunday()
+
+        switch goalType {
+        case .daily:
+            guard let sunday = sunday, let monday = monday, let tuesday = tuesday, let wednesday = wednesday, let thursday = thursday, let friday = friday, let saturday = saturday else { fatalError(#function) }
+
+            for button in [sunday, monday, tuesday, wednesday, thursday, friday, saturday].filter({ $0.tag == 2 }) {
+                let weekday = Weekday()
+                switch button.titleLabel!.text! {
+                case "Su":
+                    weekday.name = "Sunday"
+                case "M":
+                    weekday.name = "Monday"
+                case "Tu":
+                    weekday.name = "Tuesday"
+                case "W":
+                    weekday.name = "Wednesday"
+                case "Th":
+                    weekday.name = "Thursday"
+                case "F":
+                    weekday.name = "Friday"
+                default:
+                    weekday.name = "Saturday"
+                }
+                goal.days.append(weekday)
+            }
+            fallthrough
+        case .weekly:
+            goal.timesPer = Int16(timesPerTextField!.text!)!
+        default:
+            break
+        }
+
+        do {
+            try realm.write {
+                realm.add(goal)
+                print("Saved Goal")
+            }
+        } catch {
+            print("Can't save")
+        }
+
+        dismiss(animated: true, completion: nil)
+    }
 }
 
 extension AddGoalViewController: UITextFieldDelegate {
-
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        return textField.resignFirstResponder()
+    }
 }
 
 extension AddGoalViewController: UIPickerViewDelegate, UIPickerViewDataSource {
