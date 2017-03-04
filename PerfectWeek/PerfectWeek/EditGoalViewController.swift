@@ -1,26 +1,32 @@
 //
-//  AddGoalViewController.swift
+//  EditGoalViewController.swift
 //  PerfectWeek
 //
-//  Created by Evan Lewis on 2/24/17.
+//  Created by Evan Lewis on 2/27/17.
 //  Copyright © 2017 evanlewis. All rights reserved.
 //
 
 import UIKit
 import RealmSwift
 
-enum GoalType {
-    case weekly, daily, once
-}
+class EditGoalViewController: UIViewController {
 
-class AddGoalViewController: UIViewController {
-
-    var goalType: GoalType {
-        didSet {
-            goalTypeDidChange()
-        }
+    init(goal: Goal) {
+        self.goal = goal
+        super.init(nibName: nil, bundle: nil)
     }
 
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        goalTypeDidChange()
+        view.backgroundColor = .white
+    }
+
+    let goal: Goal
     let goalNameLabel = UILabel()
     let goalNameTextField = UITextField()
     let goalTypeLabel = UILabel()
@@ -37,22 +43,6 @@ class AddGoalViewController: UIViewController {
     var thursday: UIButton?
     var friday: UIButton?
     var saturday: UIButton?
-
-    init(goalType: GoalType = .weekly) {
-        self.goalType = goalType
-        super.init(nibName: nil, bundle: nil)
-        view.backgroundColor = .white
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        goalTypeTextField.text = "Weekly"
-        goalTypeDidChange()
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 
     fileprivate func setupGoalNameLabel() {
         goalNameLabel.text = "Goal Name"
@@ -129,9 +119,9 @@ class AddGoalViewController: UIViewController {
         timesPerLabel = UILabel()
         guard let timesPerLabel = timesPerLabel else { fatalError("Error in \(#function)") }
 
-        if goalType == .weekly {
+        if goal.goalType == 1 {
             timesPerLabel.text = "Times per week"
-        } else if goalType == .daily {
+        } else if goal.goalType == 2 {
             timesPerLabel.text = "Times per day"
         } else {
             fatalError("Times per label")
@@ -250,16 +240,16 @@ class AddGoalViewController: UIViewController {
         setupGoalTypeTextField()
         setupGoalTypePickerView()
 
-        switch goalType {
-        case .weekly:
+        switch goal.goalType {
+        case 1:
             setupTimesPerLabel()
             setupTimesPerTextField()
-        case .daily:
+        case 2:
             fallthrough
-//            setupTimesPerLabel()
-//            setupTimesPerTextField()
-//            setupOnTheseDaysLabel()
-//            setupWeekDays()
+            //            setupTimesPerLabel()
+            //            setupTimesPerTextField()
+            //            setupOnTheseDaysLabel()
+        //            setupWeekDays()
         default:
             break
         }
@@ -285,33 +275,33 @@ class AddGoalViewController: UIViewController {
         goal.completed = false
         goal.dueDate = Date().nextSunday()
 
-        switch goalType {
-        case .daily:
+        switch goal.goalType {
+        case 2:
             goal.goalType = 2
             /*guard let sunday = sunday, let monday = monday, let tuesday = tuesday, let wednesday = wednesday, let thursday = thursday, let friday = friday, let saturday = saturday else { fatalError(#function) }
 
-            for button in [sunday, monday, tuesday, wednesday, thursday, friday, saturday].filter({ $0.tag == 2 }) {
-                let weekday = Weekday()
-                switch button.titleLabel!.text! {
-                case "Su":
-                    weekday.name = "Sunday"
-                case "M":
-                    weekday.name = "Monday"
-                case "Tu":
-                    weekday.name = "Tuesday"
-                case "W":
-                    weekday.name = "Wednesday"
-                case "Th":
-                    weekday.name = "Thursday"
-                case "F":
-                    weekday.name = "Friday"
-                default:
-                    weekday.name = "Saturday"
-                }
-                goal.days.append(weekday)
-            }
-            fallthrough*/
-        case .weekly:
+             for button in [sunday, monday, tuesday, wednesday, thursday, friday, saturday].filter({ $0.tag == 2 }) {
+             let weekday = Weekday()
+             switch button.titleLabel!.text! {
+             case "Su":
+             weekday.name = "Sunday"
+             case "M":
+             weekday.name = "Monday"
+             case "Tu":
+             weekday.name = "Tuesday"
+             case "W":
+             weekday.name = "Wednesday"
+             case "Th":
+             weekday.name = "Thursday"
+             case "F":
+             weekday.name = "Friday"
+             default:
+             weekday.name = "Saturday"
+             }
+             goal.days.append(weekday)
+             }
+             fallthrough*/
+        case 1:
             goal.goalType = 1
             goal.timesPer = Int16(timesPerTextField!.text!)!
         default:
@@ -331,13 +321,13 @@ class AddGoalViewController: UIViewController {
     }
 }
 
-extension AddGoalViewController: UITextFieldDelegate {
+extension EditGoalViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         return textField.resignFirstResponder()
     }
 }
 
-extension AddGoalViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+extension EditGoalViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -362,49 +352,17 @@ extension AddGoalViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         switch row {
         case 0:
             goalTypeTextField.text = "Weekly"
-            goalType = .weekly
+            goal.goalType = 1
         case 1:
             goalTypeTextField.text = "Daily"
-            goalType = .daily
+            goal.goalType = 2
         default:
             goalTypeTextField.text = "Once"
-            goalType = .once
+            goal.goalType = 3
         }
     }
 
     func pickerViewDoneButtonTapped() {
         view.endEditing(true)
-    }
-}
-
-class Goal: Object {
-    dynamic var name: String = ""
-    dynamic var completed: Bool = false
-    dynamic var dueDate: Date? = nil
-    dynamic var timesFinished: Int16 = 0
-    dynamic var lastFinishDay: Date? = nil
-    dynamic var timesPer: Int16 = 0
-    dynamic var goalType: Int16 = 0
-    let days = List<Weekday>()
-}
-
-class Weekday: Object {
-    dynamic var name: String = ""
-}
-
-class TimePreferences: Object {
-    dynamic var weeklyDueDate: Date? = nil
-}
-
-class Stats: Object {
-    dynamic var numberOfPerfectWeeks: Int32 = 0
-}
-
-extension Date {
-    func nextSunday() -> Date {
-        guard let nextWeek = Calendar.current.date(byAdding: .day, value: 7, to: self) else { fatalError() }
-        guard let sunday = Calendar.current.date(bySetting: .weekday, value: 1, of: nextWeek) else { fatalError() }
-        let cal = Calendar(identifier: .gregorian)
-        return cal.startOfDay(for: sunday)
     }
 }

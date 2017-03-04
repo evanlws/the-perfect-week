@@ -20,6 +20,8 @@
 		4F1148081E5A207900346A1D /* GoalCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F1148061E5A207900346A1D /* GoalCollectionViewCell.xib */; };
 		4F11480A1E5A2B7F00346A1D /* AddGoal.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F1148091E5A2B7F00346A1D /* AddGoal.storyboard */; };
 		4F11480C1E5A2E8E00346A1D /* GoalNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F11480B1E5A2E8E00346A1D /* GoalNameViewController.swift */; };
+		4F2CB71A1E63526D00CC533C /* GoalInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2CB7191E63526D00CC533C /* GoalInfoViewController.swift */; };
+		4F2CB71C1E63EDCD00CC533C /* EditGoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2CB71B1E63EDCD00CC533C /* EditGoalViewController.swift */; };
 		4F44D9751E60E8A400ABF5B3 /* AddGoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F44D9741E60E8A400ABF5B3 /* AddGoalViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -60,6 +62,8 @@
 		4F1148061E5A207900346A1D /* GoalCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GoalCollectionViewCell.xib; sourceTree = "<group>"; };
 		4F1148091E5A2B7F00346A1D /* AddGoal.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AddGoal.storyboard; sourceTree = "<group>"; };
 		4F11480B1E5A2E8E00346A1D /* GoalNameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalNameViewController.swift; sourceTree = "<group>"; };
+		4F2CB7191E63526D00CC533C /* GoalInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalInfoViewController.swift; sourceTree = "<group>"; };
+		4F2CB71B1E63EDCD00CC533C /* EditGoalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditGoalViewController.swift; sourceTree = "<group>"; };
 		4F44D9741E60E8A400ABF5B3 /* AddGoalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddGoalViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -117,11 +121,13 @@
 				4F1147CD1E58F71700346A1D /* AppDelegate.swift */,
 				4F1148031E5A1E8D00346A1D /* GoalsViewController.swift */,
 				4F1148051E5A207900346A1D /* GoalCollectionViewCell.swift */,
-				4F11480B1E5A2E8E00346A1D /* GoalNameViewController.swift */,
+				4F2CB7191E63526D00CC533C /* GoalInfoViewController.swift */,
 				4F44D9741E60E8A400ABF5B3 /* AddGoalViewController.swift */,
+				4F2CB71B1E63EDCD00CC533C /* EditGoalViewController.swift */,
 				4F1148061E5A207900346A1D /* GoalCollectionViewCell.xib */,
 				4F1147D11E58F71700346A1D /* Main.storyboard */,
 				4F1148091E5A2B7F00346A1D /* AddGoal.storyboard */,
+				4F11480B1E5A2E8E00346A1D /* GoalNameViewController.swift */,
 				4F1147D41E58F71700346A1D /* Assets.xcassets */,
 				4F1147D61E58F71700346A1D /* LaunchScreen.storyboard */,
 				4F1147D91E58F71700346A1D /* Info.plist */,
@@ -333,6 +339,8 @@
 				4F44D9751E60E8A400ABF5B3 /* AddGoalViewController.swift in Sources */,
 				4F11480C1E5A2E8E00346A1D /* GoalNameViewController.swift in Sources */,
 				4F1148041E5A1E8D00346A1D /* GoalsViewController.swift in Sources */,
+				4F2CB71C1E63EDCD00CC533C /* EditGoalViewController.swift in Sources */,
+				4F2CB71A1E63526D00CC533C /* GoalInfoViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -27,10 +27,25 @@ class GoalsViewController: UIViewController {
         goals = realm.objects(Goal.self)
         if let timePreferences = realm.objects(TimePreferences.self).first {
             if let weeklyDueDate = timePreferences.weeklyDueDate, let goals = goals {
-                if weeklyDueDate < Date() {
+                if weeklyDueDate < Date() { // If it's a new week
+                    timePreferences.weeklyDueDate = Date().nextSunday()
                     for goal in goals {
-                        try! realm.write {
-                            goal.completed = false
+                        if goal.completed == true, goal.goalType == 3 {
+                            realm.delete(goal)
+                        } else {
+                            try! realm.write {
+                                goal.completed = false
+                            }
+                        }
+                    }
+                } else {
+                    for goal in goals {
+                        if let finishDay = goal.lastFinishDay {
+                            if (goal.goalType == 2 || goal.goalType == 1), finishDay < Calendar.current.startOfDay(for: Date()) { // If the goal type is daily and the finish day wasn't today
+                                try! realm.write {
+                                    goal.completed = false
+                                }
+                            }
                         }
                     }
                 }
@@ -74,26 +89,25 @@ extension GoalsViewController: UICollectionViewDelegate {
             present(addGoalVC, animated: true) {
                 self.collectionView.reloadData()
             }
-//            let addGoalStoryboard = UIStoryboard(name: "AddGoal", bundle: nil)
-//            if let addGoalViewController = addGoalStoryboard.instantiateInitialViewController() {
-//                present(addGoalViewController, animated: true) {
-//                    self.collectionView.reloadData()
-//                }
-//            }
         } else {
-            if let goal = goals?[indexPath.row] {
-                do {
-                    defer {
-                        collectionView.reloadData()
-                    }
-                    try realm.write {
-                        goal.completed = true
-                    }
-                } catch {
-                    print("Could not update")
-                }
+            guard let goal = goals?[indexPath.row] else { return }
+            let goalInfoVC = GoalInfoViewController(goal: goal)
+            present(goalInfoVC, animated: true) {
+                self.collectionView.reloadData()
             }
+            /*if let goal = goals?[indexPath.row] {
+             do {
+             defer {
+             collectionView.reloadData()
+             }
+             try realm.write {
+             goal.completed = true
+             }
+             } catch {
+             print("Could not update")
+             }
+             }*/
         }
-
+        
     }
 }
