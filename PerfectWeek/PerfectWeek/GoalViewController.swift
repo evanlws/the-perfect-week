@@ -17,11 +17,17 @@ class GoalsViewController: UIViewController {
 
 	fileprivate func setupCollectionView() {
 		let collectionViewFlowLayout = UICollectionViewFlowLayout()
-		collectionViewFlowLayout.itemSize = CGSize(width: 200, height: 200)
+		collectionViewFlowLayout.itemSize = CGSize(width: 170, height: 125)
 		collectionViewFlowLayout.scrollDirection = .vertical
+		collectionViewFlowLayout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+		collectionViewFlowLayout.minimumInteritemSpacing = 10.0
+
 		let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout)
+		collectionView.backgroundColor = .white
 		collectionView.delegate = self
 		collectionView.dataSource = self
+		collectionView.bounces = true
+		collectionView.alwaysBounceVertical = true
 		collectionView.register(GoalCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: GoalCollectionViewCell.self))
 		view.addSubview(collectionView)
 
@@ -35,7 +41,7 @@ class GoalsViewController: UIViewController {
 
 extension GoalsViewController: UICollectionViewDataSource {
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return 1
+		return 3
 	}
 
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -43,7 +49,7 @@ extension GoalsViewController: UICollectionViewDataSource {
 			return cell
 		}
 
-		return GoalCollectionViewCell(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
+		return GoalCollectionViewCell(frame: CGRect(x: 0, y: 0, width: 170, height: 125))
 	}
 }
 
