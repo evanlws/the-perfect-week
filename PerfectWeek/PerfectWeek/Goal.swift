@@ -10,5 +10,5 @@ import Foundation
 import RealmSwift
 
 class Goal: Object {
-    dynamic var name: String = ""
+	dynamic var name: String = ""
 }
