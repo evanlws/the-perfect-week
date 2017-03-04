@@ -15,6 +15,8 @@
 		4F1147FD1E5904A900346A1D /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F1147FC1E5904A900346A1D /* Realm.framework */; };
 		4F1147FF1E5904AC00346A1D /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F1147FE1E5904AC00346A1D /* RealmSwift.framework */; };
 		4FA6DD511E6B3D5300547D33 /* Goal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA6DD501E6B3D5300547D33 /* Goal.swift */; };
+		4FA6DD581E6B4E2400547D33 /* GoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA6DD571E6B4E2400547D33 /* GoalViewController.swift */; };
+		4FA6DD5A1E6B4E5000547D33 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FA6DD591E6B4E5000547D33 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		4F1147FC1E5904A900346A1D /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = ../Carthage/Build/iOS/Realm.framework; sourceTree = "<group>"; };
 		4F1147FE1E5904AC00346A1D /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = ../Carthage/Build/iOS/RealmSwift.framework; sourceTree = "<group>"; };
 		4FA6DD501E6B3D5300547D33 /* Goal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Goal.swift; sourceTree = "<group>"; };
+		4FA6DD571E6B4E2400547D33 /* GoalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalViewController.swift; sourceTree = "<group>"; };
+		4FA6DD591E6B4E5000547D33 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,10 +107,12 @@
 			isa = PBXGroup;
 			children = (
 				4F1147CD1E58F71700346A1D /* AppDelegate.swift */,
+				4FA6DD571E6B4E2400547D33 /* GoalViewController.swift */,
 				4FA6DD501E6B3D5300547D33 /* Goal.swift */,
 				4F1147D41E58F71700346A1D /* Assets.xcassets */,
 				4F1147D61E58F71700346A1D /* LaunchScreen.storyboard */,
 				4F1147D91E58F71700346A1D /* Info.plist */,
+				4FA6DD591E6B4E5000547D33 /* Main.storyboard */,
 			);
 			path = PerfectWeek;
 			sourceTree = "<group>";
@@ -150,6 +156,7 @@
 				4F1147C81E58F71600346A1D /* Resources */,
 				4F1148001E5904D600346A1D /* ShellScript */,
 				4F1148021E5A1AC500346A1D /* ShellScript */,
+				4FA6DD561E6B4ABD00547D33 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -250,6 +257,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FA6DD5A1E6B4E5000547D33 /* Main.storyboard in Resources */,
 				4F1147D81E58F71700346A1D /* LaunchScreen.storyboard in Resources */,
 				4F1147D51E58F71700346A1D /* Assets.xcassets in Resources */,
 			);
@@ -300,6 +308,19 @@
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
+		4FA6DD561E6B4ABD00547D33 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "TAGS=\"TODO:\"\nfind \"${SRCROOT}\" \\( -name \"*.h\" -or -name \"*.m\" -or -name \"*.swift\" \\) -not -path \"*Carthage/*\" -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($TAGS).*\\$\" | perl -p -e \"s/($TAGS)/ warning: \\$1/\"\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -307,6 +328,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FA6DD581E6B4E2400547D33 /* GoalViewController.swift in Sources */,
 				4FA6DD511E6B3D5300547D33 /* Goal.swift in Sources */,
 				4F1147CE1E58F71700346A1D /* AppDelegate.swift in Sources */,
 			);
