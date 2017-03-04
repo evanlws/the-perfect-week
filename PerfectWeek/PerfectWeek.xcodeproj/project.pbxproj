@@ -17,6 +17,7 @@
 		4FA6DD511E6B3D5300547D33 /* Goal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA6DD501E6B3D5300547D33 /* Goal.swift */; };
 		4FA6DD581E6B4E2400547D33 /* GoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA6DD571E6B4E2400547D33 /* GoalViewController.swift */; };
 		4FA6DD5A1E6B4E5000547D33 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FA6DD591E6B4E5000547D33 /* Main.storyboard */; };
+		4FA6DD5C1E6B563800547D33 /* GoalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA6DD5B1E6B563800547D33 /* GoalCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		4FA6DD501E6B3D5300547D33 /* Goal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Goal.swift; sourceTree = "<group>"; };
 		4FA6DD571E6B4E2400547D33 /* GoalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalViewController.swift; sourceTree = "<group>"; };
 		4FA6DD591E6B4E5000547D33 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		4FA6DD5B1E6B563800547D33 /* GoalCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 			children = (
 				4F1147CD1E58F71700346A1D /* AppDelegate.swift */,
 				4FA6DD571E6B4E2400547D33 /* GoalViewController.swift */,
+				4FA6DD5B1E6B563800547D33 /* GoalCollectionViewCell.swift */,
 				4FA6DD501E6B3D5300547D33 /* Goal.swift */,
 				4F1147D41E58F71700346A1D /* Assets.xcassets */,
 				4F1147D61E58F71700346A1D /* LaunchScreen.storyboard */,
@@ -329,6 +332,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FA6DD581E6B4E2400547D33 /* GoalViewController.swift in Sources */,
+				4FA6DD5C1E6B563800547D33 /* GoalCollectionViewCell.swift in Sources */,
 				4FA6DD511E6B3D5300547D33 /* Goal.swift in Sources */,
 				4F1147CE1E58F71700346A1D /* AppDelegate.swift in Sources */,
 			);
