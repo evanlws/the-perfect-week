@@ -37,20 +37,27 @@ class GoalsViewController: UIViewController {
 		collectionView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
 		collectionView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
 	}
+
 }
 
 extension GoalsViewController: UICollectionViewDataSource {
+
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		return 3
 	}
 
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: GoalCollectionViewCell.self), for: indexPath) as? GoalCollectionViewCell {
-			return cell
+		let cell: GoalCollectionViewCell
+		if let reusedCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: GoalCollectionViewCell.self), for: indexPath) as? GoalCollectionViewCell {
+			cell = reusedCell
+		} else {
+			cell = GoalCollectionViewCell()
 		}
 
-		return GoalCollectionViewCell(frame: CGRect(x: 0, y: 0, width: 170, height: 125))
+		cell.nameLabel.text = "Add a goal"
+		return cell
 	}
+
 }
 
 extension GoalsViewController: UICollectionViewDelegate {
