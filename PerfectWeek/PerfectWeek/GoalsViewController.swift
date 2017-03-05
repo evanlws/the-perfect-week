@@ -10,6 +10,17 @@ import UIKit
 
 class GoalsViewController: UIViewController {
 
+	var dataSource: GoalsViewModel
+
+	init() {
+		self.dataSource = GoalsViewModel()
+		super.init(nibName: nil, bundle: nil)
+	}
+
+	required init?(coder aDecoder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		setupCollectionView()
@@ -43,7 +54,7 @@ class GoalsViewController: UIViewController {
 extension GoalsViewController: UICollectionViewDataSource {
 
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return 3
+		return dataSource.goals.count + 1
 	}
 
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -54,7 +65,12 @@ extension GoalsViewController: UICollectionViewDataSource {
 			cell = GoalCollectionViewCell()
 		}
 
-		cell.nameLabel.text = "Add a goal"
+		if indexPath.row == dataSource.goals.count {
+			cell.nameLabel.text = "Add a goal"
+		} else {
+			cell.nameLabel.text = dataSource.goals[indexPath.row].name
+		}
+
 		return cell
 	}
 

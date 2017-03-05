@@ -16,7 +16,6 @@
 		4F1147FF1E5904AC00346A1D /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F1147FE1E5904AC00346A1D /* RealmSwift.framework */; };
 		4FA6DD511E6B3D5300547D33 /* Goal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA6DD501E6B3D5300547D33 /* Goal.swift */; };
 		4FA6DD581E6B4E2400547D33 /* GoalsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA6DD571E6B4E2400547D33 /* GoalsViewController.swift */; };
-		4FA6DD5A1E6B4E5000547D33 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FA6DD591E6B4E5000547D33 /* Main.storyboard */; };
 		4FA6DD5C1E6B563800547D33 /* GoalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA6DD5B1E6B563800547D33 /* GoalCollectionViewCell.swift */; };
 		4FA6DD5E1E6B79DE00547D33 /* GoalsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA6DD5D1E6B79DE00547D33 /* GoalsViewModel.swift */; };
 		4FA6DD601E6B7C5A00547D33 /* RealmLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA6DD5F1E6B7C5A00547D33 /* RealmLibrary.swift */; };
@@ -55,7 +54,6 @@
 		4F1147FE1E5904AC00346A1D /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = ../Carthage/Build/iOS/RealmSwift.framework; sourceTree = "<group>"; };
 		4FA6DD501E6B3D5300547D33 /* Goal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Goal.swift; sourceTree = "<group>"; };
 		4FA6DD571E6B4E2400547D33 /* GoalsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalsViewController.swift; sourceTree = "<group>"; };
-		4FA6DD591E6B4E5000547D33 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		4FA6DD5B1E6B563800547D33 /* GoalCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalCollectionViewCell.swift; sourceTree = "<group>"; };
 		4FA6DD5D1E6B79DE00547D33 /* GoalsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalsViewModel.swift; sourceTree = "<group>"; };
 		4FA6DD5F1E6B7C5A00547D33 /* RealmLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmLibrary.swift; sourceTree = "<group>"; };
@@ -121,7 +119,6 @@
 				4F1147D41E58F71700346A1D /* Assets.xcassets */,
 				4F1147D61E58F71700346A1D /* LaunchScreen.storyboard */,
 				4F1147D91E58F71700346A1D /* Info.plist */,
-				4FA6DD591E6B4E5000547D33 /* Main.storyboard */,
 			);
 			path = PerfectWeek;
 			sourceTree = "<group>";
@@ -266,7 +263,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4FA6DD5A1E6B4E5000547D33 /* Main.storyboard in Resources */,
 				4F1147D81E58F71700346A1D /* LaunchScreen.storyboard in Resources */,
 				4F1147D51E58F71700346A1D /* Assets.xcassets in Resources */,
 			);
