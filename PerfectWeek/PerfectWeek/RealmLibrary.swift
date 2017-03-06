@@ -18,11 +18,11 @@ class RealmLibrary {
 		return fetchGoals()
 	}
 
-	init?() {
+	init() {
 		do {
 			realm = try Realm()
 		} catch let error {
-			fatalError("ERROR \(error)")
+			fatalError("Error \(error)")
 		}
 	}
 
@@ -30,4 +30,16 @@ class RealmLibrary {
 		return realm.objects(Goal.self)
 	}
 
+	@discardableResult func add(_ newGoal: Goal) -> Bool {
+		do {
+			try realm.write {
+				realm.add(newGoal)
+				print("Successfully added goal \(newGoal.name)")
+			}
+		} catch let error {
+			print("Error adding goal: \(error)")
+			return false
+		}
+		return true
+	}
 }

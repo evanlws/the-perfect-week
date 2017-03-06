@@ -78,4 +78,12 @@ extension GoalsViewController: UICollectionViewDataSource {
 
 extension GoalsViewController: UICollectionViewDelegate {
 
+	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		if indexPath.row == dataSource.goals.count {
+			let navigationController = UINavigationController(rootViewController: AddGoalNameViewController())
+			present(navigationController, animated: true) {
+				collectionView.reloadData()
+			}
+		}
+	}
 }

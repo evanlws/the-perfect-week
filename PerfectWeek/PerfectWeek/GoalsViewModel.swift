@@ -18,7 +18,6 @@ class GoalsViewModel {
 	}
 
 	fileprivate func fetchGoals() -> Results<Goal> {
-		guard let library = library else { fatalError("Realm Library could not be created") }
 		return library.goals
 	}
 
