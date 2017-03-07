@@ -10,6 +10,10 @@ import UIKit
 
 class GoalCollectionViewCell: UICollectionViewCell {
 
+	enum Style {
+		case uncompleted, completed
+	}
+
 	let nameLabel: UILabel = {
 		let label = UILabel()
 		label.font = UIFont.systemFont(ofSize: 24.0)

@@ -14,6 +14,10 @@ class AddGoalNameViewModel {
 	fileprivate let library = RealmLibrary.sharedLibrary
 	fileprivate let goal = Goal()
 
+	init() {
+		goal.isCompleted = false
+	}
+
 	func validateGoalName(goalName: String?) -> Bool {
 		if let goalName = goalName, !goalName.isEmpty, !goalName.isBlank {
 			goal.name = goalName

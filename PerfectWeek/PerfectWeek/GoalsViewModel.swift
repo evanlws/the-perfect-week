@@ -21,4 +21,8 @@ class GoalsViewModel {
 		return library.goals
 	}
 
+	func complete(_ goal: Goal) {
+		library.complete(goal)
+	}
+
 }

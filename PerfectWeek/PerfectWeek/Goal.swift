@@ -12,5 +12,7 @@ import RealmSwift
 class Goal: Object {
 
 	dynamic var name: String = ""
+	dynamic var isCompleted: Bool = false
+	dynamic var weekEnd: Date = Date().nextSunday()
 
 }

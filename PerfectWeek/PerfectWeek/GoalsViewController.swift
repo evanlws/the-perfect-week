@@ -68,7 +68,15 @@ extension GoalsViewController: UICollectionViewDataSource {
 		if indexPath.row == dataSource.goals.count {
 			cell.nameLabel.text = "Add a goal"
 		} else {
-			cell.nameLabel.text = dataSource.goals[indexPath.row].name
+			let goal = dataSource.goals[indexPath.row]
+			if goal.isCompleted {
+				cell.backgroundColor = .purple
+				cell.nameLabel.textColor = .white
+			} else {
+				cell.backgroundColor = .white
+				cell.nameLabel.textColor = .purple
+			}
+			cell.nameLabel.text = goal.name
 		}
 
 		return cell
@@ -84,6 +92,10 @@ extension GoalsViewController: UICollectionViewDelegate {
 			present(navigationController, animated: true) {
 				collectionView.reloadData()
 			}
+		} else {
+			dataSource.complete(dataSource.goals[indexPath.row])
 		}
+
+		collectionView.reloadData()
 	}
 }
