@@ -16,6 +16,7 @@ class AddGoalNameViewModel {
 
 	init() {
 		goal.isCompleted = false
+		goal.objectId = UUID().uuidString
 	}
 
 	func validateGoalName(goalName: String?) -> Bool {

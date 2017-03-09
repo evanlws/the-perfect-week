@@ -18,7 +18,7 @@ class GoalCollectionViewCell: UICollectionViewCell {
 		let label = UILabel()
 		label.font = UIFont.systemFont(ofSize: 24.0)
 		label.minimumScaleFactor = 0.6
-		label.textColor = .white
+		label.textColor = .purple
 		label.textAlignment = .left
 		label.numberOfLines = 4
 		return label
@@ -30,9 +30,24 @@ class GoalCollectionViewCell: UICollectionViewCell {
 
 	override init(frame: CGRect) {
 		super.init(frame: frame)
-		self.backgroundColor = .purple
-		self.addSubview(nameLabel)
+		backgroundColor = .white
+		contentView.layer.borderColor = UIColor.purple.cgColor
+		contentView.layer.borderWidth = 2.0
+		addSubview(nameLabel)
 		setupNameLabel()
+	}
+
+	func setCompletedStyle(_ isCompleted: Bool) {
+		if isCompleted {
+			backgroundColor = .purple
+			nameLabel.textColor = .white
+			contentView.layer.borderWidth = 0.0
+		} else {
+			backgroundColor = .white
+			nameLabel.textColor = .purple
+			contentView.layer.borderColor = UIColor.purple.cgColor
+			contentView.layer.borderWidth = 2.0
+		}
 	}
 
 	required init?(coder aDecoder: NSCoder) {

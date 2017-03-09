@@ -11,8 +11,13 @@ import RealmSwift
 
 class Goal: Object {
 
+	dynamic var objectId: String = ""
 	dynamic var name: String = ""
 	dynamic var isCompleted: Bool = false
-	dynamic var weekEnd: Date = Date().nextSunday()
+	dynamic var weekEnd: Date = Date().nextSunday().addingTimeInterval(1)
+
+	override static func primaryKey() -> String? {
+		return "objectId"
+	}
 
 }

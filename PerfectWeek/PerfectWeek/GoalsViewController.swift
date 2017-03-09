@@ -69,13 +69,7 @@ extension GoalsViewController: UICollectionViewDataSource {
 			cell.nameLabel.text = "Add a goal"
 		} else {
 			let goal = dataSource.goals[indexPath.row]
-			if goal.isCompleted {
-				cell.backgroundColor = .purple
-				cell.nameLabel.textColor = .white
-			} else {
-				cell.backgroundColor = .white
-				cell.nameLabel.textColor = .purple
-			}
+			cell.setCompletedStyle(goal.isCompleted)
 			cell.nameLabel.text = goal.name
 		}
 
@@ -94,8 +88,7 @@ extension GoalsViewController: UICollectionViewDelegate {
 			}
 		} else {
 			dataSource.complete(dataSource.goals[indexPath.row])
+			collectionView.reloadData()
 		}
-
-		collectionView.reloadData()
 	}
 }

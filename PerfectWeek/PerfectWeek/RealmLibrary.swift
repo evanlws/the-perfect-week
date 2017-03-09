@@ -28,9 +28,22 @@ class RealmLibrary {
 	}
 
 	fileprivate func updateGoals() {
-		goals.forEach {
+		let fetchedGoals = goals
+		fetchedGoals.forEach {
 			if $0.weekEnd < Date().nextSunday() {
-				$0.isCompleted = false
+				let updatedGoal = Goal()
+				updatedGoal.objectId = $0.objectId
+				updatedGoal.name = $0.name
+				updatedGoal.weekEnd = Date().nextSunday().addingTimeInterval(1)
+				updatedGoal.isCompleted = false
+
+				do {
+					try realm.write {
+						realm.add(updatedGoal, update: true)
+					}
+				} catch let error {
+					print("Error \(error)")
+				}
 			}
 		}
 	}
