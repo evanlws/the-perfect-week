@@ -12,6 +12,10 @@
 		4F1147D81E58F71700346A1D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F1147D61E58F71700346A1D /* LaunchScreen.storyboard */; };
 		4F1147E31E58F71700346A1D /* PerfectWeekTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1147E21E58F71700346A1D /* PerfectWeekTests.swift */; };
 		4F1147EE1E58F71700346A1D /* PerfectWeekUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1147ED1E58F71700346A1D /* PerfectWeekUITests.swift */; };
+		4F2EB1D61E772F3200677A3C /* AddGoalTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2EB1D51E772F3100677A3C /* AddGoalTypeViewController.swift */; };
+		4F2EB1DA1E787EA500677A3C /* Stepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2EB1D91E787EA500677A3C /* Stepper.swift */; };
+		4F2EB1DC1E78CDF600677A3C /* AddGoalDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2EB1DB1E78CDF600677A3C /* AddGoalDataSource.swift */; };
+		4F2EB1DE1E78D23D00677A3C /* AddGoalTypeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2EB1DD1E78D23D00677A3C /* AddGoalTypeViewModel.swift */; };
 		4FA6DD511E6B3D5300547D33 /* Goal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA6DD501E6B3D5300547D33 /* Goal.swift */; };
 		4FA6DD581E6B4E2400547D33 /* GoalsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA6DD571E6B4E2400547D33 /* GoalsViewController.swift */; };
 		4FA6DD5C1E6B563800547D33 /* GoalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA6DD5B1E6B563800547D33 /* GoalCollectionViewCell.swift */; };
@@ -52,6 +56,10 @@
 		4F1147E91E58F71700346A1D /* PerfectWeekUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PerfectWeekUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F1147ED1E58F71700346A1D /* PerfectWeekUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerfectWeekUITests.swift; sourceTree = "<group>"; };
 		4F1147EF1E58F71700346A1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4F2EB1D51E772F3100677A3C /* AddGoalTypeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddGoalTypeViewController.swift; sourceTree = "<group>"; };
+		4F2EB1D91E787EA500677A3C /* Stepper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stepper.swift; sourceTree = "<group>"; };
+		4F2EB1DB1E78CDF600677A3C /* AddGoalDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddGoalDataSource.swift; sourceTree = "<group>"; };
+		4F2EB1DD1E78D23D00677A3C /* AddGoalTypeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddGoalTypeViewModel.swift; sourceTree = "<group>"; };
 		4FA6DD501E6B3D5300547D33 /* Goal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Goal.swift; sourceTree = "<group>"; };
 		4FA6DD571E6B4E2400547D33 /* GoalsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalsViewController.swift; sourceTree = "<group>"; };
 		4FA6DD5B1E6B563800547D33 /* GoalCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -120,7 +128,11 @@
 				4FA6DD5B1E6B563800547D33 /* GoalCollectionViewCell.swift */,
 				4FDFD0FE1E6CBEB600D33353 /* AddGoalNameViewController.swift */,
 				4FDFD1001E6D30AC00D33353 /* AddGoalNameViewModel.swift */,
+				4F2EB1D51E772F3100677A3C /* AddGoalTypeViewController.swift */,
+				4F2EB1DD1E78D23D00677A3C /* AddGoalTypeViewModel.swift */,
+				4F2EB1DB1E78CDF600677A3C /* AddGoalDataSource.swift */,
 				4FA6DD501E6B3D5300547D33 /* Goal.swift */,
+				4F2EB1D91E787EA500677A3C /* Stepper.swift */,
 				4FA6DD5F1E6B7C5A00547D33 /* RealmLibrary.swift */,
 				4F1147D41E58F71700346A1D /* Assets.xcassets */,
 				4F1147D61E58F71700346A1D /* LaunchScreen.storyboard */,
@@ -339,6 +351,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F2EB1DC1E78CDF600677A3C /* AddGoalDataSource.swift in Sources */,
 				4FDFD0FF1E6CBEB600D33353 /* AddGoalNameViewController.swift in Sources */,
 				4FA6DD581E6B4E2400547D33 /* GoalsViewController.swift in Sources */,
 				4FA6DD5E1E6B79DE00547D33 /* GoalsViewModel.swift in Sources */,
@@ -346,7 +359,10 @@
 				4FA6DD601E6B7C5A00547D33 /* RealmLibrary.swift in Sources */,
 				4FA6DD511E6B3D5300547D33 /* Goal.swift in Sources */,
 				4FDFD1011E6D30AC00D33353 /* AddGoalNameViewModel.swift in Sources */,
+				4F2EB1DA1E787EA500677A3C /* Stepper.swift in Sources */,
 				4F1147CE1E58F71700346A1D /* AppDelegate.swift in Sources */,
+				4F2EB1D61E772F3200677A3C /* AddGoalTypeViewController.swift in Sources */,
+				4F2EB1DE1E78D23D00677A3C /* AddGoalTypeViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -490,6 +506,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 7ZE54HDXZR;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SRCROOT)/Carthage/Build/iOS",
@@ -508,6 +525,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 7ZE54HDXZR;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SRCROOT)/Carthage/Build/iOS",

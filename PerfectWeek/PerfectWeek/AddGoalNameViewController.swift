@@ -10,11 +10,11 @@ import UIKit
 
 class AddGoalNameViewController: UIViewController {
 
-	var dataSource: AddGoalNameViewModel
+	var viewModel: AddGoalNameViewModel
 	let nextButton = UIButton()
 
 	init() {
-		self.dataSource = AddGoalNameViewModel()
+		self.viewModel = AddGoalNameViewModel()
 		super.init(nibName: nil, bundle: nil)
 		self.view.backgroundColor = .white
 	}
@@ -51,7 +51,6 @@ class AddGoalNameViewController: UIViewController {
 	fileprivate func setupNameTextField() {
 		let nameTextField = UITextField()
 		nameTextField.delegate = self
-		nameTextField.tag = 1
 		nameTextField.borderStyle = .line
 		view.addSubview(nameTextField)
 
@@ -79,17 +78,15 @@ class AddGoalNameViewController: UIViewController {
 
 	// MARK: - Navigation
 	func next(_ sender: UIButton) {
-		dataSource.setGoalName()
-		dismiss(animated: true, completion: nil)
+		let addGoalTypeVC = AddGoalTypeViewController(viewModel.dataSource)
+		navigationController?.pushViewController(addGoalTypeVC, animated: true)
 	}
 }
 
 extension AddGoalNameViewController: UITextFieldDelegate {
 
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-		guard textField.tag == 1 else { return resignFirstResponder() }
-
-		if dataSource.validateGoalName(goalName: textField.text) {
+		if viewModel.dataSource.setGoalName(goalName: textField.text) {
 			nextButton.isEnabled = true
 		} else {
 			nextButton.isEnabled = false
