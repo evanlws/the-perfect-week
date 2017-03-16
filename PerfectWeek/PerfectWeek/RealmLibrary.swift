@@ -30,20 +30,26 @@ class RealmLibrary {
 	fileprivate func updateGoals() {
 		let fetchedGoals = goals
 		fetchedGoals.forEach {
-			if $0.weekEnd < Date().nextSunday() {
-				let updatedGoal = Goal()
-				updatedGoal.objectId = $0.objectId
-				updatedGoal.name = $0.name
-				updatedGoal.weekEnd = Date().nextSunday().addingTimeInterval(1)
-				updatedGoal.isCompleted = false
+			var goalUpdateValues: [String: Any] = ["id": $0.objectId]
+			var frequencyUpdateValues: [String: Any] = ["id": $0.frequency!.objectId]
 
-				do {
-					try realm.write {
-						realm.add(updatedGoal, update: true)
-					}
-				} catch let error {
-					print("Error \(error)")
+			if $0.weekEnd < Date().nextSunday() {
+				goalUpdateValues["weekEnd"] = Date().nextSunday().addingTimeInterval(1)
+				goalUpdateValues["isCompleted"] = false
+				frequencyUpdateValues["weeklyProgress"] = 0
+			}
+
+			if $0.isCompleted, $0.frequency!.weeklyProgress < $0.frequency!.timesPerWeek {
+				goalUpdateValues["isCompleted"] = false
+			}
+
+			do {
+				try realm.write {
+					realm.create(Goal.self, value: goalUpdateValues, update: true)
+					realm.create(Frequency.self, value: frequencyUpdateValues, update: true)
 				}
+			} catch let error {
+				print("Could not update goals \(error.localizedDescription)")
 			}
 		}
 	}
@@ -66,24 +72,42 @@ class RealmLibrary {
 	}
 
 	@discardableResult func complete(_ goal: Goal) -> Bool {
-		do {
-			try realm.write {
-				goal.isCompleted = true
-				print("Successfully completed goal \(goal.name)")
+		guard let frequency = goal.frequency else { fatalError("Frequency is nil") }
+		if goal.isCompleted == true { return false }
+
+		if frequency.weeklyProgress == frequency.timesPerWeek - 1 {
+			do {
+				try realm.write {
+					goal.frequency?.weeklyProgress = frequency.timesPerWeek
+					goal.isCompleted = true
+					print("Successfully completed goal \(goal.name)")
+				}
+			} catch let error {
+				print("Error completing goal: \(error)")
+				return false
 			}
-		} catch let error {
-			print("Error completing goal: \(error)")
-			return false
+		} else {
+			do {
+				try realm.write {
+					goal.isCompleted = true
+					goal.frequency?.weeklyProgress = frequency.timesPerWeek + 1
+				}
+			} catch let error {
+				print("Error completing goal: \(error)")
+				return false
+			}
 		}
 		return true
 	}
 }
 
 extension Date {
+
 	func nextSunday() -> Date {
 		guard let nextWeek = Calendar.current.date(byAdding: .day, value: 7, to: self) else { fatalError() }
 		guard let sunday = Calendar.current.date(bySetting: .weekday, value: 1, of: nextWeek) else { fatalError() }
 		let cal = Calendar(identifier: .gregorian)
 		return cal.startOfDay(for: sunday)
 	}
+
 }

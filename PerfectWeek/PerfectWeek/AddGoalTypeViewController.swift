@@ -122,7 +122,7 @@ class AddGoalTypeViewController: UIViewController {
 
 	// MARK: - Navigation
 	func next(_ sender: UIButton) {
-		viewModel.dataSource.setGoalTimesPerWeek(timesPerWeek: Int(timesPerWeekStepper.numberLabel.text!)!)
+		viewModel.dataSource.setGoalTimesPerWeek(timesPerWeek: timesPerWeekStepper.counter)
 		viewModel.dataSource.saveGoal()
 		dismiss(animated: true, completion: nil)
 	}

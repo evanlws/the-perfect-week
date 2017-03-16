@@ -15,6 +15,18 @@ class Goal: Object {
 	dynamic var name: String = ""
 	dynamic var isCompleted: Bool = false
 	dynamic var weekEnd: Date = Date().nextSunday().addingTimeInterval(1)
+	dynamic var frequency: Frequency?
+
+	override static func primaryKey() -> String? {
+		return "objectId"
+	}
+
+}
+
+class Frequency: Object {
+
+	dynamic var objectId: String = ""
+	dynamic var type: Int = 0
 	dynamic var timesPerWeek: Int = 1
 	dynamic var weeklyProgress: Int = 1
 

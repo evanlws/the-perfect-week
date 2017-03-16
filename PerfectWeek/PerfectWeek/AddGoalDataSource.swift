@@ -29,8 +29,14 @@ class AddGoalDataSource {
 		}
 	}
 
-	func setGoalTimesPerWeek(timesPerWeek: Int) {
-		goal.timesPerWeek = timesPerWeek
+	func setGoalTimesPerWeek(timesPerWeek: UInt) {
+		if goal.frequency == nil {
+			let frequency = Frequency()
+			frequency.objectId = UUID().uuidString
+			goal.frequency = frequency
+		}
+
+		goal.frequency?.timesPerWeek = Int(timesPerWeek)
 	}
 
 	func saveGoal() {

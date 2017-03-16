@@ -10,8 +10,8 @@ import UIKit
 
 class Stepper: UIView {
 
-	let numberLabel = UILabel()
-	fileprivate var stepCounter: UInt = 1
+	var counter: UInt = 1
+	fileprivate let numberLabel = UILabel()
 
 	init() {
 		super.init(frame: .zero)
@@ -20,7 +20,7 @@ class Stepper: UIView {
 	}
 
 	fileprivate func setupStackViews() {
-		numberLabel.text = String(stepCounter)
+		numberLabel.text = String(counter)
 		numberLabel.font = UIFont.systemFont(ofSize: 28)
 		numberLabel.textColor = .white
 		numberLabel.backgroundColor = .orange
@@ -57,17 +57,17 @@ class Stepper: UIView {
 	}
 
 	func increment() {
-		if stepCounter != 99 {
-			stepCounter += 1
+		if counter != 99 {
+			counter += 1
 		}
-		numberLabel.text = String(stepCounter)
+		numberLabel.text = String(counter)
 	}
 
 	func decrement() {
-		if stepCounter != 0 {
-			stepCounter -= 1
+		if counter != 0 {
+			counter -= 1
 		}
-		numberLabel.text = String(stepCounter)
+		numberLabel.text = String(counter)
 	}
 
 	required init?(coder aDecoder: NSCoder) {
