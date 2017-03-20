@@ -10,7 +10,7 @@ import UIKit
 
 class Stepper: UIView {
 
-	var counter: UInt = 1
+	var counter: Int = 1
 	fileprivate let numberLabel = UILabel()
 
 	init() {

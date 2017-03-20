@@ -7,50 +7,61 @@
 //
 
 import Foundation
-import RealmSwift
+
+struct MutableGoal {
+	var name: String?
+	var objectId: String?
+	var frequency: Frequency?
+
+}
 
 class AddGoalDataSource {
 
-	fileprivate let goal = Goal()
-	fileprivate let library = RealmLibrary.sharedLibrary
+	fileprivate var mutableGoal = MutableGoal()
+	fileprivate let library = GoalLibrary.sharedLibrary
 
-	init() {
-		goal.isCompleted = false
-		goal.objectId = UUID().uuidString
-	}
-
-	func setGoalName(goalName: String?) -> Bool {
+	// MARK: - Validation
+	func isValid(_ goalName: String?) -> Bool {
 		if let goalName = goalName, !goalName.isEmpty, !goalName.isBlank {
-			goal.name = goalName
+			mutableGoal.name = goalName
 			return true
 		} else {
-			goal.name = ""
 			return false
 		}
 	}
 
-	func setGoalTimesPerWeek(timesPerWeek: UInt) {
-		if goal.frequency == nil {
-			let frequency = Frequency()
-			frequency.objectId = UUID().uuidString
-			goal.frequency = frequency
+	func isValid(_ type: Int?, timesPerNumber: Int?, onTheseDays: [Int]?, dueDate: Date?) -> Bool {
+		guard let type = type else { return false }
+		switch type {
+		case 0:
+			guard let timesPerWeek = timesPerNumber else { return false }
+			let frequency = Weekly()
+			frequency.timesPerWeek = timesPerWeek
+			mutableGoal.frequency = frequency
+		case 1:
+			guard let timesPerDay = timesPerNumber,
+				let onTheseDays = onTheseDays else { return false }
+			let frequency = Daily(days: onTheseDays, timesPerDay: timesPerDay)
+			mutableGoal.frequency = frequency
+		case 2:
+			guard let dueDate = dueDate else { return false }
+			let frequency = Once()
+			frequency.dueDate = dueDate
+			mutableGoal.frequency = frequency
+		default:
+			assertionFailure("Type is invalid")
 		}
 
-		goal.frequency?.timesPerWeek = Int(timesPerWeek)
+		mutableGoal.frequency?.type = type
+		return true
 	}
 
 	func saveGoal() {
-		if !library.add(goal) {
-			assertionFailure("Goal could not be saved")
+		mutableGoal.objectId = UUID().uuidString
+		if let name = mutableGoal.name, let objectId = mutableGoal.objectId, let frequency = mutableGoal.frequency {
+			let goal = Goal(objectId: objectId, name: name, frequency: frequency)
+			library.add(goal)
 		}
-	}
-
-}
-
-extension String {
-
-	var isBlank: Bool {
-		return self.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
 	}
 
 }

@@ -7,31 +7,68 @@
 //
 
 import Foundation
-import RealmSwift
 
-class Goal: Object {
+enum GoalType: Int {
+	case weekly, daily, once
+}
 
-	dynamic var objectId: String = ""
-	dynamic var name: String = ""
-	dynamic var isCompleted: Bool = false
-	dynamic var weekEnd: Date = Date().nextSunday().addingTimeInterval(1)
-	dynamic var frequency: Frequency?
+class Goal {
 
-	override static func primaryKey() -> String? {
-		return "objectId"
+	let objectId: String
+	var name: String
+	var isCompleted: Bool
+	var weekEnd: Date
+	var frequency: Frequency
+
+	init(objectId: String, name: String, frequency: Frequency, isCompleted: Bool = false, weekEnd: Date = Date().nextSunday().addingTimeInterval(1)) {
+		self.objectId = objectId
+		self.name = name
+		self.isCompleted = isCompleted
+		self.weekEnd = weekEnd
+		self.frequency = frequency
 	}
 
 }
 
-class Frequency: Object {
+protocol Frequency {
 
-	dynamic var objectId: String = ""
-	dynamic var type: Int = 0
-	dynamic var timesPerWeek: Int = 1
-	dynamic var weeklyProgress: Int = 1
+	var type: Int { get set }
 
-	override static func primaryKey() -> String? {
-		return "objectId"
+}
+
+class Weekly: Frequency {
+
+	var type: Int = 0
+	var timesPerWeek: Int
+	var weeklyProgress: Int = 0
+
+	init(timesPerWeek: Int = 0) {
+		self.timesPerWeek = timesPerWeek
+	}
+
+}
+
+class Daily: Frequency {
+
+	var type: Int = 1
+	var timesPerDay: Int
+	var dailyProgress: Int = 0
+	let days: [Int]
+
+	init(days: [Int], timesPerDay: Int = 0) {
+		self.days = days
+		self.timesPerDay = timesPerDay
+	}
+
+}
+
+class Once: Frequency {
+
+	var type: Int = 2
+	var dueDate: Date
+
+	init(dueDate: Date = Date().thisSaturday()) {
+		self.dueDate = dueDate
 	}
 
 }

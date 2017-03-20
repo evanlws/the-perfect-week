@@ -8,10 +8,11 @@
 
 import UIKit
 
-class AddGoalNameViewController: UIViewController {
+final class AddGoalNameViewController: UIViewController {
 
-	var viewModel: AddGoalNameViewModel
-	let nextButton = UIButton()
+	fileprivate var viewModel: AddGoalNameViewModel
+	fileprivate let nextButton = UIButton()
+	fileprivate var goalName: String?
 
 	init() {
 		self.viewModel = AddGoalNameViewModel()
@@ -66,7 +67,6 @@ class AddGoalNameViewController: UIViewController {
 		nextButton.setTitle("Next", for: .normal)
 		nextButton.backgroundColor = .purple
 		nextButton.addTarget(self, action: #selector(next(_:)), for: .touchUpInside)
-		nextButton.isEnabled = false
 		view.addSubview(nextButton)
 
 		nextButton.translatesAutoresizingMaskIntoConstraints = false
@@ -78,20 +78,17 @@ class AddGoalNameViewController: UIViewController {
 
 	// MARK: - Navigation
 	func next(_ sender: UIButton) {
-		let addGoalTypeVC = AddGoalTypeViewController(viewModel.dataSource)
-		navigationController?.pushViewController(addGoalTypeVC, animated: true)
+		if viewModel.dataSource.isValid(goalName) {
+			let addGoalTypeVC = AddGoalTypeViewController(viewModel.dataSource)
+			navigationController?.pushViewController(addGoalTypeVC, animated: true)
+		}
 	}
 }
 
 extension AddGoalNameViewController: UITextFieldDelegate {
 
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-		if viewModel.dataSource.setGoalName(goalName: textField.text) {
-			nextButton.isEnabled = true
-		} else {
-			nextButton.isEnabled = false
-		}
-
+		goalName = textField.text
 		return textField.resignFirstResponder()
 	}
 

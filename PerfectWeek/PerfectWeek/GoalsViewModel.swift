@@ -7,17 +7,16 @@
 //
 
 import Foundation
-import RealmSwift
 
 class GoalsViewModel {
 
-	fileprivate let library = RealmLibrary.sharedLibrary
+	fileprivate let library = GoalLibrary.sharedLibrary
 
-	var goals: Results<Goal> {
+	var goals: [Goal] {
 		return fetchGoals()
 	}
 
-	fileprivate func fetchGoals() -> Results<Goal> {
+	fileprivate func fetchGoals() -> [Goal] {
 		return library.goals
 	}
 
