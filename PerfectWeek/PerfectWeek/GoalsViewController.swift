@@ -8,12 +8,21 @@
 
 import UIKit
 
-class GoalsViewController: UIViewController {
+class GoalsViewController: UIViewController, UIGestureRecognizerDelegate {
 
 	var dataSource: GoalsViewModel
+	let collectionView: UICollectionView
 
 	init() {
 		self.dataSource = GoalsViewModel()
+
+		let collectionViewFlowLayout = UICollectionViewFlowLayout()
+		collectionViewFlowLayout.itemSize = CGSize(width: 170, height: 125)
+		collectionViewFlowLayout.scrollDirection = .vertical
+		collectionViewFlowLayout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+		collectionViewFlowLayout.minimumInteritemSpacing = 10.0
+		self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout)
+
 		super.init(nibName: nil, bundle: nil)
 	}
 
@@ -23,17 +32,19 @@ class GoalsViewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		setupGestureRecognizer()
 		setupCollectionView()
 	}
 
-	fileprivate func setupCollectionView() {
-		let collectionViewFlowLayout = UICollectionViewFlowLayout()
-		collectionViewFlowLayout.itemSize = CGSize(width: 170, height: 125)
-		collectionViewFlowLayout.scrollDirection = .vertical
-		collectionViewFlowLayout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-		collectionViewFlowLayout.minimumInteritemSpacing = 10.0
+	fileprivate func setupGestureRecognizer() {
+		let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(completeGoal(_:)))
+		longPressGestureRecognizer.minimumPressDuration = 0.5
+		longPressGestureRecognizer.delaysTouchesBegan = true
+		longPressGestureRecognizer.delegate = self
+		collectionView.addGestureRecognizer(longPressGestureRecognizer)
+	}
 
-		let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout)
+	fileprivate func setupCollectionView() {
 		collectionView.backgroundColor = .white
 		collectionView.delegate = self
 		collectionView.dataSource = self
@@ -47,6 +58,31 @@ class GoalsViewController: UIViewController {
 		collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
 		collectionView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
 		collectionView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+	}
+
+	// MARK: - Navigation
+	func presentGoalDetailVC(_ indexPathRow: Int) {
+		let navigationController = UINavigationController(rootViewController: GoalDetailViewController(goal: dataSource.goals[indexPathRow]))
+		present(navigationController, animated: true) {
+			self.collectionView.reloadData()
+		}
+	}
+
+	func presentAddGoalVC(_ indexPathRow: Int) {
+		let navigationController = UINavigationController(rootViewController: AddGoalNameViewController())
+		present(navigationController, animated: true) {
+			self.collectionView.reloadData()
+		}
+	}
+
+	func completeGoal(_ gestureRecognizer: UILongPressGestureRecognizer) {
+		guard gestureRecognizer.state == .ended else { return }
+
+		let point = gestureRecognizer.location(in: collectionView)
+		if let indexPath = collectionView.indexPathForItem(at: point) {
+			dataSource.complete(dataSource.goals[indexPath.row])
+			collectionView.reloadData()
+		}
 	}
 
 }
@@ -82,13 +118,9 @@ extension GoalsViewController: UICollectionViewDelegate {
 
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		if indexPath.row == dataSource.goals.count {
-			let navigationController = UINavigationController(rootViewController: AddGoalNameViewController())
-			present(navigationController, animated: true) {
-				collectionView.reloadData()
-			}
+			presentAddGoalVC(indexPath.row)
 		} else {
-			dataSource.complete(dataSource.goals[indexPath.row])
-			collectionView.reloadData()
+			presentGoalDetailVC(indexPath.row)
 		}
 	}
 }

@@ -100,4 +100,8 @@ class GoalLibrary {
 		constructor.updateGoal(with: goalUpdateValues)
 		return true
 	}
+
+	func delete(_ goal: Goal) {
+		constructor.delete(goal)
+	}
 }

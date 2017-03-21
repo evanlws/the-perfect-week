@@ -87,6 +87,20 @@ class GoalConstructor {
 		}
 	}
 
+	func delete(_ goal: Goal) {
+		if let goalToDelete = realm.object(ofType: RealmGoal.self, forPrimaryKey: goal.objectId) {
+			do {
+				try realm.write {
+					realm.delete(goalToDelete)
+				}
+			} catch let error {
+				fatalError("Error deleting goal: \(error)")
+			}
+		}
+	}
+
+	// MARK: - Convert
+
 	fileprivate func converted(_ goal: Goal) -> RealmGoal {
 		let realmGoal = RealmGoal()
 		realmGoal.objectId = goal.objectId
