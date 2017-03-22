@@ -42,17 +42,30 @@ class GoalDetailViewController: UIViewController {
 		tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
 	}
 
+	// MARK: - Navigation
+	func pressentEditGoalVC() {
+		let navigationController = UINavigationController(rootViewController: EditGoalViewController())
+		present(navigationController, animated: true, completion: nil)
+	}
+
 }
 
 extension GoalDetailViewController: UITableViewDataSource {
 
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return 1
+		return 2
 	}
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: UITableViewCell.self), for: indexPath)
-		cell.textLabel?.text = "Delete Goal"
+
+		switch indexPath.row {
+		case 0:
+			cell.textLabel?.text = "Edit Goal"
+		default:
+			cell.textLabel?.text = "Delete Goal"
+		}
+
 		return cell
 	}
 
@@ -61,10 +74,14 @@ extension GoalDetailViewController: UITableViewDataSource {
 extension GoalDetailViewController: UITableViewDelegate {
 
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		guard indexPath.row == 0 else { return }
+		switch indexPath.row {
+		case 0:
+			pressentEditGoalVC()
+		default:
+			dataSource.delete(dataSource.goal)
+			dismiss(animated: true, completion: nil)
+		}
 
-		dataSource.delete(dataSource.goal)
-		dismiss(animated: true, completion: nil)
 	}
 
 }
