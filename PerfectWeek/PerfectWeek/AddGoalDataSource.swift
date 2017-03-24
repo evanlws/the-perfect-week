@@ -8,16 +8,9 @@
 
 import Foundation
 
-struct MutableGoal {
-	var name: String?
-	var objectId: String?
-	var frequency: Frequency?
-
-}
-
 class AddGoalDataSource {
 
-	fileprivate var mutableGoal = MutableGoal()
+	fileprivate var mutableGoal = MutableGoal(objectId: UUID().uuidString)
 	fileprivate let library = GoalLibrary.sharedLibrary
 
 	// MARK: - Validation
@@ -30,26 +23,24 @@ class AddGoalDataSource {
 		}
 	}
 
-	func isValid(_ type: Int?, timesPerNumber: Int?, onTheseDays: [Int]?, dueDate: Date?) -> Bool {
+	func isValid(_ type: GoalType?, timesPerNumber: Int?, onTheseDays: [Int]?, dueDate: Date?) -> Bool {
 		guard let type = type else { return false }
 		switch type {
-		case 0:
+		case .weekly:
 			guard let timesPerWeek = timesPerNumber else { return false }
 			let frequency = Weekly()
 			frequency.timesPerWeek = timesPerWeek
 			mutableGoal.frequency = frequency
-		case 1:
+		case .daily:
 			guard let timesPerDay = timesPerNumber,
 				let onTheseDays = onTheseDays else { return false }
 			let frequency = Daily(days: onTheseDays, timesPerDay: timesPerDay)
 			mutableGoal.frequency = frequency
-		case 2:
+		case .once:
 			guard let dueDate = dueDate else { return false }
 			let frequency = Once()
 			frequency.dueDate = dueDate
 			mutableGoal.frequency = frequency
-		default:
-			assertionFailure("Type is invalid")
 		}
 
 		mutableGoal.frequency?.type = type
@@ -57,9 +48,8 @@ class AddGoalDataSource {
 	}
 
 	func saveGoal() {
-		mutableGoal.objectId = UUID().uuidString
-		if let name = mutableGoal.name, let objectId = mutableGoal.objectId, let frequency = mutableGoal.frequency {
-			let goal = Goal(objectId: objectId, name: name, frequency: frequency)
+		if let name = mutableGoal.name, let frequency = mutableGoal.frequency {
+			let goal = Goal(objectId: mutableGoal.objectId, name: name, frequency: frequency)
 			library.add(goal)
 		}
 	}

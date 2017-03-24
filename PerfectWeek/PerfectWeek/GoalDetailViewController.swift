@@ -44,7 +44,9 @@ class GoalDetailViewController: UIViewController {
 
 	// MARK: - Navigation
 	func pressentEditGoalVC() {
-		let navigationController = UINavigationController(rootViewController: EditGoalViewController())
+		let editGoalDataSource = EditGoalDataSource(goal: self.dataSource.goal)
+		let editGoalViewController = EditGoalViewController(dataSource: editGoalDataSource)
+		let navigationController = UINavigationController(rootViewController: editGoalViewController)
 		present(navigationController, animated: true, completion: nil)
 	}
 

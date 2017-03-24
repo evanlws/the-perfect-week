@@ -107,26 +107,24 @@ class GoalConstructor {
 		realmGoal.name = goal.name
 		realmGoal.isCompleted = goal.isCompleted
 		realmGoal.weekEnd = goal.weekEnd
-		realmGoal.frequencyType = goal.frequency.type
+		realmGoal.frequencyType = goal.frequency.type.rawValue
 
 		switch goal.frequency.type {
-		case GoalType.weekly.rawValue:
+		case .weekly:
 			if let weekly = goal.frequency as? Weekly {
 				realmGoal.timesPerWeek = RealmOptional(weekly.timesPerWeek)
 				realmGoal.weeklyProgress = RealmOptional(weekly.weeklyProgress)
 			}
-		case GoalType.daily.rawValue:
+		case .daily:
 			if let daily = goal.frequency as? Daily {
 				realmGoal.timesPerDay = RealmOptional(daily.timesPerDay)
 				realmGoal.dailyProgress = RealmOptional(daily.dailyProgress)
 				realmGoal.days = converted(daily.days)
 			}
-		case GoalType.once.rawValue:
+		case .once:
 			if let once = goal.frequency as? Once {
 				realmGoal.dueDate = once.dueDate as NSDate
 			}
-		default:
-			fatalError("Goal type is invalid")
 		}
 
 		return realmGoal

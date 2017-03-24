@@ -35,16 +35,35 @@ class EditGoalViewController: UIViewController {
 	fileprivate let dueDateTextField = UITextField()
 	fileprivate let dueDatePicker = UIDatePicker()
 
-	init() {
-		self.viewModel = EditGoalViewModel()
+	init(dataSource: EditGoalDataSource) {
+		self.viewModel = EditGoalViewModel(dataSource)
+		goalType = dataSource.mutableGoal.frequency?.type ?? .weekly
 		super.init(nibName: nil, bundle: nil)
 		self.view.backgroundColor = .white
 	}
-	
+
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
 
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		self.title = "Add A Goal"
+		setupNameLabel()
+		setupNameTextField()
+		setupGoalTypeLabel()
+		setupGoalTextField()
+		setupTimesPerWeekLabel()
+		setupTimesPerWeekView()
+		setupSaveButton()
+		setupDueDateLabel()
+		setupGoalTextField()
+		goalTypeDidChange()
+
+		populateGoalData()
+	}
+
+	// MARK: - Setup
 	fileprivate func setupNameLabel() {
 		nameLabel.text = "Enter a name for your goal"
 		nameLabel.font = UIFont.systemFont(ofSize: 21)
@@ -229,6 +248,20 @@ class EditGoalViewController: UIViewController {
 		dueDateTextField.topAnchor.constraint(equalTo: dueDateLabel.bottomAnchor, constant: 15).isActive = true
 	}
 
+	fileprivate func setupSaveButton() {
+		let nextButton = UIButton()
+		nextButton.setTitle("Save", for: .normal)
+		nextButton.backgroundColor = .purple
+		nextButton.addTarget(self, action: #selector(save(_:)), for: .touchUpInside)
+		view.addSubview(nextButton)
+
+		nextButton.translatesAutoresizingMaskIntoConstraints = false
+		nextButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+		nextButton.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -30).isActive = true
+		nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+		nextButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50).isActive = true
+	}
+
 	fileprivate func goalTypeDidChange() {
 		onTheseDaysLabel.removeFromSuperview()
 		timesPerWeekLabel.removeFromSuperview()
@@ -258,6 +291,35 @@ class EditGoalViewController: UIViewController {
 			setupDueDateLabel()
 			setupDueDateTextField()
 		}
+	}
+
+	private func populateGoalData() {
+		let goal = viewModel.dataSource.mutableGoal
+
+		nameTextField.text = goal.name
+		goalTypeTextField.text = goal.frequency?.type.description
+
+		if let weekly = goal.frequency as? Weekly {
+			timesPerWeekStepper.counter = weekly.timesPerWeek
+		} else if let daily = goal.frequency as? Daily {
+			timesPerWeekStepper.counter = daily.timesPerDay
+
+			sunday.tag = daily.days.contains(0) ? 2 : 1
+			monday.tag = daily.days.contains(1) ? 2 : 1
+			tuesday.tag = daily.days.contains(2) ? 2 : 1
+			wednesday.tag = daily.days.contains(3) ? 2 : 1
+			thursday.tag = daily.days.contains(4) ? 2 : 1
+			friday.tag = daily.days.contains(5) ? 2 : 1
+			saturday.tag = daily.days.contains(6) ? 2 : 1
+		} else if let once = goal.frequency as? Once {
+			if let month = Calendar.current.dateComponents([.month], from: once.dueDate).month,
+				let day = Calendar.current.dateComponents([.day], from: once.dueDate).day,
+				let year = Calendar.current.dateComponents([.year], from: once.dueDate).year,
+				goalType == .once {
+				dueDateTextField.text = "\(month)/\(day)/\(year)"
+			}
+		}
+
 	}
 
 	func toggleWeekday(_ sender: UIButton) {
@@ -293,7 +355,7 @@ class EditGoalViewController: UIViewController {
 extension EditGoalViewController: UITextFieldDelegate {
 
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-		goalName = textField.text
+		viewModel.dataSource.mutableGoal.name = textField.text
 		return textField.resignFirstResponder()
 	}
 
@@ -344,6 +406,5 @@ extension EditGoalViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 			dueDateTextField.text = "\(month)/\(day)/\(year)"
 		}
 	}
-	
-}
 
+}

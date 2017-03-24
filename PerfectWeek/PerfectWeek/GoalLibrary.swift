@@ -18,14 +18,14 @@ class GoalLibrary {
 	}
 
 	init() {
-		updateGoals()
+		checkGoalsAndUpdate()
 	}
 
 	fileprivate func fetchGoals() -> [Goal] {
 		return constructor.fetchGoals()
 	}
 
-	fileprivate func updateGoals() {
+	fileprivate func checkGoalsAndUpdate() {
 		let fetchedGoals = goals
 		fetchedGoals.forEach {
 			var goalUpdateValues: [String: Any] = ["objectId": $0.objectId]
@@ -38,7 +38,7 @@ class GoalLibrary {
 			}
 
 			switch $0.frequency.type {
-			case 0:
+			case .weekly:
 				guard let weekly = $0.frequency as? Weekly else { fatalError("Frequency could not be casted") }
 				if $0.isCompleted, weekly.weeklyProgress < weekly.timesPerWeek {
 					goalUpdateValues["isCompleted"] = false
@@ -47,7 +47,7 @@ class GoalLibrary {
 				if shouldResetFrequency {
 					goalUpdateValues["weeklyProgress"] = 0
 				}
-			case 1:
+			case .daily:
 				guard let daily = $0.frequency as? Daily else { fatalError("Frequency could not be casted") }
 
 				if $0.isCompleted, daily.dailyProgress < daily.timesPerDay {
@@ -60,7 +60,7 @@ class GoalLibrary {
 				if shouldResetFrequency {
 					goalUpdateValues["dailyProgress"] = 0
 				}
-			default:
+			case .once:
 				guard let once = $0.frequency as? Once else { fatalError("Frequency could not be casted") }
 
 				if ($0.isCompleted && shouldResetFrequency) || (!$0.isCompleted && once.dueDate < Date()) {
@@ -81,18 +81,18 @@ class GoalLibrary {
 		var goalUpdateValues: [String: Any] = ["objectId": goal.objectId]
 
 		switch goal.frequency.type {
-		case 0:
+		case .weekly:
 			guard let weekly = goal.frequency as? Weekly else { fatalError("Frequency could not be casted") }
 			goalUpdateValues["isCompleted"] = true
 			goalUpdateValues["weeklyProgress"] = weekly.weeklyProgress + 1
-		case 1:
+		case .daily:
 			guard let daily = goal.frequency as? Daily else { fatalError("Frequency could not be casted") }
 			if daily.timesPerDay == daily.dailyProgress {
 				goalUpdateValues["isCompleted"] = true
 			}
 
 			goalUpdateValues["dailyProgress"] = daily.timesPerDay + 1
-		default:
+		case .once:
 			guard let _ = goal.frequency as? Once else { fatalError("Frequency could not be casted") }
 			goalUpdateValues["isCompleted"] = true
 		}
@@ -103,5 +103,9 @@ class GoalLibrary {
 
 	func delete(_ goal: Goal) {
 		constructor.delete(goal)
+	}
+
+	func updateGoal(with values: [String: Any]) {
+		constructor.updateGoal(with: values)
 	}
 }

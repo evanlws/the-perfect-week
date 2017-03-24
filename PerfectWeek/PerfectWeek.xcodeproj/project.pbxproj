@@ -28,6 +28,7 @@
 		4FA6DD5C1E6B563800547D33 /* GoalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA6DD5B1E6B563800547D33 /* GoalCollectionViewCell.swift */; };
 		4FA6DD5E1E6B79DE00547D33 /* GoalsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA6DD5D1E6B79DE00547D33 /* GoalsViewModel.swift */; };
 		4FA6DD601E6B7C5A00547D33 /* GoalLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA6DD5F1E6B7C5A00547D33 /* GoalLibrary.swift */; };
+		4FAF09E51E837039004721AC /* EditGoalDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FAF09E41E837039004721AC /* EditGoalDataSource.swift */; };
 		4FDFD0FF1E6CBEB600D33353 /* AddGoalNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDFD0FE1E6CBEB600D33353 /* AddGoalNameViewController.swift */; };
 		4FDFD1011E6D30AC00D33353 /* AddGoalNameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDFD1001E6D30AC00D33353 /* AddGoalNameViewModel.swift */; };
 		4FDFD1031E6E4E9F00D33353 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FDFD1021E6E4E9F00D33353 /* Realm.framework */; };
@@ -79,6 +80,7 @@
 		4FA6DD5B1E6B563800547D33 /* GoalCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalCollectionViewCell.swift; sourceTree = "<group>"; };
 		4FA6DD5D1E6B79DE00547D33 /* GoalsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalsViewModel.swift; sourceTree = "<group>"; };
 		4FA6DD5F1E6B7C5A00547D33 /* GoalLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalLibrary.swift; sourceTree = "<group>"; };
+		4FAF09E41E837039004721AC /* EditGoalDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditGoalDataSource.swift; sourceTree = "<group>"; };
 		4FDFD0FE1E6CBEB600D33353 /* AddGoalNameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddGoalNameViewController.swift; sourceTree = "<group>"; };
 		4FDFD1001E6D30AC00D33353 /* AddGoalNameViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddGoalNameViewModel.swift; sourceTree = "<group>"; };
 		4FDFD1021E6E4E9F00D33353 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = Carthage/Build/iOS/Realm.framework; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 				4F2EB1E71E80C96C00677A3C /* GoalDetailViewModel.swift */,
 				4F2EB1E91E822BD300677A3C /* EditGoalViewController.swift */,
 				4F2EB1EB1E822D3800677A3C /* EditGoalViewModel.swift */,
+				4FAF09E41E837039004721AC /* EditGoalDataSource.swift */,
 				4FDFD0FE1E6CBEB600D33353 /* AddGoalNameViewController.swift */,
 				4FDFD1001E6D30AC00D33353 /* AddGoalNameViewModel.swift */,
 				4F2EB1D51E772F3100677A3C /* AddGoalTypeViewController.swift */,
@@ -383,6 +386,7 @@
 				4F2EB1E41E7EF39800677A3C /* GoalConstructor.swift in Sources */,
 				4FA6DD511E6B3D5300547D33 /* Goal.swift in Sources */,
 				4FDFD1011E6D30AC00D33353 /* AddGoalNameViewModel.swift in Sources */,
+				4FAF09E51E837039004721AC /* EditGoalDataSource.swift in Sources */,
 				4F2EB1E21E7EF38E00677A3C /* RealmGoal.swift in Sources */,
 				4F2EB1E01E7DEE8900677A3C /* Extensions.swift in Sources */,
 				4F2EB1DA1E787EA500677A3C /* Stepper.swift in Sources */,

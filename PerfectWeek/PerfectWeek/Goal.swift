@@ -8,8 +8,16 @@
 
 import Foundation
 
-enum GoalType: Int {
+enum GoalType: Int, CustomStringConvertible {
 	case weekly, daily, once
+
+	var description: String {
+		switch self {
+		case .weekly: return "Weekly"
+		case .daily: return "Daily"
+		case .once: return "Once"
+		}
+	}
 }
 
 class Goal {
@@ -32,13 +40,13 @@ class Goal {
 
 protocol Frequency {
 
-	var type: Int { get set }
+	var type: GoalType { get set }
 
 }
 
 class Weekly: Frequency {
 
-	var type: Int = 0
+	var type: GoalType = .weekly
 	var timesPerWeek: Int
 	var weeklyProgress: Int = 0
 
@@ -50,7 +58,7 @@ class Weekly: Frequency {
 
 class Daily: Frequency {
 
-	var type: Int = 1
+	var type: GoalType = .daily
 	var timesPerDay: Int
 	var dailyProgress: Int = 0
 	let days: [Int]
@@ -64,11 +72,90 @@ class Daily: Frequency {
 
 class Once: Frequency {
 
-	var type: Int = 2
+	var type: GoalType = .once
 	var dueDate: Date
 
 	init(dueDate: Date = Date().thisSaturday()) {
 		self.dueDate = dueDate
+	}
+
+}
+
+struct MutableGoal {
+
+	var updateValues: [String: Any]
+	let objectId: String
+
+	var name: String? {
+		didSet {
+			if name != oldValue {
+				print("Updating name")
+				updateValues["name"] = name
+			}
+		}
+	}
+
+	var frequencyType: String? {
+		didSet {
+			if frequencyType != oldValue {
+				updateValues["frequencyType"] = frequencyType
+			}
+		}
+	}
+
+	var timesPerWeek: Int? {
+		didSet {
+			if timesPerWeek != oldValue {
+				updateValues["timesPerWeek"] = timesPerWeek
+			}
+		}
+	}
+
+	var weeklyProgress: Int? {
+		didSet {
+			if weeklyProgress != oldValue {
+				updateValues["weeklyProgress"] = weeklyProgress
+			}
+		}
+	}
+
+	var timesPerDay: Int? {
+		didSet {
+			if timesPerDay != oldValue {
+				updateValues["weeklyProgress"] = timesPerDay
+			}
+		}
+	}
+
+	var dailyProgress: Int? {
+		didSet {
+			if dailyProgress != oldValue {
+				updateValues["dailyProgress"] = dailyProgress
+			}
+		}
+	}
+
+	var days: [Int]? {
+		didSet {
+			if days ?? [Int]() != oldValue ?? [Int]() {
+				updateValues["days"] = days
+			}
+		}
+	}
+
+	var dueDate: Date? {
+		didSet {
+			if dueDate != oldValue {
+				updateValues["dueDate"] = dueDate
+			}
+		}
+	}
+
+	var frequency: Frequency?
+
+	init(objectId: String) {
+		self.objectId = objectId
+		self.updateValues = ["objectId": objectId]
 	}
 
 }

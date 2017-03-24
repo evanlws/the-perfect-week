@@ -276,7 +276,7 @@ final class AddGoalTypeViewController: UIViewController {
 	// MARK: - Navigation
 	func next(_ sender: UIButton) {
 		if viewModel.dataSource.isValid(
-			goalType.rawValue,
+			goalType,
 			timesPerNumber:
 			timesPerWeekStepper.counter,
 			onTheseDays: filteredWeekdays(),

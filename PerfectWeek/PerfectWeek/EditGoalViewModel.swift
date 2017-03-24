@@ -9,5 +9,11 @@
 import Foundation
 
 class EditGoalViewModel {
-	
+
+	let dataSource: EditGoalDataSource
+
+	init(_ dataSource: EditGoalDataSource) {
+		self.dataSource = dataSource
+	}
+
 }
