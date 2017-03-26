@@ -17,11 +17,13 @@ final class AddGoalTypeViewController: UIViewController {
 	}
 
 	fileprivate var viewModel: AddGoalTypeViewModel
-	fileprivate let goalTypeLabel = UILabel()
-	fileprivate let goalTypeTextField = UITextField()
-	fileprivate let timesPerWeekLabel = UILabel()
+	fileprivate let goalTypeLabel = Label(style: .body)
+	fileprivate let timesPerWeekLabel = Label(style: .body)
 	fileprivate let timesPerWeekStepper = Stepper()
-	fileprivate let onTheseDaysLabel = UILabel()
+	fileprivate let onTheseDaysLabel = Label(style: .body)
+	fileprivate let dueDateLabel = Label(style: .body)
+
+	fileprivate let goalTypeTextField = UITextField()
 	fileprivate let sunday = UIButton()
 	fileprivate let monday = UIButton()
 	fileprivate let tuesday = UIButton()
@@ -29,7 +31,6 @@ final class AddGoalTypeViewController: UIViewController {
 	fileprivate let thursday = UIButton()
 	fileprivate let friday = UIButton()
 	fileprivate let saturday = UIButton()
-	fileprivate let dueDateLabel = UILabel()
 	fileprivate let dueDateTextField = UITextField()
 	fileprivate let dueDatePicker = UIDatePicker()
 
@@ -60,10 +61,6 @@ final class AddGoalTypeViewController: UIViewController {
 	// MARK: - Setup
 	fileprivate func setupGoalTypeLabel() {
 		goalTypeLabel.text = "Goal Type:"
-		goalTypeLabel.font = UIFont.systemFont(ofSize: 18)
-		goalTypeLabel.minimumScaleFactor = 0.6
-		goalTypeLabel.textColor = .black
-		goalTypeLabel.textAlignment = .left
 		view.addSubview(goalTypeLabel)
 
 		goalTypeLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -104,10 +101,6 @@ final class AddGoalTypeViewController: UIViewController {
 
 	fileprivate func setupTimesPerWeekLabel() {
 		timesPerWeekLabel.text = "Times per week:"
-		timesPerWeekLabel.font = UIFont.systemFont(ofSize: 18)
-		timesPerWeekLabel.minimumScaleFactor = 0.6
-		timesPerWeekLabel.textColor = .black
-		timesPerWeekLabel.textAlignment = .left
 		view.addSubview(timesPerWeekLabel)
 
 		timesPerWeekLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -129,10 +122,6 @@ final class AddGoalTypeViewController: UIViewController {
 
 	fileprivate func setupOnTheseDaysLabel() {
 		onTheseDaysLabel.text = "On these days:"
-		onTheseDaysLabel.font = UIFont.systemFont(ofSize: 18)
-		onTheseDaysLabel.minimumScaleFactor = 0.6
-		onTheseDaysLabel.textColor = .black
-		onTheseDaysLabel.textAlignment = .left
 		view.addSubview(onTheseDaysLabel)
 
 		onTheseDaysLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -173,10 +162,6 @@ final class AddGoalTypeViewController: UIViewController {
 
 	fileprivate func setupDueDateLabel() {
 		dueDateLabel.text = "Due Date:"
-		dueDateLabel.font = UIFont.systemFont(ofSize: 18)
-		dueDateLabel.minimumScaleFactor = 0.6
-		dueDateLabel.textColor = .black
-		dueDateLabel.textAlignment = .left
 		view.addSubview(dueDateLabel)
 
 		dueDateLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -273,7 +258,11 @@ final class AddGoalTypeViewController: UIViewController {
 		return weekdays.filter { $0.tag == 2 }.map { weekdays.index(of: $0)! }
 	}
 
-	// MARK: - Navigation
+}
+
+// MARK: - Navigation
+extension AddGoalTypeViewController {
+
 	func next(_ sender: UIButton) {
 		if viewModel.dataSource.isValid(
 			goalType,
@@ -330,7 +319,7 @@ extension AddGoalTypeViewController: UIPickerViewDelegate, UIPickerViewDataSourc
 			let day = Calendar.current.dateComponents([.day], from: dueDatePicker.date).day,
 			let year = Calendar.current.dateComponents([.year], from: dueDatePicker.date).year,
 			goalType == .once {
-				dueDateTextField.text = "\(month)/\(day)/\(year)"
+			dueDateTextField.text = "\(month)/\(day)/\(year)"
 		}
 	}
 

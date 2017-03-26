@@ -14,22 +14,12 @@ class EditGoalDataSource {
 	fileprivate let library = GoalLibrary.sharedLibrary
 
 	init(goal: Goal) {
-		self.mutableGoal = MutableGoal(objectId: goal.objectId)
-		self.mutableGoal.name = goal.name
+		self.mutableGoal = MutableGoal(objectId: goal.objectId, name: goal.name, type: goal.frequency.type)
 		self.mutableGoal.frequency = goal.frequency
 	}
 
 	// MARK: - Validation
-	func isValid(_ goalName: String?) -> Bool {
-		if let goalName = goalName, !goalName.isEmpty, !goalName.isBlank {
-			mutableGoal.name = goalName
-			return true
-		} else {
-			return false
-		}
-	}
-
-	func isValid(_ type: Int?, timesPerNumber: Int?, onTheseDays: [Int]?, dueDate: Date?) -> Bool {
+	func isValid(_ type: Int?, goalName: String?, timesPerNumber: Int?, onTheseDays: [Int]?, dueDate: Date?) -> Bool {
 		guard let type = type, let rawValue = GoalType(rawValue: type) else { return false }
 		switch type {
 		case 0:
@@ -55,7 +45,7 @@ class EditGoalDataSource {
 		return true
 	}
 
-	func saveGoal() {
+	func updateGoal() {
 		library.updateGoal(with: mutableGoal.updateValues)
 	}
 

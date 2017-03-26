@@ -95,7 +95,7 @@ struct MutableGoal {
 		}
 	}
 
-	var frequencyType: String? {
+	var frequencyType: GoalType? {
 		didSet {
 			if frequencyType != oldValue {
 				updateValues["frequencyType"] = frequencyType
@@ -153,8 +153,10 @@ struct MutableGoal {
 
 	var frequency: Frequency?
 
-	init(objectId: String) {
+	init(objectId: String, name: String? = nil, type: GoalType? = nil) {
 		self.objectId = objectId
+		self.name = name
+		self.frequencyType = type
 		self.updateValues = ["objectId": objectId]
 	}
 
