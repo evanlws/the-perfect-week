@@ -9,12 +9,12 @@
 import Foundation
 import RealmSwift
 
-class AddGoalNameViewModel {
+final class AddGoalNameViewModel {
 
-	let dataSource: AddGoalDataSource
+	var mutableGoal: MutableGoal
 
-	init() {
-		self.dataSource = AddGoalDataSource()
+	init(mutableGoal: MutableGoal) {
+		self.mutableGoal = mutableGoal
 	}
 
 }

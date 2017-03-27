@@ -8,7 +8,11 @@
 
 import UIKit
 
-class Stepper: UIView {
+protocol StepperDelegate: class {
+	func valueChanged(_ value: Int)
+}
+
+final class Stepper: UIView {
 
 	var counter: Int = 1 {
 		didSet {
@@ -16,7 +20,8 @@ class Stepper: UIView {
 		}
 	}
 
-	fileprivate let numberLabel = UILabel()
+	private let numberLabel = UILabel()
+	weak var delegate: StepperDelegate?
 
 	init() {
 		super.init(frame: .zero)
@@ -24,7 +29,7 @@ class Stepper: UIView {
 		setupStackViews()
 	}
 
-	fileprivate func setupStackViews() {
+	private func setupStackViews() {
 		numberLabel.text = String(counter)
 		numberLabel.font = UIFont.systemFont(ofSize: 28)
 		numberLabel.textColor = .white
@@ -64,15 +69,17 @@ class Stepper: UIView {
 	func increment() {
 		if counter != 99 {
 			counter += 1
+			numberLabel.text = String(counter)
+			delegate?.valueChanged(counter)
 		}
-		numberLabel.text = String(counter)
 	}
 
 	func decrement() {
 		if counter != 0 {
 			counter -= 1
+			numberLabel.text = String(counter)
+			delegate?.valueChanged(counter)
 		}
-		numberLabel.text = String(counter)
 	}
 
 	required init?(coder aDecoder: NSCoder) {

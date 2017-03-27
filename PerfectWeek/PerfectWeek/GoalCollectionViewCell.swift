@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GoalCollectionViewCell: UICollectionViewCell {
+final class GoalCollectionViewCell: UICollectionViewCell {
 
 	let nameLabel: UILabel = {
 		let label = UILabel()
@@ -50,7 +50,7 @@ class GoalCollectionViewCell: UICollectionViewCell {
 		fatalError("init(coder:) has not been implemented")
 	}
 
-	fileprivate func setupNameLabel() {
+	private func setupNameLabel() {
 		nameLabel.translatesAutoresizingMaskIntoConstraints = false
 		nameLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 5).isActive = true
 		nameLabel.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 5).isActive = true

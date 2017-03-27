@@ -8,14 +8,12 @@
 
 import UIKit
 
-class GoalsViewController: UIViewController, UIGestureRecognizerDelegate {
+final class GoalsViewController: UIViewController, UIGestureRecognizerDelegate {
 
-	var dataSource: GoalsViewModel
+	var viewModel: GoalsViewModel!
 	let collectionView: UICollectionView
 
 	init() {
-		self.dataSource = GoalsViewModel()
-
 		let collectionViewFlowLayout = UICollectionViewFlowLayout()
 		collectionViewFlowLayout.itemSize = CGSize(width: 170, height: 125)
 		collectionViewFlowLayout.scrollDirection = .vertical
@@ -36,7 +34,13 @@ class GoalsViewController: UIViewController, UIGestureRecognizerDelegate {
 		setupCollectionView()
 	}
 
-	fileprivate func setupGestureRecognizer() {
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		collectionView.reloadData()
+	}
+
+	// MARK: - Setup
+	private func setupGestureRecognizer() {
 		let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(completeGoal(_:)))
 		longPressGestureRecognizer.minimumPressDuration = 0.5
 		longPressGestureRecognizer.delaysTouchesBegan = true
@@ -44,7 +48,7 @@ class GoalsViewController: UIViewController, UIGestureRecognizerDelegate {
 		collectionView.addGestureRecognizer(longPressGestureRecognizer)
 	}
 
-	fileprivate func setupCollectionView() {
+	private func setupCollectionView() {
 		collectionView.backgroundColor = .white
 		collectionView.delegate = self
 		collectionView.dataSource = self
@@ -62,14 +66,15 @@ class GoalsViewController: UIViewController, UIGestureRecognizerDelegate {
 
 	// MARK: - Navigation
 	func presentGoalDetailVC(_ indexPathRow: Int) {
-		let navigationController = UINavigationController(rootViewController: GoalDetailViewController(goal: dataSource.goals[indexPathRow]))
-		present(navigationController, animated: true) {
-			self.collectionView.reloadData()
-		}
+		let goalDetailViewController = GoalDetailViewController()
+		goalDetailViewController.viewModel = GoalDetailViewModel(goal: viewModel.goals[indexPathRow])
+		navigationController?.pushViewController(goalDetailViewController, animated: true)
 	}
 
 	func presentAddGoalVC(_ indexPathRow: Int) {
-		let navigationController = UINavigationController(rootViewController: AddGoalNameViewController())
+		let addGoalNameViewController = AddGoalNameViewController()
+		addGoalNameViewController.viewModel = AddGoalNameViewModel(mutableGoal: MutableGoal(objectId: UUID().uuidString))
+		let navigationController = UINavigationController(rootViewController: addGoalNameViewController)
 		present(navigationController, animated: true) {
 			self.collectionView.reloadData()
 		}
@@ -80,7 +85,7 @@ class GoalsViewController: UIViewController, UIGestureRecognizerDelegate {
 
 		let point = gestureRecognizer.location(in: collectionView)
 		if let indexPath = collectionView.indexPathForItem(at: point) {
-			dataSource.complete(dataSource.goals[indexPath.row])
+			viewModel.complete(viewModel.goals[indexPath.row])
 			collectionView.reloadData()
 		}
 	}
@@ -90,7 +95,7 @@ class GoalsViewController: UIViewController, UIGestureRecognizerDelegate {
 extension GoalsViewController: UICollectionViewDataSource {
 
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return dataSource.goals.count + 1
+		return viewModel.goals.count + 1
 	}
 
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -101,10 +106,10 @@ extension GoalsViewController: UICollectionViewDataSource {
 			cell = GoalCollectionViewCell()
 		}
 
-		if indexPath.row == dataSource.goals.count {
+		if indexPath.row == viewModel.goals.count {
 			cell.nameLabel.text = "Add a goal"
 		} else {
-			let goal = dataSource.goals[indexPath.row]
+			let goal = viewModel.goals[indexPath.row]
 			cell.setCompletedStyle(goal.isCompleted)
 			cell.nameLabel.text = goal.name
 		}
@@ -117,7 +122,7 @@ extension GoalsViewController: UICollectionViewDataSource {
 extension GoalsViewController: UICollectionViewDelegate {
 
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		if indexPath.row == dataSource.goals.count {
+		if indexPath.row == viewModel.goals.count {
 			presentAddGoalVC(indexPath.row)
 		} else {
 			presentGoalDetailVC(indexPath.row)

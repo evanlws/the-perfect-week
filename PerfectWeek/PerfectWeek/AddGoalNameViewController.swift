@@ -10,35 +10,21 @@ import UIKit
 
 final class AddGoalNameViewController: UIViewController {
 
-	fileprivate var viewModel: AddGoalNameViewModel
-	fileprivate let nextButton = UIButton()
-	fileprivate var goalName: String?
-
-	init() {
-		self.viewModel = AddGoalNameViewModel()
-		super.init(nibName: nil, bundle: nil)
-		self.view.backgroundColor = .white
-	}
-
-	required init?(coder aDecoder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
-	}
+	var viewModel: AddGoalNameViewModel!
+	private let nextButton = UIButton()
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		self.view.backgroundColor = .white
 		self.title = "Add A Goal"
 		setupNameLabel()
 		setupNameTextField()
 		setupNextButton()
 	}
 
-	fileprivate func setupNameLabel() {
-		let nameLabel = UILabel()
+	private func setupNameLabel() {
+		let nameLabel = Label(style: .body)
 		nameLabel.text = "Enter a name for your goal"
-		nameLabel.font = UIFont.systemFont(ofSize: 21)
-		nameLabel.minimumScaleFactor = 0.6
-		nameLabel.textColor = .black
-		nameLabel.textAlignment = .center
 		view.addSubview(nameLabel)
 
 		nameLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -49,7 +35,7 @@ final class AddGoalNameViewController: UIViewController {
 		nameLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant:-height).isActive = true
 	}
 
-	fileprivate func setupNameTextField() {
+	private func setupNameTextField() {
 		let nameTextField = UITextField()
 		nameTextField.delegate = self
 		nameTextField.borderStyle = .line
@@ -63,7 +49,7 @@ final class AddGoalNameViewController: UIViewController {
 		nameTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: height).isActive = true
 	}
 
-	fileprivate func setupNextButton() {
+	private func setupNextButton() {
 		nextButton.setTitle("Next", for: .normal)
 		nextButton.backgroundColor = .purple
 		nextButton.addTarget(self, action: #selector(next(_:)), for: .touchUpInside)
@@ -77,18 +63,17 @@ final class AddGoalNameViewController: UIViewController {
 	}
 
 	// MARK: - Navigation
-	func next(_ sender: UIButton) {
-		if viewModel.dataSource.isValid(goalName) {
-			let addGoalTypeVC = AddGoalTypeViewController(viewModel.dataSource)
-			navigationController?.pushViewController(addGoalTypeVC, animated: true)
-		}
+	func next(_ nextButton: UIButton) {
+		let addGoalTypeVC = AddGoalTypeViewController()
+		addGoalTypeVC.viewModel = AddGoalTypeViewModel(mutableGoal: viewModel.mutableGoal)
+		navigationController?.pushViewController(addGoalTypeVC, animated: true)
 	}
 }
 
 extension AddGoalNameViewController: UITextFieldDelegate {
 
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-		goalName = textField.text
+		viewModel.mutableGoal.name = textField.text
 		return textField.resignFirstResponder()
 	}
 

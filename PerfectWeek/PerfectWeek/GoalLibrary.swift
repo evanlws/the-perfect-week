@@ -8,10 +8,10 @@
 
 import Foundation
 
-class GoalLibrary {
+final class GoalLibrary {
 
 	static let sharedLibrary = GoalLibrary()
-	fileprivate let constructor = GoalConstructor()
+	private let constructor = GoalConstructor()
 
 	var goals: [Goal] {
 		return fetchGoals()
@@ -21,11 +21,11 @@ class GoalLibrary {
 		checkGoalsAndUpdate()
 	}
 
-	fileprivate func fetchGoals() -> [Goal] {
+	private func fetchGoals() -> [Goal] {
 		return constructor.fetchGoals()
 	}
 
-	fileprivate func checkGoalsAndUpdate() {
+	private func checkGoalsAndUpdate() {
 		let fetchedGoals = goals
 		fetchedGoals.forEach {
 			var goalUpdateValues: [String: Any] = ["objectId": $0.objectId]

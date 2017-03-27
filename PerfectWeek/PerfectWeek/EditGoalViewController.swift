@@ -8,39 +8,41 @@
 
 import UIKit
 
-class EditGoalViewController: UIViewController {
+final class EditGoalViewController: UIViewController {
 
+	// TODO: This should be a delegate
 	fileprivate var goalType: GoalType {
 		didSet {
-			goalTypeDidChange()
+			if oldValue != goalType {
+				viewModel.mutableGoal.frequencyType = goalType
+				setupView(forType: goalType)
+			}
 		}
 	}
 
-	fileprivate var viewModel: EditGoalViewModel
-	fileprivate let nameLabel = Label(style: .body)
-	fileprivate let goalTypeLabel = Label(style: .body)
-	fileprivate let timesPerWeekLabel = Label(style: .body)
-	fileprivate let onTheseDaysLabel = Label(style: .body)
-	fileprivate let dueDateLabel = Label(style: .body)
+	var viewModel: EditGoalViewModel!
 
-	fileprivate let nameTextField = UITextField()
+	private let nameLabel = Label(style: .body)
+	private let nameTextField = UITextField()
+	private let goalTypeLabel = Label(style: .body)
 	fileprivate let goalTypeTextField = UITextField()
+	private let timesPerWeekLabel = Label(style: .body)
 	fileprivate let timesPerWeekStepper = Stepper()
-	fileprivate let sunday = UIButton()
-	fileprivate let monday = UIButton()
-	fileprivate let tuesday = UIButton()
-	fileprivate let wednesday = UIButton()
-	fileprivate let thursday = UIButton()
-	fileprivate let friday = UIButton()
-	fileprivate let saturday = UIButton()
+	private let dueDateLabel = Label(style: .body)
 	fileprivate let dueDateTextField = UITextField()
 	fileprivate let dueDatePicker = UIDatePicker()
+	private let onTheseDaysLabel = Label(style: .body)
+	private let sunday = UIButton()
+	private let monday = UIButton()
+	private let tuesday = UIButton()
+	private let wednesday = UIButton()
+	private let thursday = UIButton()
+	private let friday = UIButton()
+	private let saturday = UIButton()
 
-	init(dataSource: EditGoalDataSource) {
-		self.viewModel = EditGoalViewModel(dataSource)
-		goalType = dataSource.mutableGoal.frequency?.type ?? .weekly
+	init() {
+		self.goalType = .weekly
 		super.init(nibName: nil, bundle: nil)
-		self.view.backgroundColor = .white
 	}
 
 	required init?(coder aDecoder: NSCoder) {
@@ -49,7 +51,9 @@ class EditGoalViewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		self.title = "Add A Goal"
+		self.view.backgroundColor = .white
+		self.title = "Edit Goal"
+
 		setupNameLabel()
 		setupNameTextField()
 		setupGoalTypeLabel()
@@ -59,13 +63,14 @@ class EditGoalViewController: UIViewController {
 		setupSaveButton()
 		setupDueDateLabel()
 		setupGoalTextField()
-		goalTypeDidChange()
+
+		setupView(forType: goalType)
 
 		populateGoalData()
 	}
 
 	// MARK: - Setup
-	fileprivate func setupNameLabel() {
+	private func setupNameLabel() {
 		nameLabel.text = "Enter a name for your goal"
 		view.addSubview(nameLabel)
 
@@ -77,7 +82,7 @@ class EditGoalViewController: UIViewController {
 		nameLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 100).isActive = true
 	}
 
-	fileprivate func setupNameTextField() {
+	private func setupNameTextField() {
 		nameTextField.delegate = self
 		nameTextField.borderStyle = .line
 		view.addSubview(nameTextField)
@@ -90,7 +95,7 @@ class EditGoalViewController: UIViewController {
 		nameTextField.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10).isActive = true
 	}
 
-	fileprivate func setupGoalTypeLabel() {
+	private func setupGoalTypeLabel() {
 		goalTypeLabel.text = "Goal Type:"
 		view.addSubview(goalTypeLabel)
 
@@ -101,7 +106,7 @@ class EditGoalViewController: UIViewController {
 		goalTypeLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 15).isActive = true
 	}
 
-	fileprivate func setupGoalTextField() {
+	private func setupGoalTextField() {
 		goalTypeTextField.borderStyle = .line
 		goalTypeTextField.text = "Weekly"
 		view.addSubview(goalTypeTextField)
@@ -130,7 +135,7 @@ class EditGoalViewController: UIViewController {
 		goalTypeTextField.topAnchor.constraint(equalTo: goalTypeLabel.bottomAnchor, constant: 15).isActive = true
 	}
 
-	fileprivate func setupTimesPerWeekLabel() {
+	private func setupTimesPerWeekLabel() {
 		timesPerWeekLabel.text = "Times per week:"
 		view.addSubview(timesPerWeekLabel)
 
@@ -141,7 +146,7 @@ class EditGoalViewController: UIViewController {
 		timesPerWeekLabel.topAnchor.constraint(equalTo: goalTypeTextField.bottomAnchor, constant: 30).isActive = true
 	}
 
-	fileprivate func setupTimesPerWeekView() {
+	private func setupTimesPerWeekView() {
 		view.addSubview(timesPerWeekStepper)
 
 		timesPerWeekStepper.translatesAutoresizingMaskIntoConstraints = false
@@ -151,7 +156,7 @@ class EditGoalViewController: UIViewController {
 		timesPerWeekStepper.topAnchor.constraint(equalTo: timesPerWeekLabel.bottomAnchor, constant: 15).isActive = true
 	}
 
-	fileprivate func setupOnTheseDaysLabel() {
+	private func setupOnTheseDaysLabel() {
 		onTheseDaysLabel.text = "On these days:"
 		view.addSubview(onTheseDaysLabel)
 
@@ -162,7 +167,7 @@ class EditGoalViewController: UIViewController {
 		onTheseDaysLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
 	}
 
-	fileprivate func setupWeekDays() {
+	private func setupWeekDays() {
 		sunday.setTitle("Su", for: .normal)
 		monday.setTitle("M", for: .normal)
 		tuesday.setTitle("Tu", for: .normal)
@@ -191,7 +196,7 @@ class EditGoalViewController: UIViewController {
 		saturday.leftAnchor.constraint(equalTo: friday.rightAnchor, constant: 5).isActive = true
 	}
 
-	fileprivate func setupDueDateLabel() {
+	private func setupDueDateLabel() {
 		dueDateLabel.text = "Due Date:"
 		view.addSubview(dueDateLabel)
 
@@ -202,7 +207,7 @@ class EditGoalViewController: UIViewController {
 		dueDateLabel.topAnchor.constraint(equalTo: goalTypeTextField.bottomAnchor, constant: 30).isActive = true
 	}
 
-	fileprivate func setupDueDateTextField() {
+	private func setupDueDateTextField() {
 		dueDateTextField.borderStyle = .line
 		dueDateTextField.text = ""
 		view.addSubview(dueDateTextField)
@@ -229,7 +234,7 @@ class EditGoalViewController: UIViewController {
 		dueDateTextField.topAnchor.constraint(equalTo: dueDateLabel.bottomAnchor, constant: 15).isActive = true
 	}
 
-	fileprivate func setupSaveButton() {
+	private func setupSaveButton() {
 		let nextButton = UIButton()
 		nextButton.setTitle("Save", for: .normal)
 		nextButton.backgroundColor = .purple
@@ -243,7 +248,30 @@ class EditGoalViewController: UIViewController {
 		nextButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50).isActive = true
 	}
 
-	fileprivate func goalTypeDidChange() {
+	private func setupView(forType: GoalType) {
+		removeViews()
+
+		switch goalType {
+		case .weekly:
+			viewModel.mutableGoal.frequencyType = .weekly
+			timesPerWeekLabel.text = "Times per week:"
+			setupTimesPerWeekLabel()
+			setupTimesPerWeekView()
+		case .daily:
+			viewModel.mutableGoal.frequencyType = .daily
+			timesPerWeekLabel.text = "Times per day:"
+			setupTimesPerWeekLabel()
+			setupTimesPerWeekView()
+			setupOnTheseDaysLabel()
+			setupWeekDays()
+		case .once:
+			viewModel.mutableGoal.frequencyType = .once
+			setupDueDateLabel()
+			setupDueDateTextField()
+		}
+	}
+
+	private func removeViews() {
 		onTheseDaysLabel.removeFromSuperview()
 		timesPerWeekLabel.removeFromSuperview()
 		timesPerWeekStepper.removeFromSuperview()
@@ -256,26 +284,10 @@ class EditGoalViewController: UIViewController {
 		saturday.removeFromSuperview()
 		dueDateLabel.removeFromSuperview()
 		dueDateTextField.removeFromSuperview()
-
-		switch goalType {
-		case .weekly:
-			timesPerWeekLabel.text = "Times per week:"
-			setupTimesPerWeekLabel()
-			setupTimesPerWeekView()
-		case .daily:
-			timesPerWeekLabel.text = "Times per day:"
-			setupTimesPerWeekLabel()
-			setupTimesPerWeekView()
-			setupOnTheseDaysLabel()
-			setupWeekDays()
-		case .once:
-			setupDueDateLabel()
-			setupDueDateTextField()
-		}
 	}
 
 	private func populateGoalData() {
-		let goal = viewModel.dataSource.mutableGoal
+		let goal = viewModel.mutableGoal
 
 		nameTextField.text = goal.name
 		goalTypeTextField.text = goal.frequency?.type.description
@@ -313,7 +325,7 @@ class EditGoalViewController: UIViewController {
 		}
 	}
 
-	fileprivate func filteredWeekdays() -> [Int] {
+	private func filteredWeekdays() -> [Int] {
 		let weekdays = [sunday, monday, tuesday, wednesday, thursday, friday, saturday]
 		return weekdays.filter { $0.tag == 2 }.map { weekdays.index(of: $0)! }
 	}
@@ -324,26 +336,19 @@ class EditGoalViewController: UIViewController {
 extension EditGoalViewController {
 
 	func save(_ sender: UIButton) {
-		if let frequency = viewModel.dataSource.mutableGoal.frequencyType {
+		if let frequency = viewModel.mutableGoal.frequencyType {
 			switch frequency {
 			case .weekly:
-				viewModel.dataSource.mutableGoal.timesPerWeek = timesPerWeekStepper.counter
+				viewModel.mutableGoal.timesPerWeek = timesPerWeekStepper.counter
 			case .daily:
-				viewModel.dataSource.mutableGoal.timesPerDay = timesPerWeekStepper.counter
+				viewModel.mutableGoal.timesPerDay = timesPerWeekStepper.counter
 			case .once:
 				break
 			}
 		}
 
-		if viewModel.dataSource.isValid(
-			goalType.rawValue,
-			goalName: nameTextField.text,
-			timesPerNumber: timesPerWeekStepper.counter,
-			onTheseDays: filteredWeekdays(),
-			dueDate: dueDatePicker.date) {
-			viewModel.dataSource.updateGoal()
-			dismiss(animated: true, completion: nil)
-		}
+		viewModel.updateGoal()
+		_ = navigationController?.popToRootViewController(animated: true)
 	}
 
 }
@@ -352,7 +357,7 @@ extension EditGoalViewController: UITextFieldDelegate {
 
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 		if let text = textField.text {
-			viewModel.dataSource.mutableGoal.name = text
+			viewModel.mutableGoal.name = text
 		}
 
 		return textField.resignFirstResponder()

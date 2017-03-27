@@ -8,28 +8,19 @@
 
 import UIKit
 
-class GoalDetailViewController: UIViewController {
+final class GoalDetailViewController: UIViewController {
 
-	var dataSource: GoalDetailViewModel
+	var viewModel: GoalDetailViewModel!
 	let tableView = UITableView(frame: .zero)
-
-	init(goal: Goal) {
-		self.dataSource = GoalDetailViewModel(goal)
-		super.init(nibName: nil, bundle: nil)
-		let cancelButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancel(_:)))
-		navigationItem.leftBarButtonItem = cancelButtonItem
-	}
-
-	required init?(coder aDecoder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
-	}
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		let cancelButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancel(_:)))
+		navigationItem.leftBarButtonItem = cancelButtonItem
 		setupTableView()
 	}
 
-	fileprivate func setupTableView() {
+	private func setupTableView() {
 		tableView.backgroundColor = .white
 		tableView.delegate = self
 		tableView.dataSource = self
@@ -46,16 +37,13 @@ class GoalDetailViewController: UIViewController {
 
 	// MARK: - Navigation
 	func pressentEditGoalVC() {
-		let editGoalDataSource = EditGoalDataSource(goal: self.dataSource.goal)
-		let editGoalViewController = EditGoalViewController(dataSource: editGoalDataSource)
-		let navigationController = UINavigationController(rootViewController: editGoalViewController)
-		present(navigationController, animated: true) {
-			self.tableView.reloadData()
-		}
+		let editGoalViewController = EditGoalViewController()
+		editGoalViewController.viewModel = EditGoalViewModel(goal: viewModel.goal)
+		navigationController?.pushViewController(editGoalViewController, animated: true)
 	}
 
 	func cancel(_ barButtonItem: UIBarButtonItem) {
-		dismiss(animated: true, completion: nil)
+		_ = navigationController?.popToRootViewController(animated: true)
 	}
 
 }
@@ -75,10 +63,10 @@ extension GoalDetailViewController: UITableViewDataSource {
 		case 1:
 			cell.textLabel?.text = "Delete Goal"
 		case 2:
-			cell.textLabel?.text = dataSource.goal.name
+			cell.textLabel?.text = viewModel.goal.name
 		default:
-			if dataSource.goal.frequency.type == .weekly {
-				if let weekly = dataSource.goal.frequency as? Weekly {
+			if viewModel.goal.frequency.type == .weekly {
+				if let weekly = viewModel.goal.frequency as? Weekly {
 					cell.textLabel?.text = String(weekly.timesPerWeek)
 				}
 			}
@@ -96,10 +84,10 @@ extension GoalDetailViewController: UITableViewDelegate {
 		case 0:
 			pressentEditGoalVC()
 		case 1:
-			dataSource.delete(dataSource.goal)
-			dismiss(animated: true, completion: nil)
+			viewModel.delete(viewModel.goal)
+			_ = navigationController?.popToRootViewController(animated: true)
 		default:
-			dismiss(animated: true, completion: nil)
+			break
 		}
 
 	}

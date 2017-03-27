@@ -43,6 +43,7 @@ extension Date {
 		if let weekday = Calendar.current.dateComponents([.weekday], from: self).day {
 			return weekday
 		}
+
 		fatalError("Current weekday is nil")
 	}
 

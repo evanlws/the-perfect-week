@@ -8,12 +8,17 @@
 
 import Foundation
 
-class EditGoalViewModel {
+final class EditGoalViewModel {
 
-	let dataSource: EditGoalDataSource
+	var mutableGoal: MutableGoal
+	private let library = GoalLibrary.sharedLibrary
 
-	init(_ dataSource: EditGoalDataSource) {
-		self.dataSource = dataSource
+	init(goal: Goal) {
+		self.mutableGoal = MutableGoal(goal)
+	}
+
+	func updateGoal() {
+		library.updateGoal(with: mutableGoal.updateValues)
 	}
 
 }

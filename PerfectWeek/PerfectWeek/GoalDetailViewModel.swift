@@ -8,13 +8,13 @@
 
 import Foundation
 
-class GoalDetailViewModel {
+final class GoalDetailViewModel {
 
-	fileprivate let library = GoalLibrary.sharedLibrary
+	private let library = GoalLibrary.sharedLibrary
 
 	let goal: Goal
 
-	init(_ goal: Goal) {
+	init(goal: Goal) {
 		self.goal = goal
 	}
 

@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class GoalConstructor {
+final class GoalConstructor {
 
 	let realm: Realm
 
@@ -101,7 +101,7 @@ class GoalConstructor {
 
 	// MARK: - Convert
 
-	fileprivate func converted(_ goal: Goal) -> RealmGoal {
+	private func converted(_ goal: Goal) -> RealmGoal {
 		let realmGoal = RealmGoal()
 		realmGoal.objectId = goal.objectId
 		realmGoal.name = goal.name
@@ -130,7 +130,7 @@ class GoalConstructor {
 		return realmGoal
 	}
 
-	fileprivate func converted(_ days: List<IntObject>) -> [Int] {
+	private func converted(_ days: List<IntObject>) -> [Int] {
 		var convertedDays = [Int]()
 		days.forEach {
 			convertedDays.append($0.value)
@@ -139,7 +139,7 @@ class GoalConstructor {
 		return convertedDays
 	}
 
-	fileprivate func converted(_ days: [Int]) -> List<IntObject> {
+	private func converted(_ days: [Int]) -> List<IntObject> {
 		let convertedDays = List<IntObject>()
 		days.forEach {
 			convertedDays.append(IntObject(value: $0))

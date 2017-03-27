@@ -20,7 +20,7 @@ enum GoalType: Int, CustomStringConvertible {
 	}
 }
 
-class Goal {
+final class Goal {
 
 	let objectId: String
 	var name: String
@@ -36,6 +36,11 @@ class Goal {
 		self.frequency = frequency
 	}
 
+	convenience init?(_ mutableGoal: MutableGoal) {
+		guard let name = mutableGoal.name, let frequency = mutableGoal.frequency else { return nil }
+		self.init(objectId: mutableGoal.objectId, name: name, frequency: frequency)
+	}
+
 }
 
 protocol Frequency {
@@ -44,7 +49,7 @@ protocol Frequency {
 
 }
 
-class Weekly: Frequency {
+final class Weekly: Frequency {
 
 	var type: GoalType = .weekly
 	var timesPerWeek: Int
@@ -56,7 +61,7 @@ class Weekly: Frequency {
 
 }
 
-class Daily: Frequency {
+final class Daily: Frequency {
 
 	var type: GoalType = .daily
 	var timesPerDay: Int
@@ -70,7 +75,7 @@ class Daily: Frequency {
 
 }
 
-class Once: Frequency {
+final class Once: Frequency {
 
 	var type: GoalType = .once
 	var dueDate: Date
@@ -157,6 +162,14 @@ struct MutableGoal {
 		self.objectId = objectId
 		self.name = name
 		self.frequencyType = type
+		self.updateValues = ["objectId": objectId]
+	}
+
+	init(_ goal: Goal) {
+		self.objectId = goal.objectId
+		self.name = goal.name
+		self.frequencyType = goal.frequency.type
+		self.frequency = goal.frequency
 		self.updateValues = ["objectId": objectId]
 	}
 

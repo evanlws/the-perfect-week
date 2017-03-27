@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Label: UILabel {
+final class Label: UILabel {
 
 	enum Style {
 		case body

@@ -8,15 +8,15 @@
 
 import Foundation
 
-class GoalsViewModel {
+final class GoalsViewModel {
 
-	fileprivate let library = GoalLibrary.sharedLibrary
+	private let library = GoalLibrary.sharedLibrary
 
 	var goals: [Goal] {
 		return fetchGoals()
 	}
 
-	fileprivate func fetchGoals() -> [Goal] {
+	private func fetchGoals() -> [Goal] {
 		return library.goals
 	}
 
