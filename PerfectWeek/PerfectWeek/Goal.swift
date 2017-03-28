@@ -94,7 +94,6 @@ struct MutableGoal {
 	var name: String? {
 		didSet {
 			if name != oldValue {
-				print("Updating name")
 				updateValues["name"] = name
 			}
 		}
@@ -103,7 +102,7 @@ struct MutableGoal {
 	var frequencyType: GoalType? {
 		didSet {
 			if frequencyType != oldValue {
-				updateValues["frequencyType"] = frequencyType
+				resetFrequency()
 			}
 		}
 	}
@@ -127,7 +126,7 @@ struct MutableGoal {
 	var timesPerDay: Int? {
 		didSet {
 			if timesPerDay != oldValue {
-				updateValues["weeklyProgress"] = timesPerDay
+				updateValues["timesPerDay"] = timesPerDay
 			}
 		}
 	}
@@ -171,6 +170,13 @@ struct MutableGoal {
 		self.frequencyType = goal.frequency.type
 		self.frequency = goal.frequency
 		self.updateValues = ["objectId": objectId]
+	}
+
+	mutating func resetFrequency() {
+		guard let goalName = name, let goalFrequencyType = frequencyType else { fatalError("No goal name or frequency. What are you updating?") }
+		self.updateValues = ["objectId": objectId, "name": goalName, "frequencyType": goalFrequencyType.rawValue]
+		weeklyProgress = 0
+		dailyProgress = 0
 	}
 
 }

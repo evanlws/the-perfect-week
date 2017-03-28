@@ -10,7 +10,6 @@ import UIKit
 
 final class EditGoalViewController: UIViewController {
 
-	// TODO: This should be a delegate
 	fileprivate var goalType: GoalType {
 		didSet {
 			if oldValue != goalType {
@@ -136,7 +135,6 @@ final class EditGoalViewController: UIViewController {
 	}
 
 	private func setupTimesPerWeekLabel() {
-		timesPerWeekLabel.text = "Times per week:"
 		view.addSubview(timesPerWeekLabel)
 
 		timesPerWeekLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -253,19 +251,16 @@ final class EditGoalViewController: UIViewController {
 
 		switch goalType {
 		case .weekly:
-			viewModel.mutableGoal.frequencyType = .weekly
 			timesPerWeekLabel.text = "Times per week:"
 			setupTimesPerWeekLabel()
 			setupTimesPerWeekView()
 		case .daily:
-			viewModel.mutableGoal.frequencyType = .daily
 			timesPerWeekLabel.text = "Times per day:"
 			setupTimesPerWeekLabel()
 			setupTimesPerWeekView()
 			setupOnTheseDaysLabel()
 			setupWeekDays()
 		case .once:
-			viewModel.mutableGoal.frequencyType = .once
 			setupDueDateLabel()
 			setupDueDateTextField()
 		}
@@ -323,6 +318,8 @@ final class EditGoalViewController: UIViewController {
 			sender.tag = 1
 			sender.backgroundColor = .gray
 		}
+
+		viewModel.mutableGoal.days = filteredWeekdays()
 	}
 
 	private func filteredWeekdays() -> [Int] {

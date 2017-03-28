@@ -10,7 +10,6 @@ import UIKit
 
 final class AddGoalTypeViewController: UIViewController {
 
-	// TODO: This should be a delegate
 	fileprivate var goalType: GoalType {
 		didSet {
 			if oldValue != goalType {

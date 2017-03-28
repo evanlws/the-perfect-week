@@ -5,3 +5,4 @@ disabled_rules: # rule identifiers to exclude from running
   - todo
   - cyclomatic_complexity
   - type_body_length
+  - file_length
