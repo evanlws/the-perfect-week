@@ -63,7 +63,7 @@ final class GoalLibrary {
 			case .once:
 				guard let once = $0.frequency as? Once else { fatalError("Frequency could not be casted") }
 
-				if ($0.isCompleted && shouldResetFrequency) || (!$0.isCompleted && once.dueDate < Date()) {
+				if ($0.isCompleted && shouldResetFrequency) || (!$0.isCompleted && once.dueDate.startOfDay() < Date().startOfDay()) {
 					goalUpdateValues["DELETE"] = true
 				}
 			}
@@ -72,7 +72,7 @@ final class GoalLibrary {
 		}
 	}
 
-	@discardableResult func add(_ newGoal: Goal) {
+	func add(_ newGoal: Goal) {
 		constructor.add(newGoal)
 	}
 

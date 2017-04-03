@@ -71,6 +71,7 @@ final class GoalsViewController: UIViewController, UIGestureRecognizerDelegate {
 		navigationController?.pushViewController(goalDetailViewController, animated: true)
 	}
 
+	// Summary: Add Goal
 	func presentAddGoalVC(_ indexPathRow: Int) {
 		let addGoalNameViewController = AddGoalNameViewController()
 		addGoalNameViewController.viewModel = AddGoalNameViewModel(mutableGoal: MutableGoal(objectId: UUID().uuidString))

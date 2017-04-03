@@ -67,9 +67,14 @@ final class GoalConstructor {
 			return
 		}
 
+		var updateValues = values
+		if let days = updateValues["days"] as? [Int] {
+			updateValues["days"] = converted(days)
+		}
+
 		do {
 			try realm.write {
-				realm.create(RealmGoal.self, value: values, update: true)
+				realm.create(RealmGoal.self, value: updateValues, update: true)
 			}
 		} catch let error {
 			print("Could not update goals \(error.localizedDescription)")
@@ -142,7 +147,9 @@ final class GoalConstructor {
 	private func converted(_ days: [Int]) -> List<IntObject> {
 		let convertedDays = List<IntObject>()
 		days.forEach {
-			convertedDays.append(IntObject(value: $0))
+			let intObject = IntObject()
+			intObject.value = $0
+			convertedDays.append(intObject)
 		}
 
 		return convertedDays

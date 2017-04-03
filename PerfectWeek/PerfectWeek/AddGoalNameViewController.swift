@@ -15,6 +15,8 @@ final class AddGoalNameViewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		let cancelButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancel(_:)))
+		navigationItem.leftBarButtonItem = cancelButtonItem
 		self.view.backgroundColor = .white
 		self.title = "Add A Goal"
 		setupNameLabel()
@@ -39,6 +41,8 @@ final class AddGoalNameViewController: UIViewController {
 		let nameTextField = UITextField()
 		nameTextField.delegate = self
 		nameTextField.borderStyle = .line
+		nameTextField.autocorrectionType = .no
+		nameTextField.returnKeyType = .done
 		view.addSubview(nameTextField)
 
 		nameTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -54,7 +58,7 @@ final class AddGoalNameViewController: UIViewController {
 		nextButton.backgroundColor = .purple
 		nextButton.addTarget(self, action: #selector(next(_:)), for: .touchUpInside)
 		view.addSubview(nextButton)
-
+		disableNextButton()
 		nextButton.translatesAutoresizingMaskIntoConstraints = false
 		nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
 		nextButton.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -10).isActive = true
@@ -68,12 +72,53 @@ final class AddGoalNameViewController: UIViewController {
 		addGoalTypeVC.viewModel = AddGoalTypeViewModel(mutableGoal: viewModel.mutableGoal)
 		navigationController?.pushViewController(addGoalTypeVC, animated: true)
 	}
+
+	func cancel(_ cancelBarButtonItem: UIBarButtonItem) {
+		dismiss(animated: true, completion: nil)
+	}
+
+	fileprivate func disableNextButton() {
+		nextButton.alpha = 0.5
+		nextButton.isEnabled = false
+	}
+
+	fileprivate func enableNextButton() {
+		nextButton.alpha = 1.0
+		nextButton.isEnabled = true
+	}
 }
 
 extension AddGoalNameViewController: UITextFieldDelegate {
 
+	func textFieldDidEndEditing(_ textField: UITextField) {
+		if textField.text?.isBlank == false {
+			viewModel.mutableGoal.name = textField.text
+			enableNextButton()
+		}
+	}
+
+	// String == What the user is trying to add
+	// Text == What the user already had
+	// Updated text == What the user has altogether. Should be String + text if succeeds
+	func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+		guard let text = textField.text, let stringRange = range.range(for: text) else {
+			return false
+		}
+
+		if !string.isEmpty, String(string.characters.prefix(1)).trimmingCharacters(in: .whitespacesAndNewlines).isEmpty, text.isEmpty || (text.isBlank && string.isBlank) {
+			return false
+		}
+
+		let updatedText = text.replacingCharacters(in: stringRange, with: string)
+
+		if string.isEmpty {
+			return true //backspace
+		}
+
+		return updatedText.characters.count <= 30
+	}
+
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-		viewModel.mutableGoal.name = textField.text
 		return textField.resignFirstResponder()
 	}
 
