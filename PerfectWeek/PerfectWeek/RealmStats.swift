@@ -14,7 +14,7 @@ class RealmStats: Object {
 	dynamic var objectId: String = ""
 	var days = List<RealmDay>()
 	var perfectWeeks = RealmOptional<Int>()
-	var currentStreaks = RealmOptional<Int>()
+	var currentStreak = RealmOptional<Int>()
 
 }
 
