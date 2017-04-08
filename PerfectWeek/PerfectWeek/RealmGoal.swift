@@ -29,8 +29,7 @@ class RealmGoal: Object {
 	var days = List<IntObject>()
 
 	// MARK: - Once
-	dynamic var dueDate: NSDate? = nil
-
+	dynamic var dueDate: NSDate?
 	override static func primaryKey() -> String? {
 		return "objectId"
 	}

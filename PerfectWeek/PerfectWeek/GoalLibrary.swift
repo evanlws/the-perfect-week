@@ -93,7 +93,7 @@ final class GoalLibrary {
 
 			goalUpdateValues["dailyProgress"] = daily.timesPerDay + 1
 		case .once:
-			guard let _ = goal.frequency as? Once else { fatalError("Frequency could not be casted") }
+			guard goal.frequency as? Once != nil else { fatalError("Frequency could not be casted") }
 			goalUpdateValues["isCompleted"] = true
 		}
 

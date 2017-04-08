@@ -23,6 +23,7 @@
 		4F2EB1EA1E822BD300677A3C /* EditGoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2EB1E91E822BD300677A3C /* EditGoalViewController.swift */; };
 		4F2EB1EC1E822D3800677A3C /* EditGoalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2EB1EB1E822D3800677A3C /* EditGoalViewModel.swift */; };
 		4F2F2DF11E8745B500684D02 /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F2DF01E8745B500684D02 /* Label.swift */; };
+		4F491E961E986A9C003BAF0D /* RealmStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F491E951E986A9C003BAF0D /* RealmStats.swift */; };
 		4FA6DD511E6B3D5300547D33 /* Goal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA6DD501E6B3D5300547D33 /* Goal.swift */; };
 		4FA6DD581E6B4E2400547D33 /* GoalsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA6DD571E6B4E2400547D33 /* GoalsViewController.swift */; };
 		4FA6DD5C1E6B563800547D33 /* GoalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA6DD5B1E6B563800547D33 /* GoalCollectionViewCell.swift */; };
@@ -74,6 +75,7 @@
 		4F2EB1E91E822BD300677A3C /* EditGoalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditGoalViewController.swift; sourceTree = "<group>"; };
 		4F2EB1EB1E822D3800677A3C /* EditGoalViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditGoalViewModel.swift; sourceTree = "<group>"; };
 		4F2F2DF01E8745B500684D02 /* Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
+		4F491E951E986A9C003BAF0D /* RealmStats.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmStats.swift; sourceTree = "<group>"; };
 		4FA6DD501E6B3D5300547D33 /* Goal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Goal.swift; sourceTree = "<group>"; };
 		4FA6DD571E6B4E2400547D33 /* GoalsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalsViewController.swift; sourceTree = "<group>"; };
 		4FA6DD5B1E6B563800547D33 /* GoalCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -219,6 +221,7 @@
 				4FA6DD5F1E6B7C5A00547D33 /* GoalLibrary.swift */,
 				4FA6DD501E6B3D5300547D33 /* Goal.swift */,
 				4F2EB1E11E7EF38E00677A3C /* RealmGoal.swift */,
+				4F491E951E986A9C003BAF0D /* RealmStats.swift */,
 				4F2EB1E31E7EF39800677A3C /* GoalConstructor.swift */,
 			);
 			name = "Library and Model";
@@ -431,6 +434,7 @@
 				4F2EB1EC1E822D3800677A3C /* EditGoalViewModel.swift in Sources */,
 				4FDFD0FF1E6CBEB600D33353 /* AddGoalNameViewController.swift in Sources */,
 				4F2EB1E81E80C96C00677A3C /* GoalDetailViewModel.swift in Sources */,
+				4F491E961E986A9C003BAF0D /* RealmStats.swift in Sources */,
 				4FA6DD581E6B4E2400547D33 /* GoalsViewController.swift in Sources */,
 				4F2F2DF11E8745B500684D02 /* Label.swift in Sources */,
 				4FA6DD5E1E6B79DE00547D33 /* GoalsViewModel.swift in Sources */,
