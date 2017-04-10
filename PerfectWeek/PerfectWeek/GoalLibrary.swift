@@ -11,36 +11,33 @@ import Foundation
 final class GoalLibrary {
 
 	static let sharedLibrary = GoalLibrary()
-	private let constructor = GoalConstructor()
 
 	var goals: [Goal] {
-		return fetchGoals()
+		return RealmLibrary.sharedLibrary.goals
 	}
 
 	init() {
 		checkGoalsAndUpdate()
 	}
 
-	private func fetchGoals() -> [Goal] {
-		return constructor.fetchGoals()
-	}
-
 	private func checkGoalsAndUpdate() {
-		let fetchedGoals = goals
-		fetchedGoals.forEach {
-			var goalUpdateValues: [String: Any] = ["objectId": $0.objectId]
+		for goal in goals {
+			var goalUpdateValues: [String: Any] = ["objectId": goal.objectId]
 			var shouldResetFrequency = false
 
-			if $0.weekEnd < Date().nextSunday() {
+			if goal.weekEnd < Date().nextSunday() {
 				goalUpdateValues["weekEnd"] = Date().nextSunday().addingTimeInterval(1)
 				goalUpdateValues["isCompleted"] = false
 				shouldResetFrequency = true
 			}
 
-			switch $0.frequency.type {
+			switch goal.frequency.type {
 			case .weekly:
-				guard let weekly = $0.frequency as? Weekly else { fatalError("Frequency could not be casted") }
-				if $0.isCompleted, weekly.weeklyProgress < weekly.timesPerWeek {
+				guard let weekly = goal.frequency as? Weekly else {
+					debugPrint("Guard failure warning: \(goal.name) could not be updated")
+					continue
+				}
+				if goal.isCompleted, weekly.weeklyProgress < weekly.timesPerWeek {
 					goalUpdateValues["isCompleted"] = false
 				}
 
@@ -48,9 +45,12 @@ final class GoalLibrary {
 					goalUpdateValues["weeklyProgress"] = 0
 				}
 			case .daily:
-				guard let daily = $0.frequency as? Daily else { fatalError("Frequency could not be casted") }
+				guard let daily = goal.frequency as? Daily else {
+					debugPrint("Guard failure warning: \(goal.name) could not be updated")
+					continue
+				}
 
-				if $0.isCompleted, daily.dailyProgress < daily.timesPerDay {
+				if goal.isCompleted, daily.dailyProgress < daily.timesPerDay {
 
 					if daily.days.contains(Date().currentWeekday()) {
 						goalUpdateValues["isCompleted"] = false
@@ -61,51 +61,70 @@ final class GoalLibrary {
 					goalUpdateValues["dailyProgress"] = 0
 				}
 			case .once:
-				guard let once = $0.frequency as? Once else { fatalError("Frequency could not be casted") }
+				guard let once = goal.frequency as? Once else {
+					debugPrint("Guard failure warning: \(goal.name) could not be updated")
+					continue
+				}
 
-				if ($0.isCompleted && shouldResetFrequency) || (!$0.isCompleted && once.dueDate.startOfDay() < Date().startOfDay()) {
+				if (goal.isCompleted && shouldResetFrequency) || (!goal.isCompleted && once.dueDate.startOfDay() < Date().startOfDay()) {
 					goalUpdateValues["DELETE"] = true
 				}
 			}
 
-			constructor.updateGoal(with: goalUpdateValues)
+			RealmLibrary.sharedLibrary.updateGoal(with: goalUpdateValues)
 		}
 	}
 
 	func add(_ newGoal: Goal) {
-		constructor.add(newGoal)
+		RealmLibrary.sharedLibrary.add(newGoal)
 	}
 
-	@discardableResult func complete(_ goal: Goal) -> Bool {
-		if goal.isCompleted == true { return false }
+	func complete(_ goal: Goal) {
+		if goal.isCompleted == true {
+			debugPrint("Guard failure warning: \(goal.name) could not be completed")
+			return
+		}
+
 		var goalUpdateValues: [String: Any] = ["objectId": goal.objectId]
 
 		switch goal.frequency.type {
 		case .weekly:
-			guard let weekly = goal.frequency as? Weekly else { fatalError("Frequency could not be casted") }
+			guard let weekly = goal.frequency as? Weekly else {
+				debugPrint("Guard failure warning: \(goal.name) could not be completed")
+				return
+			}
+
 			goalUpdateValues["isCompleted"] = true
 			goalUpdateValues["weeklyProgress"] = weekly.weeklyProgress + 1
 		case .daily:
-			guard let daily = goal.frequency as? Daily else { fatalError("Frequency could not be casted") }
+			guard let daily = goal.frequency as? Daily else {
+				debugPrint("Guard failure warning: \(goal.name) could not be completed")
+				return
+			}
+
 			if daily.timesPerDay == daily.dailyProgress {
 				goalUpdateValues["isCompleted"] = true
 			}
 
 			goalUpdateValues["dailyProgress"] = daily.timesPerDay + 1
 		case .once:
-			guard goal.frequency as? Once != nil else { fatalError("Frequency could not be casted") }
+			guard goal.frequency as? Once != nil else {
+				debugPrint("Guard failure warning: \(goal.name) could not be completed")
+				return
+			}
+
 			goalUpdateValues["isCompleted"] = true
 		}
 
-		constructor.updateGoal(with: goalUpdateValues)
-		return true
+		StatsLibrary.sharedLibrary.updateStats(reason: .goalCompleted)
+		RealmLibrary.sharedLibrary.updateGoal(with: goalUpdateValues)
 	}
 
 	func delete(_ goal: Goal) {
-		constructor.delete(goal)
+		RealmLibrary.sharedLibrary.delete(goal)
 	}
 
 	func updateGoal(with values: [String: Any]) {
-		constructor.updateGoal(with: values)
+		RealmLibrary.sharedLibrary.updateGoal(with: values)
 	}
 }

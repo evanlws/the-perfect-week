@@ -11,29 +11,19 @@ import Foundation
 final class Stats {
 
 	let objectId: String
-	var days: [Day]
+	var days: [Date: Int]
 	var perfectWeeks: Int
 	var currentStreak: Int
 
-	init(objectId: String, days: [Day] = [], perfectWeeks: Int = 0, currentStreak: Int = 0) {
+	init(objectId: String, days: [Date: Int] = [:], perfectWeeks: Int = 0, currentStreak: Int = 0) {
 		self.objectId = objectId
 		self.days = days
 		self.perfectWeeks = perfectWeeks
 		self.currentStreak = currentStreak
 	}
 
-}
-
-final class Day {
-
-	let objectId: String
-	let date: Date
-	var goalsCompleted: Int
-
-	init(objectId: String, date: Date = Date(), goalsCompleted: Int = 0) {
-		self.objectId = objectId
-		self.date = date
-		self.goalsCompleted = goalsCompleted
+	var description: String {
+		return "\nGoal:\n\tObjectID: \(objectId)\n\tPerfect Weeks: \(perfectWeeks)\n\tCurrent Streak: \(currentStreak)\n"
 	}
 
 }

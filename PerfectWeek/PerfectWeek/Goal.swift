@@ -41,6 +41,10 @@ final class Goal {
 		self.init(objectId: mutableGoal.objectId, name: name, frequency: frequency)
 	}
 
+	var description: String {
+		return "\nGoal:\n\tObjectID: \(objectId)\n\tName: \(name)\n\tCompleted: \(isCompleted ? "Yes" : "No")\n\tWeekend Date: \(weekEnd)\n\tFrequencyType: \(frequency.type.rawValue)\n"
+	}
+
 }
 
 protocol Frequency {

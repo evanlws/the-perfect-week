@@ -20,7 +20,6 @@ class RealmStats: Object {
 
 class RealmDay: Object {
 
-	dynamic var objectId: String = ""
 	dynamic var date: NSDate?
 	var goalsCompleted = RealmOptional<Int>()
 
