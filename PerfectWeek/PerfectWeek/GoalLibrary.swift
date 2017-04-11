@@ -67,7 +67,8 @@ final class GoalLibrary {
 				}
 
 				if (goal.isCompleted && shouldResetFrequency) || (!goal.isCompleted && once.dueDate.startOfDay() < Date().startOfDay()) {
-					goalUpdateValues["DELETE"] = true
+					RealmLibrary.sharedLibrary.delete(goal)
+					continue
 				}
 			}
 
