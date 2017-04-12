@@ -10,7 +10,7 @@ import Foundation
 
 final class GoalDetailViewModel {
 
-	private let library = GoalLibrary.sharedLibrary
+	private let library = GoalLibrary.shared
 
 	let goal: Goal
 

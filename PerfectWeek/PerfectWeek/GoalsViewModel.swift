@@ -10,7 +10,7 @@ import Foundation
 
 final class GoalsViewModel {
 
-	private let library = GoalLibrary.sharedLibrary
+	private let library = GoalLibrary.shared
 
 	var goals: [Goal] {
 		return fetchGoals()
@@ -22,6 +22,10 @@ final class GoalsViewModel {
 
 	func complete(_ goal: Goal) {
 		library.complete(goal)
+	}
+
+	func undo(_ goal: Goal) {
+		library.undo(goal)
 	}
 
 }

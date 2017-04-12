@@ -16,7 +16,7 @@ enum ConversionError: Error {
 
 class RealmLibrary {
 
-	static let sharedLibrary = RealmLibrary()
+	static let shared = RealmLibrary()
 
 	private let realm: Realm
 
@@ -38,7 +38,9 @@ class RealmLibrary {
 
 	func add(_ goal: Goal) {
 		do {
-			try realm.add(GoalConstructor.converted(goal))
+			try realm.write {
+				try realm.add(GoalConstructor.converted(goal))
+			}
 		} catch ConversionError.unexpectedFrequencyType(let frequency) {
 				debugPrint("Could not convert goal, \(frequency) is not a valid frequency")
 		} catch {
@@ -47,16 +49,36 @@ class RealmLibrary {
 	}
 
 	func updateGoal(with values: [String: Any]) {
-		realm.create(RealmGoal.self, value: values, update: true)
+		var values = values
+
+		if let days = values["days"] as? [Int] {
+			values["days"] = GoalConstructor.converted(days)
+		}
+
+		do {
+			try realm.write {
+				realm.create(RealmGoal.self, value: values, update: true)
+			}
+		} catch let error {
+			debugPrint("Could not update goal: \(error.localizedDescription)")
+		}
 	}
 
 	func updateStats(with values: [String: Any]) {
-		realm.create(RealmStats.self, value: values, update: true)
+		do {
+			try realm.write {
+				realm.create(RealmStats.self, value: values, update: true)
+			}
+		} catch let error {
+			debugPrint("Could not update stats: \(error.localizedDescription)")
+		}
 	}
 
 	func delete(_ goal: Goal) {
 		do {
-			try realm.delete(GoalConstructor.converted(goal))
+			try realm.write {
+				try realm.delete(GoalConstructor.converted(goal))
+			}
 		} catch ConversionError.unexpectedFrequencyType(let frequency) {
 			debugPrint("Could not convert goal, \(frequency) is not a valid frequency")
 		} catch {
@@ -94,7 +116,17 @@ class RealmLibrary {
 		}
 
 		debugPrint("Could not fetch stats object. Creating a new one.")
-		return Stats(objectId: NSUUID().uuidString)
+		let newStats = Stats(objectId: NSUUID().uuidString)
+
+		do {
+			try realm.write {
+				realm.add(StatsConstructor.converted(newStats))
+			}
+		} catch let error {
+			fatalError("Could not add stats: \(error.localizedDescription)")
+		}
+
+		return newStats
 	}
 
 }

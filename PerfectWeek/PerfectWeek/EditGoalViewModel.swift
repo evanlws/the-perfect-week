@@ -11,7 +11,7 @@ import Foundation
 final class EditGoalViewModel {
 
 	var mutableGoal: MutableGoal
-	private let library = GoalLibrary.sharedLibrary
+	private let library = GoalLibrary.shared
 
 	init(goal: Goal) {
 		self.mutableGoal = MutableGoal(goal)

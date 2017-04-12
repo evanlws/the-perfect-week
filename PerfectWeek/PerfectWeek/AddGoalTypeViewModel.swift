@@ -11,7 +11,7 @@ import Foundation
 final class AddGoalTypeViewModel {
 
 	var mutableGoal: MutableGoal
-	private let library = GoalLibrary.sharedLibrary
+	private let library = GoalLibrary.shared
 
 	init(mutableGoal: MutableGoal) {
 		self.mutableGoal = mutableGoal

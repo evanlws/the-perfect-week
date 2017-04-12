@@ -30,6 +30,7 @@ class RealmGoal: Object {
 
 	// MARK: - Once
 	dynamic var dueDate: NSDate?
+
 	override static func primaryKey() -> String? {
 		return "objectId"
 	}

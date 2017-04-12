@@ -10,10 +10,10 @@ import Foundation
 
 final class GoalLibrary {
 
-	static let sharedLibrary = GoalLibrary()
+	static let shared = GoalLibrary()
 
 	var goals: [Goal] {
-		return RealmLibrary.sharedLibrary.goals
+		return RealmLibrary.shared.goals
 	}
 
 	init() {
@@ -67,21 +67,21 @@ final class GoalLibrary {
 				}
 
 				if (goal.isCompleted && shouldResetFrequency) || (!goal.isCompleted && once.dueDate.startOfDay() < Date().startOfDay()) {
-					RealmLibrary.sharedLibrary.delete(goal)
+					RealmLibrary.shared.delete(goal)
 					continue
 				}
 			}
 
-			RealmLibrary.sharedLibrary.updateGoal(with: goalUpdateValues)
+			RealmLibrary.shared.updateGoal(with: goalUpdateValues)
 		}
 	}
 
 	func add(_ newGoal: Goal) {
-		RealmLibrary.sharedLibrary.add(newGoal)
+		RealmLibrary.shared.add(newGoal)
 	}
 
 	func complete(_ goal: Goal) {
-		if goal.isCompleted == true {
+		guard goal.isCompleted == false else {
 			debugPrint("Guard failure warning: \(goal.name) could not be completed")
 			return
 		}
@@ -117,15 +117,49 @@ final class GoalLibrary {
 			goalUpdateValues["isCompleted"] = true
 		}
 
-		StatsLibrary.sharedLibrary.updateStats(reason: .goalCompleted)
-		RealmLibrary.sharedLibrary.updateGoal(with: goalUpdateValues)
+		StatsLibrary.shared.updateStats(reason: .goalCompleted)
+		RealmLibrary.shared.updateGoal(with: goalUpdateValues)
+	}
+
+	func undo(_ goal: Goal) {
+		guard goal.isCompleted == true else {
+			debugPrint("Guard failure warning: Could not undo \(goal.name)")
+			return
+		}
+
+		var goalUpdateValues: [String: Any] = ["objectId": goal.objectId, "isCompleted": false]
+
+		switch goal.frequency.type {
+		case .weekly:
+			guard let weekly = goal.frequency as? Weekly, weekly.weeklyProgress > 0 else {
+				debugPrint("Guard failure warning: Could not undo \(goal.name)")
+				return
+			}
+
+			goalUpdateValues["weeklyProgress"] = weekly.weeklyProgress - 1
+		case .daily:
+			guard let daily = goal.frequency as? Daily, daily.dailyProgress > 0 else {
+				debugPrint("Guard failure warning: Could not undo \(goal.name)")
+				return
+			}
+
+			goalUpdateValues["dailyProgress"] = daily.timesPerDay - 1
+		case .once:
+			guard goal.frequency as? Once != nil else {
+				debugPrint("Guard failure warning: Could not undo \(goal.name)")
+				return
+			}
+		}
+
+		StatsLibrary.shared.updateStats(reason: .undoGoal)
+		RealmLibrary.shared.updateGoal(with: goalUpdateValues)
 	}
 
 	func delete(_ goal: Goal) {
-		RealmLibrary.sharedLibrary.delete(goal)
+		RealmLibrary.shared.delete(goal)
 	}
 
 	func updateGoal(with values: [String: Any]) {
-		RealmLibrary.sharedLibrary.updateGoal(with: values)
+		RealmLibrary.shared.updateGoal(with: values)
 	}
 }

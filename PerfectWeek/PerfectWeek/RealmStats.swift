@@ -16,6 +16,10 @@ class RealmStats: Object {
 	var perfectWeeks = RealmOptional<Int>()
 	var currentStreak = RealmOptional<Int>()
 
+	override static func primaryKey() -> String? {
+		return "objectId"
+	}
+
 }
 
 class RealmDay: Object {

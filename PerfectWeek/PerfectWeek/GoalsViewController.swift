@@ -42,7 +42,7 @@ final class GoalsViewController: UIViewController, UIGestureRecognizerDelegate {
 	// MARK: - Setup
 	private func setupGestureRecognizer() {
 		let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(completeGoal(_:)))
-		longPressGestureRecognizer.minimumPressDuration = 0.5
+		longPressGestureRecognizer.minimumPressDuration = 1.0
 		longPressGestureRecognizer.delaysTouchesBegan = true
 		longPressGestureRecognizer.delegate = self
 		collectionView.addGestureRecognizer(longPressGestureRecognizer)
@@ -82,11 +82,17 @@ final class GoalsViewController: UIViewController, UIGestureRecognizerDelegate {
 	}
 
 	func completeGoal(_ gestureRecognizer: UILongPressGestureRecognizer) {
-		guard gestureRecognizer.state == .ended else { return }
+		guard gestureRecognizer.state == .began else { return }
 
 		let point = gestureRecognizer.location(in: collectionView)
 		if let indexPath = collectionView.indexPathForItem(at: point) {
-			viewModel.complete(viewModel.goals[indexPath.row])
+			let goal = viewModel.goals[indexPath.row] as Goal
+			if goal.isCompleted {
+				viewModel.undo(goal)
+			} else {
+				viewModel.complete(viewModel.goals[indexPath.row])
+			}
+
 			collectionView.reloadData()
 		}
 	}

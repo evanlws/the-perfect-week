@@ -12,7 +12,7 @@ import RealmSwift
 final class StatsConstructor {
 
 	// MARK: - Stats to RealmStats
-	static func converted(stats: Stats) -> RealmStats {
+	static func converted(_ stats: Stats) -> RealmStats {
 		let realmStats = RealmStats()
 		realmStats.objectId = stats.objectId
 		realmStats.days = converted(days: stats.days)

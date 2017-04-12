@@ -11,13 +11,13 @@ import Foundation
 final class StatsLibrary {
 
 	enum UpdateReason {
-		case goalCompleted
+		case goalCompleted, undoGoal
 	}
 
-	static let sharedLibrary = StatsLibrary()
+	static let shared = StatsLibrary()
 
 	var stats: Stats {
-		return RealmLibrary.sharedLibrary.stats
+		return RealmLibrary.shared.stats
 	}
 
 	func updateStats(reason: UpdateReason) {
@@ -27,10 +27,15 @@ final class StatsLibrary {
 		case .goalCompleted:
 			let goalsCompleted = stats.days[Date().startOfDay()]
 			stats.days[Date().startOfDay()] = (goalsCompleted ?? 0) + 1
-			statsUpdateValues["days"] = StatsConstructor.converted(days: stats.days)
+		case .undoGoal:
+			if let goalsCompleted = stats.days[Date().startOfDay()], goalsCompleted > 0 {
+				stats.days[Date().startOfDay()] = goalsCompleted - 1
+			} else {
+				return
+			}
 		}
-
-		RealmLibrary.sharedLibrary.updateStats(with: statsUpdateValues)
+		statsUpdateValues["days"] = StatsConstructor.converted(days: stats.days)
+		RealmLibrary.shared.updateStats(with: statsUpdateValues)
 	}
 
 }
