@@ -15,6 +15,7 @@ final class StatsLibrary {
 	}
 
 	static let shared = StatsLibrary()
+	private init() {}
 
 	var stats: Stats {
 		return RealmLibrary.shared.stats

@@ -28,7 +28,7 @@ class RealmLibrary {
 		return fetchStats()
 	}
 
-	init() {
+	private init() {
 		do {
 			try realm = Realm()
 		} catch let error {

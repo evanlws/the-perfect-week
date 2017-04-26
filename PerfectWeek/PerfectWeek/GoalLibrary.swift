@@ -16,7 +16,7 @@ final class GoalLibrary {
 		return RealmLibrary.shared.goals
 	}
 
-	init() {
+	private init() {
 		checkGoalsAndUpdate()
 	}
 
