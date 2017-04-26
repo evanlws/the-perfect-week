@@ -15,8 +15,8 @@ final class GoalsViewController: UIViewController, UIGestureRecognizerDelegate {
 
 	init() {
 		let collectionViewFlowLayout = UICollectionViewFlowLayout()
-		collectionViewFlowLayout.itemSize = CGSize(width: 170, height: 125)
 		collectionViewFlowLayout.scrollDirection = .vertical
+		collectionViewFlowLayout.itemSize = CGSize(width: GoalCollectionViewCell.size.width, height: GoalCollectionViewCell.size.height)
 		collectionViewFlowLayout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
 		collectionViewFlowLayout.minimumInteritemSpacing = 10.0
 		self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout)

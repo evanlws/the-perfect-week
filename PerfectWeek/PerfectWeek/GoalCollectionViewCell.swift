@@ -10,6 +10,8 @@ import UIKit
 
 final class GoalCollectionViewCell: UICollectionViewCell {
 
+	static let size: CGSize = CGSize(width: UIScreen.main.bounds.width - 40, height: 64.0)
+
 	let nameLabel: UILabel = {
 		let label = UILabel()
 		label.font = UIFont.systemFont(ofSize: 24.0)
