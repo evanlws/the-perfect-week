@@ -10,7 +10,7 @@ import UIKit
 
 final class GoalCollectionViewCell: UICollectionViewCell {
 
-	static let size: CGSize = CGSize(width: UIScreen.main.bounds.width - 40, height: 64.0)
+	static let size = CGSize(width: UIScreen.main.bounds.size.width - (collectionViewInset * 4), height: 64.0)
 
 	let nameLabel: UILabel = {
 		let label = UILabel()
@@ -22,9 +22,15 @@ final class GoalCollectionViewCell: UICollectionViewCell {
 		return label
 	}()
 
-	convenience init() {
-		self.init(frame: CGRect(x: 0, y: 0, width: 170, height: 125))
-	}
+	private var progressLabel: UILabel = {
+		let label = UILabel()
+		label.text = "0%"
+		label.font = UIFont.systemFont(ofSize: 16.0)
+		label.textAlignment = .center
+		return label
+	}()
+
+	private let progressView = UIView()
 
 	override init(frame: CGRect) {
 		super.init(frame: frame)
@@ -32,7 +38,35 @@ final class GoalCollectionViewCell: UICollectionViewCell {
 		contentView.layer.borderColor = UIColor.purple.cgColor
 		contentView.layer.borderWidth = 2.0
 		addSubview(nameLabel)
-		setupNameLabel()
+
+		progressView.addSubview(progressLabel)
+		addSubview(progressView)
+		setupConstraints()
+	}
+
+	required init?(coder aDecoder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+
+	private func setupConstraints() {
+		nameLabel.translatesAutoresizingMaskIntoConstraints = false
+		nameLabel.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor).isActive = true
+		nameLabel.leftAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leftAnchor).isActive = true
+		nameLabel.bottomAnchor.constraint(equalTo: contentView.layoutMarginsGuide.bottomAnchor).isActive = true
+
+		progressView.translatesAutoresizingMaskIntoConstraints = false
+		progressView.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor).isActive = true
+		progressView.leftAnchor.constraint(equalTo: nameLabel.rightAnchor).isActive = true
+		progressView.bottomAnchor.constraint(equalTo: contentView.layoutMarginsGuide.bottomAnchor).isActive = true
+		progressView.rightAnchor.constraint(equalTo: contentView.layoutMarginsGuide.rightAnchor).isActive = true
+		progressView.widthAnchor.constraint(equalToConstant: 50.0).isActive = true
+		progressView.heightAnchor.constraint(equalTo: progressView.widthAnchor).isActive = true
+
+		progressLabel.translatesAutoresizingMaskIntoConstraints = false
+		progressLabel.topAnchor.constraint(equalTo: progressView.topAnchor).isActive = true
+		progressLabel.leftAnchor.constraint(equalTo: progressView.leftAnchor).isActive = true
+		progressLabel.bottomAnchor.constraint(equalTo: progressView.bottomAnchor).isActive = true
+		progressLabel.rightAnchor.constraint(equalTo: progressView.rightAnchor).isActive = true
 	}
 
 	func setCompletedStyle(_ isCompleted: Bool) {
@@ -48,16 +82,15 @@ final class GoalCollectionViewCell: UICollectionViewCell {
 		}
 	}
 
-	required init?(coder aDecoder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
-	}
+	func setProgress(value: Int) {
+		var value = value
+		if value > 100 {
+			value = 100
+		} else if value < 0 {
+			value = 0
+		}
 
-	private func setupNameLabel() {
-		nameLabel.translatesAutoresizingMaskIntoConstraints = false
-		nameLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 5).isActive = true
-		nameLabel.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 5).isActive = true
-		nameLabel.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -5).isActive = true
-		nameLabel.bottomAnchor.constraint(lessThanOrEqualTo: self.contentView.bottomAnchor).isActive = true
+		progressLabel.text = "\(value)%"
 	}
 
 }
