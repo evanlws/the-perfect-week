@@ -12,6 +12,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	var window: UIWindow?
+	var informationHeader: InformationHeader?
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 		window = UIWindow(frame: UIScreen.main.bounds)
@@ -19,8 +20,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		let goalsViewController = GoalsViewController()
 		goalsViewController.viewModel = GoalsViewModel()
 		let navigationController = UINavigationController(rootViewController: goalsViewController)
+		navigationController.setNavigationBarHidden(true, animated: false)
 		window?.rootViewController = navigationController
 		window?.makeKeyAndVisible()
+
+		informationHeader = InformationHeader()
 		return true
 	}
 

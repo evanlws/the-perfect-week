@@ -24,6 +24,7 @@
 		4F2EB1EC1E822D3800677A3C /* EditGoalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2EB1EB1E822D3800677A3C /* EditGoalViewModel.swift */; };
 		4F2F2DF11E8745B500684D02 /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F2DF01E8745B500684D02 /* Label.swift */; };
 		4F491E961E986A9C003BAF0D /* RealmStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F491E951E986A9C003BAF0D /* RealmStats.swift */; };
+		4F61472F1EB597A50058BF43 /* InformationHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F61472E1EB597A50058BF43 /* InformationHeader.swift */; };
 		4F854E2D1E9B55540038A23F /* StatsLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F854E2C1E9B55540038A23F /* StatsLibrary.swift */; };
 		4F854E2F1E9B556C0038A23F /* RealmLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F854E2E1E9B556C0038A23F /* RealmLibrary.swift */; };
 		4FA6DD511E6B3D5300547D33 /* Goal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA6DD501E6B3D5300547D33 /* Goal.swift */; };
@@ -80,6 +81,7 @@
 		4F2EB1EB1E822D3800677A3C /* EditGoalViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditGoalViewModel.swift; sourceTree = "<group>"; };
 		4F2F2DF01E8745B500684D02 /* Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
 		4F491E951E986A9C003BAF0D /* RealmStats.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmStats.swift; sourceTree = "<group>"; };
+		4F61472E1EB597A50058BF43 /* InformationHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationHeader.swift; sourceTree = "<group>"; };
 		4F854E2C1E9B55540038A23F /* StatsLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsLibrary.swift; sourceTree = "<group>"; };
 		4F854E2E1E9B556C0038A23F /* RealmLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmLibrary.swift; sourceTree = "<group>"; };
 		4FA6DD501E6B3D5300547D33 /* Goal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Goal.swift; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 		4F1147CC1E58F71600346A1D /* PerfectWeek */ = {
 			isa = PBXGroup;
 			children = (
+				4F6147301EB640BF0058BF43 /* Header */,
 				4F2F2DE91E87349000684D02 /* Overview */,
 				4F2F2DEA1E8734AA00684D02 /* Detail */,
 				4F2F2DEB1E8734CA00684D02 /* Edit */,
@@ -254,6 +257,14 @@
 				4F1147D91E58F71700346A1D /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4F6147301EB640BF0058BF43 /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				4F61472E1EB597A50058BF43 /* InformationHeader.swift */,
+			);
+			name = Header;
 			sourceTree = "<group>";
 		};
 		4F854E271E9AC0C70038A23F /* Realm */ = {
@@ -465,6 +476,7 @@
 				4FD9872F1E989E2F00917F57 /* Stats.swift in Sources */,
 				4FA6DD511E6B3D5300547D33 /* Goal.swift in Sources */,
 				4FD987311E98A2C800917F57 /* StatsConstructor.swift in Sources */,
+				4F61472F1EB597A50058BF43 /* InformationHeader.swift in Sources */,
 				4FDFD1011E6D30AC00D33353 /* AddGoalNameViewModel.swift in Sources */,
 				4F2EB1E21E7EF38E00677A3C /* RealmGoal.swift in Sources */,
 				4F2EB1E01E7DEE8900677A3C /* Extensions.swift in Sources */,

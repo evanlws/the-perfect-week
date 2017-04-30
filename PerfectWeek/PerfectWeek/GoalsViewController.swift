@@ -22,7 +22,6 @@ final class GoalsViewController: UIViewController, UIGestureRecognizerDelegate {
 		collectionViewFlowLayout.sectionInset = UIEdgeInsets(top: collectionViewInset, left: collectionViewInset, bottom: collectionViewInset, right: collectionViewInset)
 		collectionViewFlowLayout.minimumInteritemSpacing = 10.0
 		self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout)
-
 		super.init(nibName: nil, bundle: nil)
 	}
 
@@ -42,14 +41,6 @@ final class GoalsViewController: UIViewController, UIGestureRecognizerDelegate {
 	}
 
 	// MARK: - Setup
-	private func setupGestureRecognizer() {
-		let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(completeGoal(_:)))
-		longPressGestureRecognizer.minimumPressDuration = 1.0
-		longPressGestureRecognizer.delaysTouchesBegan = true
-		longPressGestureRecognizer.delegate = self
-		collectionView.addGestureRecognizer(longPressGestureRecognizer)
-	}
-
 	private func setupCollectionView() {
 		collectionView.backgroundColor = .white
 		collectionView.delegate = self
@@ -60,10 +51,18 @@ final class GoalsViewController: UIViewController, UIGestureRecognizerDelegate {
 		view.addSubview(collectionView)
 
 		collectionView.translatesAutoresizingMaskIntoConstraints = false
-		collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 150).isActive = true
+		collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: InformationHeader.windowSize.height).isActive = true
 		collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
 		collectionView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
 		collectionView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+	}
+
+	private func setupGestureRecognizer() {
+		let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(completeGoal(_:)))
+		longPressGestureRecognizer.minimumPressDuration = 1.0
+		longPressGestureRecognizer.delaysTouchesBegan = true
+		longPressGestureRecognizer.delegate = self
+		collectionView.addGestureRecognizer(longPressGestureRecognizer)
 	}
 
 	// MARK: - Navigation
@@ -73,7 +72,6 @@ final class GoalsViewController: UIViewController, UIGestureRecognizerDelegate {
 		navigationController?.pushViewController(goalDetailViewController, animated: true)
 	}
 
-	// Summary: Add Goal
 	func presentAddGoalVC(_ indexPathRow: Int) {
 		let addGoalNameViewController = AddGoalNameViewController()
 		addGoalNameViewController.viewModel = AddGoalNameViewModel(mutableGoal: MutableGoal(objectId: UUID().uuidString))
