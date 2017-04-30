@@ -55,12 +55,11 @@ final class GoalCollectionViewCell: UICollectionViewCell {
 		nameLabel.bottomAnchor.constraint(equalTo: contentView.layoutMarginsGuide.bottomAnchor).isActive = true
 
 		progressView.translatesAutoresizingMaskIntoConstraints = false
-		progressView.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor).isActive = true
 		progressView.leftAnchor.constraint(equalTo: nameLabel.rightAnchor).isActive = true
-		progressView.bottomAnchor.constraint(equalTo: contentView.layoutMarginsGuide.bottomAnchor).isActive = true
 		progressView.rightAnchor.constraint(equalTo: contentView.layoutMarginsGuide.rightAnchor).isActive = true
 		progressView.widthAnchor.constraint(equalToConstant: 50.0).isActive = true
 		progressView.heightAnchor.constraint(equalTo: progressView.widthAnchor).isActive = true
+		progressView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
 
 		progressLabel.translatesAutoresizingMaskIntoConstraints = false
 		progressLabel.topAnchor.constraint(equalTo: progressView.topAnchor).isActive = true
