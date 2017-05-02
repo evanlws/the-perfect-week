@@ -57,14 +57,14 @@ final class InformationViewController: UIViewController {
 		multiplierLabel.font = UIFont.systemFont(ofSize: 23)
 		view.addSubview(multiplierLabel)
 
-		let dayOfWeekLabel = UILabel()
-		dayOfWeekLabel.font = UIFont.systemFont(ofSize: 36)
-		dayOfWeekLabel.textColor = .black
-		dayOfWeekLabel.textAlignment = .right
-		dayOfWeekLabel.sizeToFit()
-		dayOfWeekLabel.adjustsFontSizeToFitWidth = true
-		dayOfWeekLabel.text = "Saturday"
-		view.addSubview(dayOfWeekLabel)
+		let weekdayLabel = UILabel()
+		weekdayLabel.font = UIFont.systemFont(ofSize: 36)
+		weekdayLabel.textColor = .black
+		weekdayLabel.textAlignment = .right
+		weekdayLabel.sizeToFit()
+		weekdayLabel.adjustsFontSizeToFitWidth = true
+		weekdayLabel.text = "Saturday"
+		view.addSubview(weekdayLabel)
 
 		let dateLabel = UILabel()
 		dateLabel.font = UIFont.systemFont(ofSize: 20)
@@ -88,13 +88,13 @@ final class InformationViewController: UIViewController {
 		multiplierLabel.leftAnchor.constraint(equalTo: progressView.rightAnchor, constant: 5.0).isActive = true
 		multiplierLabel.bottomAnchor.constraint(equalTo: progressView.bottomAnchor).isActive = true
 
-		dayOfWeekLabel.translatesAutoresizingMaskIntoConstraints = false
-		dayOfWeekLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: UIApplication.shared.statusBarFrame.size.height + 5.0).isActive = true
-		dayOfWeekLabel.leftAnchor.constraint(equalTo: multiplierLabel.rightAnchor).isActive = true
-		dayOfWeekLabel.rightAnchor.constraint(equalTo: view.layoutMarginsGuide.rightAnchor).isActive = true
+		weekdayLabel.translatesAutoresizingMaskIntoConstraints = false
+		weekdayLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: UIApplication.shared.statusBarFrame.size.height + 5.0).isActive = true
+		weekdayLabel.leftAnchor.constraint(equalTo: multiplierLabel.rightAnchor).isActive = true
+		weekdayLabel.rightAnchor.constraint(equalTo: view.layoutMarginsGuide.rightAnchor).isActive = true
 
 		dateLabel.translatesAutoresizingMaskIntoConstraints = false
-		dateLabel.topAnchor.constraint(equalTo: dayOfWeekLabel.bottomAnchor, constant: 2.0).isActive = true
+		dateLabel.topAnchor.constraint(equalTo: weekdayLabel.bottomAnchor, constant: 2.0).isActive = true
 		dateLabel.leftAnchor.constraint(equalTo: multiplierLabel.rightAnchor).isActive = true
 		dateLabel.bottomAnchor.constraint(lessThanOrEqualTo: progressView.bottomAnchor).isActive = true
 		dateLabel.rightAnchor.constraint(equalTo: view.layoutMarginsGuide.rightAnchor).isActive = true
