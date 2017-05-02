@@ -39,7 +39,10 @@ final class InformationViewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+	}
 
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
 		setupViews()
 	}
 
@@ -58,6 +61,8 @@ final class InformationViewController: UIViewController {
 		dayOfWeekLabel.font = UIFont.systemFont(ofSize: 36)
 		dayOfWeekLabel.textColor = .black
 		dayOfWeekLabel.textAlignment = .right
+		dayOfWeekLabel.sizeToFit()
+		dayOfWeekLabel.adjustsFontSizeToFitWidth = true
 		dayOfWeekLabel.text = "Saturday"
 		view.addSubview(dayOfWeekLabel)
 
@@ -65,6 +70,8 @@ final class InformationViewController: UIViewController {
 		dateLabel.font = UIFont.systemFont(ofSize: 20)
 		dateLabel.textColor = .black
 		dateLabel.textAlignment = .right
+		dateLabel.sizeToFit()
+		dateLabel.adjustsFontSizeToFitWidth = true
 		dateLabel.text = "January 28"
 		view.addSubview(dateLabel)
 
@@ -73,23 +80,23 @@ final class InformationViewController: UIViewController {
 		view.addSubview(tipsPagingView)
 
 		progressView.translatesAutoresizingMaskIntoConstraints = false
-		progressView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: UIApplication.shared.statusBarFrame.size.height + 8.0).isActive = true
+		progressView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: UIApplication.shared.statusBarFrame.size.height + 5.0).isActive = true
 		progressView.leftAnchor.constraint(equalTo: view.layoutMarginsGuide.leftAnchor).isActive = true
-		progressView.widthAnchor.constraint(equalToConstant: 75).isActive =  true
-		progressView.heightAnchor.constraint(equalTo: progressView.widthAnchor).isActive = true
+		progressView.widthAnchor.constraint(equalTo: progressView.heightAnchor).isActive = true
 
 		multiplierLabel.translatesAutoresizingMaskIntoConstraints = false
 		multiplierLabel.leftAnchor.constraint(equalTo: progressView.rightAnchor, constant: 5.0).isActive = true
 		multiplierLabel.bottomAnchor.constraint(equalTo: progressView.bottomAnchor).isActive = true
 
 		dayOfWeekLabel.translatesAutoresizingMaskIntoConstraints = false
-		dayOfWeekLabel.topAnchor.constraint(equalTo: progressView.topAnchor).isActive = true
+		dayOfWeekLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: UIApplication.shared.statusBarFrame.size.height + 5.0).isActive = true
 		dayOfWeekLabel.leftAnchor.constraint(equalTo: multiplierLabel.rightAnchor).isActive = true
 		dayOfWeekLabel.rightAnchor.constraint(equalTo: view.layoutMarginsGuide.rightAnchor).isActive = true
 
 		dateLabel.translatesAutoresizingMaskIntoConstraints = false
-		dateLabel.topAnchor.constraint(equalTo: dayOfWeekLabel.bottomAnchor, constant: 5.0).isActive = true
+		dateLabel.topAnchor.constraint(equalTo: dayOfWeekLabel.bottomAnchor, constant: 2.0).isActive = true
 		dateLabel.leftAnchor.constraint(equalTo: multiplierLabel.rightAnchor).isActive = true
+		dateLabel.bottomAnchor.constraint(lessThanOrEqualTo: progressView.bottomAnchor).isActive = true
 		dateLabel.rightAnchor.constraint(equalTo: view.layoutMarginsGuide.rightAnchor).isActive = true
 
 		tipsPagingView.translatesAutoresizingMaskIntoConstraints = false
@@ -97,6 +104,7 @@ final class InformationViewController: UIViewController {
 		tipsPagingView.leftAnchor.constraint(equalTo: view.layoutMarginsGuide.leftAnchor).isActive = true
 		tipsPagingView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -5.0).isActive = true
 		tipsPagingView.rightAnchor.constraint(equalTo: view.layoutMarginsGuide.rightAnchor).isActive = true
+		tipsPagingView.heightAnchor.constraint(equalToConstant: view.bounds.size.height/3).isActive = true
 	}
 
 	required init?(coder aDecoder: NSCoder) {
