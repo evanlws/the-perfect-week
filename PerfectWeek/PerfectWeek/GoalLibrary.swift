@@ -16,63 +16,14 @@ final class GoalLibrary {
 		return RealmLibrary.shared.goals
 	}
 
-	private init() {
-		checkGoalsAndUpdate()
+	var stats: Stats {
+		return RealmLibrary.shared.stats
 	}
 
-	private func checkGoalsAndUpdate() {
-		for goal in goals {
-			var goalUpdateValues: [String: Any] = ["objectId": goal.objectId]
-			var shouldResetFrequency = false
-
-			if goal.weekEnd < Date().nextSunday() {
-				goalUpdateValues["weekEnd"] = Date().nextSunday().addingTimeInterval(1)
-				goalUpdateValues["isCompleted"] = false
-				shouldResetFrequency = true
-			}
-
-			switch goal.frequency.type {
-			case .weekly:
-				guard let weekly = goal.frequency as? Weekly else {
-					debugPrint("Guard failure warning: \(goal.name) could not be updated")
-					continue
-				}
-				if goal.isCompleted, weekly.weeklyProgress < weekly.timesPerWeek {
-					goalUpdateValues["isCompleted"] = false
-				}
-
-				if shouldResetFrequency {
-					goalUpdateValues["weeklyProgress"] = 0
-				}
-			case .daily:
-				guard let daily = goal.frequency as? Daily else {
-					debugPrint("Guard failure warning: \(goal.name) could not be updated")
-					continue
-				}
-
-				if goal.isCompleted, daily.dailyProgress < daily.timesPerDay {
-
-					if daily.days.contains(Date().currentWeekday()) {
-						goalUpdateValues["isCompleted"] = false
-					}
-				}
-
-				if shouldResetFrequency {
-					goalUpdateValues["dailyProgress"] = 0
-				}
-			case .once:
-				guard let once = goal.frequency as? Once else {
-					debugPrint("Guard failure warning: \(goal.name) could not be updated")
-					continue
-				}
-
-				if (goal.isCompleted && shouldResetFrequency) || (!goal.isCompleted && once.dueDate.startOfDay() < Date().startOfDay()) {
-					RealmLibrary.shared.delete(goal)
-					continue
-				}
-			}
-
-			RealmLibrary.shared.updateGoal(with: goalUpdateValues)
+	private init() {
+		if Date() > stats.weekEnd {
+			StatsLibrary.shared.updateStats(reason: .newWeek)
+			goals.forEach { updateGoal(with: ["objectId": $0.objectId, "progress": 0]) }
 		}
 	}
 
@@ -81,78 +32,23 @@ final class GoalLibrary {
 	}
 
 	func complete(_ goal: Goal) {
-		guard goal.isCompleted == false else {
+		guard goal.progress != goal.frequency else {
 			debugPrint("Guard failure warning: \(goal.name) could not be completed")
 			return
 		}
 
-		var goalUpdateValues: [String: Any] = ["objectId": goal.objectId]
-
-		switch goal.frequency.type {
-		case .weekly:
-			guard let weekly = goal.frequency as? Weekly else {
-				debugPrint("Guard failure warning: \(goal.name) could not be completed")
-				return
-			}
-
-			goalUpdateValues["isCompleted"] = true
-			goalUpdateValues["weeklyProgress"] = weekly.weeklyProgress + 1
-		case .daily:
-			guard let daily = goal.frequency as? Daily else {
-				debugPrint("Guard failure warning: \(goal.name) could not be completed")
-				return
-			}
-
-			if daily.timesPerDay == daily.dailyProgress {
-				goalUpdateValues["isCompleted"] = true
-			}
-
-			goalUpdateValues["dailyProgress"] = daily.timesPerDay + 1
-		case .once:
-			guard goal.frequency as? Once != nil else {
-				debugPrint("Guard failure warning: \(goal.name) could not be completed")
-				return
-			}
-
-			goalUpdateValues["isCompleted"] = true
-		}
-
 		StatsLibrary.shared.updateStats(reason: .goalCompleted)
-		RealmLibrary.shared.updateGoal(with: goalUpdateValues)
+		updateGoal(with: ["objectId": goal.objectId, "progress": goal.progress + 1, "lastCompleted": Date()])
 	}
 
 	func undo(_ goal: Goal) {
-		guard goal.isCompleted == true else {
+		guard goal.progress > 0 else {
 			debugPrint("Guard failure warning: Could not undo \(goal.name)")
 			return
 		}
 
-		var goalUpdateValues: [String: Any] = ["objectId": goal.objectId, "isCompleted": false]
-
-		switch goal.frequency.type {
-		case .weekly:
-			guard let weekly = goal.frequency as? Weekly, weekly.weeklyProgress > 0 else {
-				debugPrint("Guard failure warning: Could not undo \(goal.name)")
-				return
-			}
-
-			goalUpdateValues["weeklyProgress"] = weekly.weeklyProgress - 1
-		case .daily:
-			guard let daily = goal.frequency as? Daily, daily.dailyProgress > 0 else {
-				debugPrint("Guard failure warning: Could not undo \(goal.name)")
-				return
-			}
-
-			goalUpdateValues["dailyProgress"] = daily.timesPerDay - 1
-		case .once:
-			guard goal.frequency as? Once != nil else {
-				debugPrint("Guard failure warning: Could not undo \(goal.name)")
-				return
-			}
-		}
-
 		StatsLibrary.shared.updateStats(reason: .undoGoal)
-		RealmLibrary.shared.updateGoal(with: goalUpdateValues)
+		updateGoal(with: ["objectId": goal.objectId, "progress": goal.progress - 1])
 	}
 
 	func delete(_ goal: Goal) {

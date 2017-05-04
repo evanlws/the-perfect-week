@@ -12,9 +12,10 @@ import RealmSwift
 class RealmStats: Object {
 
 	dynamic var objectId: String = ""
+	dynamic var perfectWeeks = 0
+	dynamic var currentStreak = 0
+	dynamic var weekEnd: NSDate = NSDate()
 	var days = List<RealmDay>()
-	var perfectWeeks = RealmOptional<Int>()
-	var currentStreak = RealmOptional<Int>()
 
 	override static func primaryKey() -> String? {
 		return "objectId"
@@ -25,6 +26,6 @@ class RealmStats: Object {
 class RealmDay: Object {
 
 	dynamic var date: NSDate?
-	var goalsCompleted = RealmOptional<Int>()
+	dynamic var goalsCompleted = 0
 
 }

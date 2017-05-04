@@ -65,11 +65,7 @@ extension GoalDetailViewController: UITableViewDataSource {
 		case 2:
 			cell.textLabel?.text = viewModel.goal.name
 		default:
-			if viewModel.goal.frequency.type == .weekly {
-				if let weekly = viewModel.goal.frequency as? Weekly {
-					cell.textLabel?.text = String(weekly.timesPerWeek)
-				}
-			}
+			cell.textLabel?.text = String(viewModel.goal.frequency)
 		}
 
 		return cell

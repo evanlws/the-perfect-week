@@ -87,10 +87,10 @@ final class GoalsViewController: UIViewController, UIGestureRecognizerDelegate {
 		let point = gestureRecognizer.location(in: collectionView)
 		if let indexPath = collectionView.indexPathForItem(at: point) {
 			let goal = viewModel.goals[indexPath.row] as Goal
-			if goal.isCompleted {
+			if goal.progress == goal.frequency {
 				viewModel.undo(goal)
 			} else {
-				viewModel.complete(viewModel.goals[indexPath.row])
+				viewModel.complete(goal)
 			}
 
 			collectionView.reloadData()
@@ -117,7 +117,7 @@ extension GoalsViewController: UICollectionViewDataSource {
 			cell.nameLabel.text = "Add a goal"
 		} else {
 			let goal = viewModel.goals[indexPath.row]
-			cell.setCompletedStyle(goal.isCompleted)
+			cell.setCompletedStyle(goal.progress == goal.frequency)
 			cell.nameLabel.text = goal.name
 		}
 

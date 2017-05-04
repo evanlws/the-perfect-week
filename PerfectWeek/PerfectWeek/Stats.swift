@@ -14,16 +14,18 @@ final class Stats {
 	var days: [Date: Int]
 	var perfectWeeks: Int
 	var currentStreak: Int
+	var weekEnd: Date
 
-	init(objectId: String, days: [Date: Int] = [:], perfectWeeks: Int = 0, currentStreak: Int = 0) {
+	init(objectId: String, days: [Date: Int] = [:], perfectWeeks: Int = 0, currentStreak: Int = 0, weekEnd: Date = Date().nextSunday().addingTimeInterval(1)) {
 		self.objectId = objectId
 		self.days = days
 		self.perfectWeeks = perfectWeeks
 		self.currentStreak = currentStreak
+		self.weekEnd = weekEnd
 	}
 
 	var description: String {
-		return "\nGoal:\n\tObjectID: \(objectId)\n\tPerfect Weeks: \(perfectWeeks)\n\tCurrent Streak: \(currentStreak)\n"
+		return "\nGoal:\n\tObjectID: \(objectId)\n\tPerfect Weeks: \(perfectWeeks)\n\tCurrent Streak: \(currentStreak)\n\tWeekEnd: \(weekEnd)\n"
 	}
 
 }

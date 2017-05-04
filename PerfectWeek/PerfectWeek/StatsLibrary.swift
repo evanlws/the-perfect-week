@@ -11,7 +11,7 @@ import Foundation
 final class StatsLibrary {
 
 	enum UpdateReason {
-		case goalCompleted, undoGoal
+		case goalCompleted, undoGoal, newWeek
 	}
 
 	static let shared = StatsLibrary()
@@ -28,14 +28,16 @@ final class StatsLibrary {
 		case .goalCompleted:
 			let goalsCompleted = stats.days[Date().startOfDay()]
 			stats.days[Date().startOfDay()] = (goalsCompleted ?? 0) + 1
+			statsUpdateValues["days"] = StatsConverter.converted(days: stats.days)
 		case .undoGoal:
-			if let goalsCompleted = stats.days[Date().startOfDay()], goalsCompleted > 0 {
+			guard let goalsCompleted = stats.days[Date().startOfDay()], goalsCompleted > 0 else { return }
 				stats.days[Date().startOfDay()] = goalsCompleted - 1
-			} else {
-				return
-			}
+
+			statsUpdateValues["days"] = StatsConverter.converted(days: stats.days)
+		case .newWeek:
+			statsUpdateValues["weekEnd"] = Date().nextSunday().addingTimeInterval(1)
 		}
-		statsUpdateValues["days"] = StatsConstructor.converted(days: stats.days)
+
 		RealmLibrary.shared.updateStats(with: statsUpdateValues)
 	}
 

@@ -1,5 +1,5 @@
 //
-//  StatsConstructor.swift
+//  StatsConverter.swift
 //  PerfectWeek
 //
 //  Created by Evan Lewis on 4/8/17.
@@ -9,16 +9,21 @@
 import Foundation
 import RealmSwift
 
-final class StatsConstructor {
+enum ConversionError: Error {
+	case nilValue(at: String)
+	case unexpectedFrequencyType(Int)
+}
+
+final class StatsConverter {
 
 	// MARK: - Stats to RealmStats
 	static func converted(_ stats: Stats) -> RealmStats {
 		let realmStats = RealmStats()
 		realmStats.objectId = stats.objectId
+		realmStats.perfectWeeks = stats.perfectWeeks
+		realmStats.currentStreak = stats.currentStreak
+		realmStats.weekEnd = stats.weekEnd as NSDate
 		realmStats.days = converted(days: stats.days)
-		realmStats.perfectWeeks = RealmOptional(stats.perfectWeeks)
-		realmStats.currentStreak = RealmOptional(stats.currentStreak)
-
 		return realmStats
 	}
 
@@ -26,7 +31,7 @@ final class StatsConstructor {
 		let daysList = List<RealmDay>()
 		days.forEach({ (key: Date, value: Int) in
 			let realmDay = RealmDay()
-			realmDay.goalsCompleted = RealmOptional(value)
+			realmDay.goalsCompleted = value
 			realmDay.date = key as NSDate
 			daysList.append(realmDay)
 		})
@@ -35,11 +40,8 @@ final class StatsConstructor {
 	}
 
 	// MARK: - RealmStats to Stats
-	static func converted(_ realmStats: RealmStats) throws -> Stats {
-		guard let perfectWeeks = realmStats.perfectWeeks.value else { throw ConversionError.nilValue(at: "RealmStats.perfectWeeks") }
-		guard let currentStreak = realmStats.currentStreak.value else { throw ConversionError.nilValue(at: "RealmStats.currentStreak") }
-
-		let stats = Stats(objectId: realmStats.objectId, days: converted(realmDays: realmStats.days), perfectWeeks: perfectWeeks, currentStreak: currentStreak)
+	static func converted(_ realmStats: RealmStats) -> Stats {
+		let stats = Stats(objectId: realmStats.objectId, days: converted(realmDays: realmStats.days), perfectWeeks: realmStats.perfectWeeks, currentStreak: realmStats.currentStreak, weekEnd: realmStats.weekEnd as Date)
 		return stats
 	}
 
@@ -48,9 +50,7 @@ final class StatsConstructor {
 		realmDays.forEach {
 			guard let nsDate = $0.date else { fatalError("Could not cast object. Due date is nil") }
 			let date = nsDate as Date
-			if let goalsCompleted = $0.goalsCompleted.value {
-				days[date] = goalsCompleted
-			}
+			days[date] = $0.goalsCompleted
 		}
 
 		return days

@@ -8,86 +8,70 @@
 
 import Foundation
 
-enum GoalType: Int, CustomStringConvertible {
-	case weekly, daily, once
-
-	var description: String {
-		switch self {
-		case .weekly: return "Weekly"
-		case .daily: return "Daily"
-		case .once: return "Once"
-		}
-	}
-}
-
 final class Goal {
 
 	let objectId: String
-	var name: String
-	var isCompleted: Bool
-	var weekEnd: Date
-	var frequency: Frequency
+	let name: String
+	let frequency: Int
+	let progress: Int
+	var lastCompleted: Date?
+	var extensionItem: ExtensionItem?
 
-	init(objectId: String, name: String, frequency: Frequency, isCompleted: Bool = false, weekEnd: Date = Date().nextSunday().addingTimeInterval(1)) {
+	init(objectId: String,
+	     name: String,
+	     frequency: Int,
+	     extensionItem: ExtensionItem?,
+	     lastCompleted: Date?,
+	     progress: Int = 0) {
 		self.objectId = objectId
 		self.name = name
-		self.isCompleted = isCompleted
-		self.weekEnd = weekEnd
 		self.frequency = frequency
+		self.progress = progress
+		self.lastCompleted = lastCompleted
+		self.extensionItem = extensionItem
 	}
 
 	convenience init?(_ mutableGoal: MutableGoal) {
 		guard let name = mutableGoal.name, let frequency = mutableGoal.frequency else { return nil }
-		self.init(objectId: mutableGoal.objectId, name: name, frequency: frequency)
+		self.init(objectId: mutableGoal.objectId, name: name, frequency: frequency, extensionItem: mutableGoal.extensionItem, lastCompleted: nil)
 	}
 
 	var description: String {
-		return "\nGoal:\n\tObjectID: \(objectId)\n\tName: \(name)\n\tCompleted: \(isCompleted ? "Yes" : "No")\n\tWeekend Date: \(weekEnd)\n\tFrequencyType: \(frequency.type.rawValue)\n"
+		return "\nGoal:\n\tObjectID: \(objectId)\n\tName: \(name)\n\tLast Completed: \(String(describing: lastCompleted))\n\tFrequency: \(frequency)\n\tProgress: \(progress)\n\tExtension: \(String(describing: extensionItem?.description))\n"
 	}
 
 }
 
-protocol Frequency {
+final class ExtensionItem {
 
-	var type: GoalType { get set }
+	enum ItemType: Int, CustomStringConvertible {
+		case steps, walkingAndRunning, focusSession
 
-}
-
-final class Weekly: Frequency {
-
-	var type: GoalType = .weekly
-	var timesPerWeek: Int
-	var weeklyProgress: Int = 0
-
-	init(timesPerWeek: Int = 0) {
-		self.timesPerWeek = timesPerWeek
+		var description: String {
+			switch self {
+			case .steps:
+				return "Steps"
+			case .walkingAndRunning:
+				return "Walking + Running"
+			case .focusSession:
+				return "Focus Session"
+			}
+		}
 	}
 
-}
+	let name: String
+	let itemType: ItemType
 
-final class Daily: Frequency {
+	init?(name: String?, itemType: ItemType?) {
+		guard let name = name, let itemType = itemType else { return nil }
 
-	var type: GoalType = .daily
-	var timesPerDay: Int
-	var dailyProgress: Int = 0
-	let days: [Int]
-
-	init(days: [Int], timesPerDay: Int = 0) {
-		self.days = days
-		self.timesPerDay = timesPerDay
+		self.name = name
+		self.itemType = itemType
 	}
 
-}
-
-final class Once: Frequency {
-
-	var type: GoalType = .once
-	var dueDate: Date
-
-	init(dueDate: Date = Date().thisSaturday()) {
-		self.dueDate = dueDate
+	var description: String {
+		return "\nExtension:\n\tName: \(name)\n\tItemType: \(itemType.description)\n"
 	}
-
 }
 
 struct MutableGoal {
@@ -103,84 +87,36 @@ struct MutableGoal {
 		}
 	}
 
-	var frequencyType: GoalType? {
+	var frequency: Int? {
 		didSet {
-			if frequencyType != oldValue {
-				resetFrequency()
+			if frequency != oldValue {
+				updateValues["frequency"] = frequency
 			}
 		}
 	}
 
-	var timesPerWeek: Int? {
+	var progress: Int? {
 		didSet {
-			if timesPerWeek != oldValue {
-				updateValues["timesPerWeek"] = timesPerWeek
+			if progress != oldValue {
+				updateValues["progress"] = progress
 			}
 		}
 	}
 
-	var weeklyProgress: Int? {
-		didSet {
-			if weeklyProgress != oldValue {
-				updateValues["weeklyProgress"] = weeklyProgress
-			}
-		}
-	}
+	var lastCompleted: Date?
 
-	var timesPerDay: Int? {
-		didSet {
-			if timesPerDay != oldValue {
-				updateValues["timesPerDay"] = timesPerDay
-			}
-		}
-	}
+	var extensionItem: ExtensionItem?
 
-	var dailyProgress: Int? {
-		didSet {
-			if dailyProgress != oldValue {
-				updateValues["dailyProgress"] = dailyProgress
-			}
-		}
-	}
-
-	var days: [Int]? {
-		didSet {
-			if days ?? [Int]() != oldValue ?? [Int]() {
-				updateValues["days"] = days
-			}
-		}
-	}
-
-	var dueDate: Date? {
-		didSet {
-			if dueDate != oldValue {
-				updateValues["dueDate"] = dueDate
-			}
-		}
-	}
-
-	var frequency: Frequency?
-
-	init(objectId: String, name: String? = nil, type: GoalType? = nil) {
+	init(objectId: String) { // Used when creating a goal
 		self.objectId = objectId
-		self.name = name
-		self.frequencyType = type
 		self.updateValues = ["objectId": objectId]
 	}
 
-	init(_ goal: Goal) {
+	init(_ goal: Goal) { // Used when updating a goal
 		self.objectId = goal.objectId
 		self.name = goal.name
-		self.frequencyType = goal.frequency.type
 		self.frequency = goal.frequency
 		self.updateValues = ["objectId": objectId]
-	}
-
-	mutating func resetFrequency() {
-		guard let goalName = name, let goalFrequencyType = frequencyType else { fatalError("No goal name or frequency. What are you updating?") }
-		self.updateValues = ["objectId": objectId, "name": goalName, "frequencyType": goalFrequencyType.rawValue]
-		weeklyProgress = 0
-		dailyProgress = 0
 	}
 
 }

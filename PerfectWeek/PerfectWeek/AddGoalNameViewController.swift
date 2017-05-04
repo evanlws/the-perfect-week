@@ -11,14 +11,14 @@ import UIKit
 final class AddGoalNameViewController: UIViewController {
 
 	var viewModel: AddGoalNameViewModel!
-	private let nextButton = UIButton()
+	fileprivate let nextButton = UIButton()
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		let cancelButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancel(_:)))
 		navigationItem.leftBarButtonItem = cancelButtonItem
 		self.view.backgroundColor = .white
-		self.title = "Add A Goal"
+		self.title = "Add Goal"
 		setupNameLabel()
 		setupNameTextField()
 		setupNextButton()
@@ -66,11 +66,14 @@ final class AddGoalNameViewController: UIViewController {
 		nextButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
 	}
 
-	// MARK: - Navigation
+}
+
+// MARK: - Navigation
+extension AddGoalNameViewController {
 	func next(_ nextButton: UIButton) {
-		let addGoalTypeVC = AddGoalTypeViewController()
-		addGoalTypeVC.viewModel = AddGoalTypeViewModel(mutableGoal: viewModel.mutableGoal)
-		navigationController?.pushViewController(addGoalTypeVC, animated: true)
+		let addGoalFrequencyVC = AddGoalFrequencyViewController()
+		addGoalFrequencyVC.viewModel = AddGoalFrequencyViewModel(mutableGoal: viewModel.mutableGoal)
+		navigationController?.pushViewController(addGoalFrequencyVC, animated: true)
 	}
 
 	func cancel(_ cancelBarButtonItem: UIBarButtonItem) {
