@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-final class GoalConverter {
+struct GoalConverter {
 
 	// MARK: - Goals to RealmGoals
 	static func converted(_ goal: Goal) -> RealmGoal {

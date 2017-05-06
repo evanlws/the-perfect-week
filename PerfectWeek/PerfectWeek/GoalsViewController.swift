@@ -37,6 +37,7 @@ final class GoalsViewController: UIViewController, UIGestureRecognizerDelegate {
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+		InformationHeaderObserver.shouldShowInformationHeader()
 		collectionView.reloadData()
 	}
 
@@ -64,6 +65,10 @@ final class GoalsViewController: UIViewController, UIGestureRecognizerDelegate {
 		longPressGestureRecognizer.delegate = self
 		collectionView.addGestureRecognizer(longPressGestureRecognizer)
 	}
+
+}
+
+extension GoalsViewController {
 
 	// MARK: - Navigation
 	func presentGoalDetailVC(_ indexPathRow: Int) {
@@ -135,4 +140,5 @@ extension GoalsViewController: UICollectionViewDelegate {
 			presentGoalDetailVC(indexPath.row)
 		}
 	}
+
 }

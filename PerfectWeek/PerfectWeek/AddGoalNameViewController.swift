@@ -24,6 +24,11 @@ final class AddGoalNameViewController: UIViewController {
 		setupNextButton()
 	}
 
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		InformationHeaderObserver.shouldHideInformationHeader()
+	}
+
 	private func setupNameLabel() {
 		let nameLabel = Label(style: .body)
 		nameLabel.text = "Enter a name for your goal"

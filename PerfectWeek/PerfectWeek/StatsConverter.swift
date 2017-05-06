@@ -14,7 +14,7 @@ enum ConversionError: Error {
 	case unexpectedFrequencyType(Int)
 }
 
-final class StatsConverter {
+struct StatsConverter {
 
 	// MARK: - Stats to RealmStats
 	static func converted(_ stats: Stats) -> RealmStats {

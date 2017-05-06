@@ -22,10 +22,42 @@ final class InformationHeader {
 		informationWindow.isHidden = false
 		let informationViewController = InformationViewController()
 		informationWindow.rootViewController = informationViewController
+
+		addObservers()
+	}
+
+	private func addObservers() {
+		NotificationCenter.default.addObserver(self, selector: #selector(showInformationHeader), name: Notification.Name(rawValue: InformationHeaderObserver.showInformationHeaderNotification), object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(hideInformationHeader), name: Notification.Name(rawValue: InformationHeaderObserver.hideInformationHeaderNotification), object: nil)
+	}
+
+	@objc func showInformationHeader() {
+		if informationWindow.isHidden {
+			self.informationWindow.isHidden = false
+			UIView.animate(withDuration: 0.1, animations: {
+				var frame = self.informationWindow.frame
+				frame.origin.y = 0.0
+				self.informationWindow.frame = frame
+			}, completion: nil)
+		}
+	}
+
+	@objc func hideInformationHeader() {
+		if !informationWindow.isHidden {
+			UIView.animate(withDuration: 0.1, animations: {
+				var frame = self.informationWindow.frame
+				frame.origin.y = -frame.height
+				self.informationWindow.frame = frame
+			}) { _ in
+				self.informationWindow.isHidden = true
+			}
+		}
 	}
 
 	deinit {
 		debugPrint("WARNING: Information header is being released")
+		NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: InformationHeaderObserver.showInformationHeaderNotification), object: nil)
+		NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: InformationHeaderObserver.hideInformationHeaderNotification), object: nil)
 	}
 
 }
@@ -37,8 +69,8 @@ final class InformationViewController: UIViewController {
 		self.view.backgroundColor = .red
 	}
 
-	override func viewDidLoad() {
-		super.viewDidLoad()
+	required init?(coder aDecoder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -105,10 +137,6 @@ final class InformationViewController: UIViewController {
 		tipsPagingView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -5.0).isActive = true
 		tipsPagingView.rightAnchor.constraint(equalTo: view.layoutMarginsGuide.rightAnchor).isActive = true
 		tipsPagingView.heightAnchor.constraint(equalToConstant: view.bounds.size.height/3).isActive = true
-	}
-
-	required init?(coder aDecoder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
 	}
 
 }
