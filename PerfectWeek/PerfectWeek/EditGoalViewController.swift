@@ -32,17 +32,23 @@ final class EditGoalViewController: UIViewController {
 		setupSaveButton()
 	}
 
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		InformationHeaderObserver.shouldHideInformationHeader()
+	}
+
 	// MARK: - Setup
 	private func setupNameLabel() {
-		nameLabel.text = "Enter a name for your goal"
+		nameLabel.text = "Name"
 		view.addSubview(nameLabel)
 
 		nameLabel.translatesAutoresizingMaskIntoConstraints = false
-		let height: CGFloat = 30
-		nameLabel.heightAnchor.constraint(equalToConstant: height).isActive = true
-		nameLabel.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -10).isActive = true
-		nameLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
-		nameLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 100).isActive = true
+		NSLayoutConstraint.activate([
+			nameLabel.heightAnchor.constraint(equalToConstant: Label.defaultHeight),
+			nameLabel.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -10),
+			nameLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
+			nameLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 100)
+		])
 	}
 
 	private func setupNameTextField() {
@@ -53,21 +59,24 @@ final class EditGoalViewController: UIViewController {
 		view.addSubview(nameTextField)
 
 		nameTextField.translatesAutoresizingMaskIntoConstraints = false
-		let height: CGFloat = 30
-		nameTextField.heightAnchor.constraint(equalToConstant: height).isActive = true
-		nameTextField.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -10).isActive = true
-		nameTextField.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
-		nameTextField.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10).isActive = true
+		NSLayoutConstraint.activate([
+			nameTextField.heightAnchor.constraint(equalToConstant: Label.defaultHeight),
+			nameTextField.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -10),
+			nameTextField.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
+			nameTextField.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10)
+		])
 	}
 
 	private func setupTimesPerWeekLabel() {
 		view.addSubview(timesPerWeekLabel)
 
 		timesPerWeekLabel.translatesAutoresizingMaskIntoConstraints = false
-		timesPerWeekLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
-		timesPerWeekLabel.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -20).isActive = true
-		timesPerWeekLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
-		timesPerWeekLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 30).isActive = true
+		NSLayoutConstraint.activate([
+			timesPerWeekLabel.heightAnchor.constraint(equalToConstant: Label.defaultHeight),
+			timesPerWeekLabel.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -20),
+			timesPerWeekLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
+			timesPerWeekLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 30)
+		])
 	}
 
 	private func setupTimesPerWeekStepper() {
@@ -76,10 +85,12 @@ final class EditGoalViewController: UIViewController {
 		viewModel.mutableGoal.frequency = timesPerWeekStepper.counter
 
 		timesPerWeekStepper.translatesAutoresizingMaskIntoConstraints = false
-		timesPerWeekStepper.heightAnchor.constraint(equalToConstant: 100).isActive = true
-		timesPerWeekStepper.widthAnchor.constraint(equalToConstant: 120).isActive = true
-		timesPerWeekStepper.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
-		timesPerWeekStepper.topAnchor.constraint(equalTo: timesPerWeekLabel.bottomAnchor, constant: 15).isActive = true
+		NSLayoutConstraint.activate([
+			timesPerWeekStepper.heightAnchor.constraint(equalToConstant: 100),
+			timesPerWeekStepper.widthAnchor.constraint(equalToConstant: 120),
+			timesPerWeekStepper.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
+			timesPerWeekStepper.topAnchor.constraint(equalTo: timesPerWeekLabel.bottomAnchor, constant: 15)
+		])
 	}
 
 	private func setupSaveButton() {
@@ -89,10 +100,12 @@ final class EditGoalViewController: UIViewController {
 		view.addSubview(saveButton)
 
 		saveButton.translatesAutoresizingMaskIntoConstraints = false
-		saveButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-		saveButton.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -30).isActive = true
-		saveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-		saveButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50).isActive = true
+		NSLayoutConstraint.activate([
+			saveButton.heightAnchor.constraint(equalToConstant: Label.defaultHeight),
+			saveButton.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -30),
+			saveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+			saveButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50)
+		])
 	}
 
 }

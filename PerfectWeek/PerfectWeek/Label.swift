@@ -10,6 +10,8 @@ import UIKit
 
 final class Label: UILabel {
 
+	static let defaultHeight: CGFloat = 30.0
+
 	enum Style {
 		case body, header
 	}
