@@ -12,8 +12,19 @@ final class AddGoalFrequencyViewController: UIViewController {
 
 	var viewModel: AddGoalFrequencyViewModel!
 
-	private let frequencyPrompt = Label(style: .body)
-	private let timesPerWeekLabel = Label(style: .body)
+	private let frequencyPrompt: Label = {
+		let label = Label(style: .header)
+		label.text = "How often do you want to complete this goal?"
+		label.numberOfLines = 0
+		return label
+	}()
+
+	private let timesPerWeekLabel: Label = {
+		let label = Label(style: .body)
+		label.text = "Times per week"
+		return label
+	}()
+
 	private let timesPerWeekStepper = Stepper()
 
 	override func viewDidLoad() {

@@ -11,7 +11,7 @@ import UIKit
 final class Label: UILabel {
 
 	enum Style {
-		case body
+		case body, header
 	}
 
 	init(style: Style) {
@@ -23,6 +23,11 @@ final class Label: UILabel {
 			self.minimumScaleFactor = 0.6
 			self.textColor = .black
 			self.textAlignment = .left
+		case .header:
+			self.font = UIFont.systemFont(ofSize: 22)
+			self.minimumScaleFactor = 0.6
+			self.textColor = .black
+			self.textAlignment = .center
 		}
 
 	}
