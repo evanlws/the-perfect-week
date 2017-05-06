@@ -35,10 +35,12 @@ final class AddGoalFrequencyViewController: UIViewController {
 		view.addSubview(frequencyPrompt)
 
 		frequencyPrompt.translatesAutoresizingMaskIntoConstraints = false
-		frequencyPrompt.heightAnchor.constraint(equalToConstant: 60).isActive = true
-		frequencyPrompt.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -40).isActive = true
-		frequencyPrompt.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 30).isActive = true
-		frequencyPrompt.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+		NSLayoutConstraint.activate([
+			frequencyPrompt.heightAnchor.constraint(equalToConstant: 60),
+			frequencyPrompt.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -40),
+			frequencyPrompt.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 30),
+			frequencyPrompt.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+		])
 	}
 
 	private func setupTimesPerWeekLabel() {
@@ -46,10 +48,12 @@ final class AddGoalFrequencyViewController: UIViewController {
 		view.addSubview(timesPerWeekLabel)
 
 		timesPerWeekLabel.translatesAutoresizingMaskIntoConstraints = false
-		timesPerWeekLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
-		timesPerWeekLabel.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -20).isActive = true
-		timesPerWeekLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
-		timesPerWeekLabel.topAnchor.constraint(equalTo: frequencyPrompt.bottomAnchor, constant: 30).isActive = true
+		NSLayoutConstraint.activate([
+			timesPerWeekLabel.heightAnchor.constraint(equalToConstant: 30),
+			timesPerWeekLabel.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -20),
+			timesPerWeekLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
+			timesPerWeekLabel.topAnchor.constraint(equalTo: frequencyPrompt.bottomAnchor, constant: 30)
+		])
 	}
 
 	private func setupTimesPerWeekStepper() {
@@ -59,10 +63,12 @@ final class AddGoalFrequencyViewController: UIViewController {
 		viewModel.mutableGoal.frequency = timesPerWeekStepper.counter
 
 		timesPerWeekStepper.translatesAutoresizingMaskIntoConstraints = false
-		timesPerWeekStepper.heightAnchor.constraint(equalToConstant: 100).isActive = true
-		timesPerWeekStepper.widthAnchor.constraint(equalToConstant: 120).isActive = true
-		timesPerWeekStepper.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor).isActive = true
-		timesPerWeekStepper.topAnchor.constraint(equalTo: timesPerWeekLabel.bottomAnchor, constant: 15).isActive = true
+		NSLayoutConstraint.activate([
+			timesPerWeekStepper.heightAnchor.constraint(equalToConstant: 100),
+			timesPerWeekStepper.widthAnchor.constraint(equalToConstant: 120),
+			timesPerWeekStepper.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
+			timesPerWeekStepper.topAnchor.constraint(equalTo: timesPerWeekLabel.bottomAnchor, constant: 15)
+		])
 	}
 
 	private func setupNextButton() {
@@ -73,10 +79,12 @@ final class AddGoalFrequencyViewController: UIViewController {
 		view.addSubview(nextButton)
 
 		nextButton.translatesAutoresizingMaskIntoConstraints = false
-		nextButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-		nextButton.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -30).isActive = true
-		nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-		nextButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50).isActive = true
+		NSLayoutConstraint.activate([
+			nextButton.heightAnchor.constraint(equalToConstant: 30),
+			nextButton.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -30),
+			nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+			nextButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50)
+		])
 	}
 
 }

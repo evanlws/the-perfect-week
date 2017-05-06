@@ -36,10 +36,12 @@ final class AddGoalNameViewController: UIViewController {
 
 		nameLabel.translatesAutoresizingMaskIntoConstraints = false
 		let height: CGFloat = 30
-		nameLabel.heightAnchor.constraint(equalToConstant: height).isActive = true
-		nameLabel.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -10).isActive = true
-		nameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive  = true
-		nameLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant:-height).isActive = true
+		NSLayoutConstraint.activate([
+			nameLabel.heightAnchor.constraint(equalToConstant: height),
+			nameLabel.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -10),
+			nameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+			nameLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant:-height)
+		])
 	}
 
 	private func setupNameTextField() {
@@ -52,10 +54,12 @@ final class AddGoalNameViewController: UIViewController {
 
 		nameTextField.translatesAutoresizingMaskIntoConstraints = false
 		let height: CGFloat = 30
-		nameTextField.heightAnchor.constraint(equalToConstant: height).isActive = true
-		nameTextField.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -10).isActive = true
-		nameTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-		nameTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: height).isActive = true
+		NSLayoutConstraint.activate([
+			nameTextField.heightAnchor.constraint(equalToConstant: height),
+			nameTextField.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -10),
+			nameTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+			nameTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: height)
+		])
 	}
 
 	private func setupNextButton() {
@@ -64,11 +68,14 @@ final class AddGoalNameViewController: UIViewController {
 		nextButton.addTarget(self, action: #selector(next(_:)), for: .touchUpInside)
 		view.addSubview(nextButton)
 		disableNextButton()
+
 		nextButton.translatesAutoresizingMaskIntoConstraints = false
-		nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-		nextButton.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -10).isActive = true
-		nextButton.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -60).isActive = true
-		nextButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+		NSLayoutConstraint.activate([
+			nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+			nextButton.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -10),
+			nextButton.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -60),
+			nextButton.heightAnchor.constraint(equalToConstant: 30)
+		])
 	}
 
 }
