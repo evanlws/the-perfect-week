@@ -62,9 +62,14 @@ class RealmLibrary {
 	}
 
 	func delete(_ goal: Goal) {
+		guard let realmGoal = realm.object(ofType: RealmGoal.self, forPrimaryKey: GoalConverter.converted(goal).objectId) else {
+			debugPrint("Guard failure warning: Could not find object with id")
+			return
+		}
+
 		do {
 			try realm.write {
-				realm.delete(GoalConverter.converted(goal))
+				realm.delete(realmGoal)
 			}
 		} catch {
 			debugPrint("Could not delete goal")
