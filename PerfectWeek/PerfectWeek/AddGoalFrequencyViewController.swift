@@ -31,20 +31,20 @@ final class AddGoalFrequencyViewController: UIViewController {
 
 	// MARK: - Setup
 	private func setupFrequencyPrompt() {
-		frequencyPrompt.text = "How often do you want to complete this goal?"
 		view.addSubview(frequencyPrompt)
 
 		frequencyPrompt.translatesAutoresizingMaskIntoConstraints = false
+		let navigationBarHeight = navigationController?.navigationBar.bounds.size.height ?? 0
 		NSLayoutConstraint.activate([
 			frequencyPrompt.heightAnchor.constraint(equalToConstant: 60),
 			frequencyPrompt.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -40),
-			frequencyPrompt.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 30),
+			frequencyPrompt.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: navigationBarHeight + 40),
 			frequencyPrompt.centerXAnchor.constraint(equalTo: view.centerXAnchor)
 		])
+
 	}
 
 	private func setupTimesPerWeekLabel() {
-		timesPerWeekLabel.text = "Times per week"
 		view.addSubview(timesPerWeekLabel)
 
 		timesPerWeekLabel.translatesAutoresizingMaskIntoConstraints = false
