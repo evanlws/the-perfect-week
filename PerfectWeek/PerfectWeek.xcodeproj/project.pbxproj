@@ -33,6 +33,7 @@
 		4FA6DD5C1E6B563800547D33 /* GoalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA6DD5B1E6B563800547D33 /* GoalCollectionViewCell.swift */; };
 		4FA6DD5E1E6B79DE00547D33 /* GoalsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA6DD5D1E6B79DE00547D33 /* GoalsViewModel.swift */; };
 		4FA6DD601E6B7C5A00547D33 /* GoalLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA6DD5F1E6B7C5A00547D33 /* GoalLibrary.swift */; };
+		4FBF57DD1EBE6DB8001DA75C /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBF57DC1EBE6DB8001DA75C /* NotificationManager.swift */; };
 		4FD9872F1E989E2F00917F57 /* Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD9872E1E989E2F00917F57 /* Stats.swift */; };
 		4FD987311E98A2C800917F57 /* StatsConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD987301E98A2C700917F57 /* StatsConverter.swift */; };
 		4FDFD0FF1E6CBEB600D33353 /* AddGoalNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDFD0FE1E6CBEB600D33353 /* AddGoalNameViewController.swift */; };
@@ -91,6 +92,8 @@
 		4FA6DD5B1E6B563800547D33 /* GoalCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalCollectionViewCell.swift; sourceTree = "<group>"; };
 		4FA6DD5D1E6B79DE00547D33 /* GoalsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalsViewModel.swift; sourceTree = "<group>"; };
 		4FA6DD5F1E6B7C5A00547D33 /* GoalLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalLibrary.swift; sourceTree = "<group>"; };
+		4FBF57DC1EBE6DB8001DA75C /* NotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		4FBF57DF1EBF72DA001DA75C /* PerfectWeek.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PerfectWeek.entitlements; sourceTree = "<group>"; };
 		4FD9872E1E989E2F00917F57 /* Stats.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stats.swift; sourceTree = "<group>"; };
 		4FD987301E98A2C700917F57 /* StatsConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsConverter.swift; sourceTree = "<group>"; };
 		4FDFD0FE1E6CBEB600D33353 /* AddGoalNameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddGoalNameViewController.swift; sourceTree = "<group>"; };
@@ -155,6 +158,7 @@
 				4F2F2DEA1E8734AA00684D02 /* Detail */,
 				4F2F2DEB1E8734CA00684D02 /* Edit */,
 				4F2F2DEC1E8734D300684D02 /* Add */,
+				4FBF57DE1EBF7249001DA75C /* Notifications */,
 				4F2F2DED1E8734DF00684D02 /* Library and Model */,
 				4F2F2DEE1E8734EC00684D02 /* UI and Extensions */,
 				4F2F2DEF1E8734FF00684D02 /* Supporting Files */,
@@ -254,6 +258,7 @@
 			isa = PBXGroup;
 			children = (
 				4F1147CD1E58F71700346A1D /* AppDelegate.swift */,
+				4FBF57DF1EBF72DA001DA75C /* PerfectWeek.entitlements */,
 				4F1147D41E58F71700346A1D /* Assets.xcassets */,
 				4F1147D61E58F71700346A1D /* LaunchScreen.storyboard */,
 				4F1147D91E58F71700346A1D /* Info.plist */,
@@ -280,6 +285,14 @@
 				4F491E951E986A9C003BAF0D /* RealmStats.swift */,
 			);
 			name = Realm;
+			sourceTree = "<group>";
+		};
+		4FBF57DE1EBF7249001DA75C /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				4FBF57DC1EBE6DB8001DA75C /* NotificationManager.swift */,
+			);
+			name = Notifications;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -355,6 +368,11 @@
 						CreatedOnToolsVersion = 8.2;
 						DevelopmentTeam = 7ZE54HDXZR;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					4F1147DD1E58F71700346A1D = {
 						CreatedOnToolsVersion = 8.2;
@@ -477,6 +495,7 @@
 				4FA6DD601E6B7C5A00547D33 /* GoalLibrary.swift in Sources */,
 				4F2EB1E41E7EF39800677A3C /* GoalConverter.swift in Sources */,
 				4F7F5E401EBE2249009A1385 /* InformationHeaderObserver.swift in Sources */,
+				4FBF57DD1EBE6DB8001DA75C /* NotificationManager.swift in Sources */,
 				4FD9872F1E989E2F00917F57 /* Stats.swift in Sources */,
 				4FA6DD511E6B3D5300547D33 /* Goal.swift in Sources */,
 				4FD987311E98A2C800917F57 /* StatsConverter.swift in Sources */,
@@ -634,6 +653,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = PerfectWeek/PerfectWeek.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 7ZE54HDXZR;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -653,6 +673,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = PerfectWeek/PerfectWeek.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 7ZE54HDXZR;
 				FRAMEWORK_SEARCH_PATHS = (

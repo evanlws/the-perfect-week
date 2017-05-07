@@ -28,7 +28,11 @@ final class GoalLibrary {
 	}
 
 	func add(_ newGoal: Goal) {
-		RealmLibrary.shared.add(newGoal)
+		RealmLibrary.shared.add(newGoal) { (success) in
+			if success {
+				NotificationManager.scheduleNotificationFor(newGoal)
+			}
+		}
 	}
 
 	func complete(_ goal: Goal) {

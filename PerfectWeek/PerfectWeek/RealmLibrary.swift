@@ -31,14 +31,17 @@ class RealmLibrary {
 		}
 	}
 
-	func add(_ goal: Goal) {
+	func add(_ goal: Goal, completion: (Bool) -> Void) {
 		do {
 			try realm.write {
 				realm.add(GoalConverter.converted(goal))
 			}
 		} catch {
 			debugPrint("Could not add goal")
+			completion(false)
 		}
+
+		completion(true)
 	}
 
 	func updateGoal(with values: [String: Any]) {
