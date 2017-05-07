@@ -40,6 +40,11 @@ final class AddGoalFrequencyViewController: UIViewController {
 		setupNextButton()
 	}
 
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		NotificationManager.requestNotificationsPermission()
+	}
+
 	// MARK: - Setup
 	private func setupFrequencyPrompt() {
 		view.addSubview(frequencyPrompt)
