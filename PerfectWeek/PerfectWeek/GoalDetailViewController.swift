@@ -15,8 +15,6 @@ final class GoalDetailViewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		let cancelButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancel(_:)))
-		navigationItem.leftBarButtonItem = cancelButtonItem
 		setupTableView()
 	}
 
@@ -29,7 +27,7 @@ final class GoalDetailViewController: UIViewController {
 		view.addSubview(tableView)
 
 		tableView.translatesAutoresizingMaskIntoConstraints = false
-		tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 150).isActive = true
+		tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: InformationHeader.windowSize.height).isActive = true
 		tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
 		tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
 		tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
@@ -51,7 +49,7 @@ final class GoalDetailViewController: UIViewController {
 extension GoalDetailViewController: UITableViewDataSource {
 
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return 4
+		return 5
 	}
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -64,6 +62,8 @@ extension GoalDetailViewController: UITableViewDataSource {
 			cell.textLabel?.text = "Delete Goal"
 		case 2:
 			cell.textLabel?.text = viewModel.goal.name
+		case 3:
+			cell.textLabel?.text = "Cancel"
 		default:
 			cell.textLabel?.text = String(viewModel.goal.frequency)
 		}
@@ -81,6 +81,8 @@ extension GoalDetailViewController: UITableViewDelegate {
 			pressentEditGoalVC()
 		case 1:
 			viewModel.delete(viewModel.goal)
+			fallthrough
+		case 3:
 			_ = navigationController?.popToRootViewController(animated: true)
 		default:
 			break
