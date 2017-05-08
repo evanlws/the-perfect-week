@@ -13,7 +13,7 @@ struct NotificationManager {
 	enum TimeOfDay: Int {
 		case morning = 9
 		case afternoon = 12
-		case evening = 6
+		case evening = 18
 	}
 
 	enum DayOfWeek: Int {
