@@ -17,11 +17,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 		window = UIWindow(frame: UIScreen.main.bounds)
 		window?.backgroundColor = .white
+
 		let goalsViewController = GoalsViewController()
 		goalsViewController.viewModel = GoalsViewModel()
 		let navigationController = UINavigationController(rootViewController: goalsViewController)
+		navigationController.tabBarItem = UITabBarItem(title: "Goals", image: nil, tag: 1)
 		navigationController.setNavigationBarHidden(true, animated: false)
-		window?.rootViewController = navigationController
+
+		let statsViewController = UIViewController()
+		statsViewController.tabBarItem = UITabBarItem(title: "Stats", image: nil, tag: 2)
+
+		let tabBarController = UITabBarController()
+		tabBarController.viewControllers = [navigationController, statsViewController]
+		window?.rootViewController = tabBarController
+
 		window?.makeKeyAndVisible()
 
 		informationHeader = InformationHeader()
