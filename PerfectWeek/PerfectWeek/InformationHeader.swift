@@ -80,8 +80,7 @@ final class InformationViewController: UIViewController {
 
 	// MARK: - Setup
 	private func setupViews() {
-		let progressView = UIView()
-		progressView.backgroundColor = .yellow
+		let progressView = ProgressView()
 		view.addSubview(progressView)
 
 		let multiplierLabel = UILabel()

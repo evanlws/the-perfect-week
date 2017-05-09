@@ -45,6 +45,10 @@ final class Goal {
 		return progress == frequency
 	}
 
+	func currentProgress() -> Int {
+		return Int(Float(progress) / Float(frequency) * 100.0)
+	}
+
 	var description: String {
 		return "\nGoal:\n\tObjectID: \(objectId)\n\tName: \(name)\n\tLast Completed: \(String(describing: lastCompleted))\n\tFrequency: \(frequency)\n\tProgress: \(progress)\n\tExtension: \(String(describing: extensionItem?.description))\n"
 	}

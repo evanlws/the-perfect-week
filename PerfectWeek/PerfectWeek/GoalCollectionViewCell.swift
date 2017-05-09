@@ -22,15 +22,7 @@ final class GoalCollectionViewCell: UICollectionViewCell {
 		return label
 	}()
 
-	private var progressLabel: UILabel = {
-		let label = UILabel()
-		label.text = "0%"
-		label.font = UIFont.systemFont(ofSize: 16.0)
-		label.textAlignment = .center
-		return label
-	}()
-
-	private let progressView = UIView()
+	let progressView = ProgressView()
 
 	override init(frame: CGRect) {
 		super.init(frame: frame)
@@ -42,9 +34,8 @@ final class GoalCollectionViewCell: UICollectionViewCell {
 		clipsToBounds = false
 		layer.masksToBounds = false
 		addSubview(nameLabel)
-
-		progressView.addSubview(progressLabel)
 		addSubview(progressView)
+
 		setupConstraints()
 	}
 
@@ -64,31 +55,6 @@ final class GoalCollectionViewCell: UICollectionViewCell {
 		progressView.widthAnchor.constraint(equalToConstant: 50.0).isActive = true
 		progressView.heightAnchor.constraint(equalTo: progressView.widthAnchor).isActive = true
 		progressView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
-
-		progressLabel.translatesAutoresizingMaskIntoConstraints = false
-		progressLabel.topAnchor.constraint(equalTo: progressView.topAnchor).isActive = true
-		progressLabel.leftAnchor.constraint(equalTo: progressView.leftAnchor).isActive = true
-		progressLabel.bottomAnchor.constraint(equalTo: progressView.bottomAnchor).isActive = true
-		progressLabel.rightAnchor.constraint(equalTo: progressView.rightAnchor).isActive = true
-	}
-
-	func setCompletedStyle(_ goalIsCompleted: Bool) {
-		if goalIsCompleted {
-			nameLabel.textColor = .green
-		} else {
-			nameLabel.textColor = .black
-		}
-	}
-
-	func setProgress(value: Int) {
-		var value = value
-		if value > 100 {
-			value = 100
-		} else if value < 0 {
-			value = 0
-		}
-
-		progressLabel.text = "\(value)%"
 	}
 
 }

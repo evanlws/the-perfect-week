@@ -19,6 +19,7 @@ final class GoalsViewController: UIViewController, UIGestureRecognizerDelegate {
 		let collectionViewFlowLayout = UICollectionViewFlowLayout()
 		collectionViewFlowLayout.scrollDirection = .vertical
 		collectionViewFlowLayout.itemSize = CGSize(width: GoalCollectionViewCell.size.width, height: GoalCollectionViewCell.size.height)
+		collectionViewFlowLayout.headerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: 30)
 		collectionViewFlowLayout.sectionInset = UIEdgeInsets(top: collectionViewInset, left: collectionViewInset, bottom: collectionViewInset, right: collectionViewInset)
 		collectionViewFlowLayout.minimumInteritemSpacing = 10.0
 		self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout)
@@ -50,6 +51,7 @@ final class GoalsViewController: UIViewController, UIGestureRecognizerDelegate {
 		collectionView.alwaysBounceVertical = true
 		collectionView.register(GoalCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: GoalCollectionViewCell.self))
 		collectionView.register(AddGoalCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: AddGoalCollectionViewCell.self))
+		collectionView.register(CollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: String(describing: CollectionViewHeader.self))
 
 		view.addSubview(collectionView)
 
@@ -114,6 +116,22 @@ extension GoalsViewController: UICollectionViewDataSource {
 		return viewModel.numberOfSections
 	}
 
+	func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+		guard kind == UICollectionElementKindSectionHeader else { return UICollectionReusableView() }
+
+		if let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: String(describing: CollectionViewHeader.self), for: indexPath) as? CollectionViewHeader {
+			if indexPath.section == 1 {
+				header.nameLabel.text = "Goals completed"
+			} else {
+				header.nameLabel.text = "Goals to complete"
+			}
+
+			return header
+		}
+
+		return UICollectionReusableView()
+	}
+
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		if section == 0 {
 			return viewModel.goalsToComplete.count + 1
@@ -133,6 +151,8 @@ extension GoalsViewController: UICollectionViewDataSource {
 			}
 
 			cell.nameLabel.text = goal.name
+			cell.progressView.updateProgress(progress: goal.currentProgress())
+			print("Current progress \(goal.currentProgress())")
 			return cell
 
 		} else if indexPath.section == 0, indexPath.row == viewModel.goalsToComplete.count {
@@ -157,6 +177,39 @@ extension GoalsViewController: UICollectionViewDelegate {
 		if indexPath.section != 0, indexPath.row != viewModel.goalsToComplete.count {
 			presentGoalDetailVC(indexPath)
 		}
+	}
+
+}
+
+class CollectionViewHeader: UICollectionReusableView {
+
+	let nameLabel: UILabel = {
+		let label = UILabel()
+		label.font = UIFont.systemFont(ofSize: 14.0)
+		label.minimumScaleFactor = 0.6
+		label.textColor = .gray
+		label.textAlignment = .left
+		label.numberOfLines = 4
+		return label
+	}()
+
+	override init(frame: CGRect) {
+		super.init(frame: frame)
+
+		addSubview(nameLabel)
+		setupConstraints()
+	}
+
+	required init?(coder aDecoder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+
+	private func setupConstraints() {
+		nameLabel.translatesAutoresizingMaskIntoConstraints = false
+		NSLayoutConstraint.activate([
+			nameLabel.widthAnchor.constraint(equalTo: widthAnchor),
+			nameLabel.heightAnchor.constraint(equalTo: heightAnchor)
+		])
 	}
 
 }

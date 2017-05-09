@@ -34,8 +34,15 @@ final class GoalsViewModel: NSObject {
 	}
 
 	func objectAt(_ indexPath: IndexPath) -> Goal? {
-		guard goalsToComplete.count > indexPath.row || goalsCompletedToday.count > indexPath.row else { return nil }
-		return indexPath.section == 0 ? goalsToComplete[indexPath.row] : goalsCompletedToday[indexPath.row]
+		if indexPath.section == 0, goalsToComplete.count > indexPath.row {
+			return goalsToComplete[indexPath.row]
+		}
+
+		if indexPath.section == 1, goalsCompletedToday.count > indexPath.row {
+			return goalsCompletedToday[indexPath.row]
+		}
+
+		return nil
 	}
 
 }

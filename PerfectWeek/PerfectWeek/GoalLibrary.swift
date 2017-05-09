@@ -37,8 +37,8 @@ final class GoalLibrary {
 	}
 
 	func complete(_ goal: Goal) {
-		guard goal.progress != goal.frequency else {
-			debugPrint("Guard failure warning: \(goal.name) could not be completed")
+		guard !goal.isPerfectGoal(), !goal.wasCompletedToday() else {
+			debugPrint("Guard failure warning: \(goal.name) was already completed")
 			return
 		}
 
