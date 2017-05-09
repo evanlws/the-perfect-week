@@ -6,14 +6,19 @@
 //  Copyright © 2017 evanlewis. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
-final class GoalsViewModel {
+final class GoalsViewModel: NSObject {
 
+	let numberOfSections = 2
 	private let library = GoalLibrary.shared
 
-	var goals: [Goal] {
-		return fetchGoals()
+	var goalsCompletedToday: [Goal] {
+		return fetchGoals().filter({ $0.wasCompletedToday() })
+	}
+
+	var goalsToComplete: [Goal] {
+		return fetchGoals().filter({ !$0.wasCompletedToday() })
 	}
 
 	private func fetchGoals() -> [Goal] {
@@ -26,6 +31,11 @@ final class GoalsViewModel {
 
 	func undo(_ goal: Goal) {
 		library.undo(goal)
+	}
+
+	func objectAt(_ indexPath: IndexPath) -> Goal? {
+		guard goalsToComplete.count > indexPath.row || goalsCompletedToday.count > indexPath.row else { return nil }
+		return indexPath.section == 0 ? goalsToComplete[indexPath.row] : goalsCompletedToday[indexPath.row]
 	}
 
 }

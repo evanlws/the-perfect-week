@@ -36,6 +36,15 @@ final class Goal {
 		self.init(objectId: mutableGoal.objectId, name: name, frequency: frequency, extensionItem: mutableGoal.extensionItem, lastCompleted: nil)
 	}
 
+	func wasCompletedToday() -> Bool {
+		guard let lastCompleted = lastCompleted else { return false }
+		return lastCompleted > Date().startOfDay()
+	}
+
+	func isPerfectGoal() -> Bool {
+		return progress == frequency
+	}
+
 	var description: String {
 		return "\nGoal:\n\tObjectID: \(objectId)\n\tName: \(name)\n\tLast Completed: \(String(describing: lastCompleted))\n\tFrequency: \(frequency)\n\tProgress: \(progress)\n\tExtension: \(String(describing: extensionItem?.description))\n"
 	}

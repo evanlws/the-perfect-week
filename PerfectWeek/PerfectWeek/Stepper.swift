@@ -67,7 +67,7 @@ final class Stepper: UIView {
 	}
 
 	func increment() {
-		if counter != 99 {
+		if counter != 7 {
 			counter += 1
 			numberLabel.text = String(counter)
 			delegate?.valueChanged(counter)

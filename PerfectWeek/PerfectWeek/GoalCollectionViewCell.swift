@@ -35,8 +35,12 @@ final class GoalCollectionViewCell: UICollectionViewCell {
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 		backgroundColor = .white
-		contentView.layer.borderColor = UIColor.purple.cgColor
-		contentView.layer.borderWidth = 2.0
+		layer.shadowColor = UIColor.black.cgColor
+		layer.shadowOffset = CGSize(width: 0, height: 1)
+		layer.shadowOpacity = 1
+		layer.shadowRadius = 1.0
+		clipsToBounds = false
+		layer.masksToBounds = false
 		addSubview(nameLabel)
 
 		progressView.addSubview(progressLabel)
@@ -68,16 +72,11 @@ final class GoalCollectionViewCell: UICollectionViewCell {
 		progressLabel.rightAnchor.constraint(equalTo: progressView.rightAnchor).isActive = true
 	}
 
-	func setCompletedStyle(_ isCompleted: Bool) {
-		if isCompleted {
-			backgroundColor = .purple
-			nameLabel.textColor = .white
-			contentView.layer.borderWidth = 0.0
+	func setCompletedStyle(_ goalIsCompleted: Bool) {
+		if goalIsCompleted {
+			nameLabel.textColor = .green
 		} else {
-			backgroundColor = .white
-			nameLabel.textColor = .purple
-			contentView.layer.borderColor = UIColor.purple.cgColor
-			contentView.layer.borderWidth = 2.0
+			nameLabel.textColor = .black
 		}
 	}
 

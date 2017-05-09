@@ -111,6 +111,16 @@ final class InformationViewController: UIViewController {
 		tipsPagingView.backgroundColor = .blue
 		view.addSubview(tipsPagingView)
 
+		let tipsLabel = UILabel()
+		tipsLabel.font = UIFont.systemFont(ofSize: 14)
+		tipsLabel.textColor = .black
+		tipsLabel.numberOfLines = 0
+		tipsLabel.textAlignment = .center
+		tipsLabel.sizeToFit()
+		tipsLabel.adjustsFontSizeToFitWidth = true
+		tipsLabel.text = "I'm sure I'll put content here eventually\n\t\t\t-Evan"
+		view.addSubview(tipsLabel)
+
 		progressView.translatesAutoresizingMaskIntoConstraints = false
 		progressView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: UIApplication.shared.statusBarFrame.size.height + 5.0).isActive = true
 		progressView.leftAnchor.constraint(equalTo: view.layoutMarginsGuide.leftAnchor).isActive = true
@@ -137,6 +147,12 @@ final class InformationViewController: UIViewController {
 		tipsPagingView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -5.0).isActive = true
 		tipsPagingView.rightAnchor.constraint(equalTo: view.layoutMarginsGuide.rightAnchor).isActive = true
 		tipsPagingView.heightAnchor.constraint(equalToConstant: view.bounds.size.height/3).isActive = true
+
+		tipsLabel.translatesAutoresizingMaskIntoConstraints = false
+		tipsLabel.topAnchor.constraint(equalTo: tipsPagingView.topAnchor, constant: 5.0).isActive = true
+		tipsLabel.leftAnchor.constraint(equalTo: tipsPagingView.leftAnchor, constant: 5.0).isActive = true
+		tipsLabel.bottomAnchor.constraint(equalTo: tipsPagingView.bottomAnchor, constant: 5.0).isActive = true
+		tipsLabel.rightAnchor.constraint(equalTo: tipsPagingView.rightAnchor, constant: 5.0).isActive = true
 	}
 
 }

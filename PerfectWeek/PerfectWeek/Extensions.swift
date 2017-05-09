@@ -6,7 +6,7 @@
 //  Copyright © 2017 evanlewis. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 extension String {
 
@@ -67,4 +67,13 @@ extension NSRange {
 		return fromIndex ..< toIndex
 	}
 
+}
+
+extension UIButton {
+	convenience init(style: UIButtonType) {
+		self.init(type: style)
+
+		self.setTitleColor(.white, for: .normal)
+		self.backgroundColor = .purple
+	}
 }

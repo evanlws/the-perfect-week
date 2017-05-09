@@ -49,13 +49,17 @@ final class GoalsViewController: UIViewController, UIGestureRecognizerDelegate {
 		collectionView.bounces = true
 		collectionView.alwaysBounceVertical = true
 		collectionView.register(GoalCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: GoalCollectionViewCell.self))
+		collectionView.register(AddGoalCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: AddGoalCollectionViewCell.self))
+
 		view.addSubview(collectionView)
 
 		collectionView.translatesAutoresizingMaskIntoConstraints = false
-		collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: InformationHeader.windowSize.height).isActive = true
-		collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-		collectionView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-		collectionView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+		NSLayoutConstraint.activate([
+			collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: InformationHeader.windowSize.height),
+			collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+			collectionView.leftAnchor.constraint(equalTo: view.leftAnchor),
+			collectionView.rightAnchor.constraint(equalTo: view.rightAnchor)
+		])
 	}
 
 	private func setupGestureRecognizer() {
@@ -71,13 +75,14 @@ final class GoalsViewController: UIViewController, UIGestureRecognizerDelegate {
 extension GoalsViewController {
 
 	// MARK: - Navigation
-	func presentGoalDetailVC(_ indexPathRow: Int) {
+	func presentGoalDetailVC(_ indexPath: IndexPath) {
+		guard let goal = viewModel.objectAt(indexPath) else { return }
 		let goalDetailViewController = GoalDetailViewController()
-		goalDetailViewController.viewModel = GoalDetailViewModel(goal: viewModel.goals[indexPathRow])
+		goalDetailViewController.viewModel = GoalDetailViewModel(goal: goal)
 		navigationController?.pushViewController(goalDetailViewController, animated: true)
 	}
 
-	func presentAddGoalVC(_ indexPathRow: Int) {
+	func presentAddGoalVC() {
 		let addGoalNameViewController = AddGoalNameViewController()
 		addGoalNameViewController.viewModel = AddGoalNameViewModel(mutableGoal: MutableGoal(objectId: UUID().uuidString))
 		let navigationController = UINavigationController(rootViewController: addGoalNameViewController)
@@ -90,8 +95,7 @@ extension GoalsViewController {
 		guard gestureRecognizer.state == .began else { return }
 
 		let point = gestureRecognizer.location(in: collectionView)
-		if let indexPath = collectionView.indexPathForItem(at: point) {
-			let goal = viewModel.goals[indexPath.row] as Goal
+		if let indexPath = collectionView.indexPathForItem(at: point), let goal = viewModel.objectAt(indexPath) {
 			if goal.progress == goal.frequency {
 				viewModel.undo(goal)
 			} else {
@@ -106,38 +110,52 @@ extension GoalsViewController {
 
 extension GoalsViewController: UICollectionViewDataSource {
 
+	func numberOfSections(in collectionView: UICollectionView) -> Int {
+		return viewModel.numberOfSections
+	}
+
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return viewModel.goals.count + 1
+		if section == 0 {
+			return viewModel.goalsToComplete.count + 1
+		}
+
+		return viewModel.goalsCompletedToday.count
 	}
 
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let cell: GoalCollectionViewCell
-		if let reusedCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: GoalCollectionViewCell.self), for: indexPath) as? GoalCollectionViewCell {
-			cell = reusedCell
-		} else {
-			cell = GoalCollectionViewCell()
-		}
 
-		if indexPath.row == viewModel.goals.count {
-			cell.nameLabel.text = "Add a goal"
-		} else {
-			let goal = viewModel.goals[indexPath.row]
-			cell.setCompletedStyle(goal.progress == goal.frequency)
+		if let goal = viewModel.objectAt(indexPath) {
+			let cell: GoalCollectionViewCell
+			if let reusedCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: GoalCollectionViewCell.self), for: indexPath) as? GoalCollectionViewCell {
+				cell = reusedCell
+			} else {
+				cell = GoalCollectionViewCell()
+			}
+
 			cell.nameLabel.text = goal.name
+			return cell
+
+		} else if indexPath.section == 0, indexPath.row == viewModel.goalsToComplete.count {
+			let cell: AddGoalCollectionViewCell
+			if let reusedCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: AddGoalCollectionViewCell.self), for: indexPath) as? AddGoalCollectionViewCell {
+				cell = reusedCell
+			} else {
+				cell = AddGoalCollectionViewCell()
+			}
+
+			cell.newGoalButton.addTarget(self, action: #selector(presentAddGoalVC), for: .touchUpInside)
+			return cell
 		}
 
-		return cell
+		return UICollectionViewCell()
 	}
-
 }
 
 extension GoalsViewController: UICollectionViewDelegate {
 
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		if indexPath.row == viewModel.goals.count {
-			presentAddGoalVC(indexPath.row)
-		} else {
-			presentGoalDetailVC(indexPath.row)
+		if indexPath.section != 0, indexPath.row != viewModel.goalsToComplete.count {
+			presentGoalDetailVC(indexPath)
 		}
 	}
 
