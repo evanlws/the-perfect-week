@@ -77,8 +77,7 @@ final class GoalsViewController: UIViewController, UIGestureRecognizerDelegate {
 extension GoalsViewController {
 
 	// MARK: - Navigation
-	func presentGoalDetailVC(_ indexPath: IndexPath) {
-		guard let goal = viewModel.objectAt(indexPath) else { return }
+	func presentGoalDetailVC(_ goal: Goal) {
 		let goalDetailViewController = GoalDetailViewController()
 		goalDetailViewController.viewModel = GoalDetailViewModel(goal: goal)
 		navigationController?.pushViewController(goalDetailViewController, animated: true)
@@ -174,9 +173,8 @@ extension GoalsViewController: UICollectionViewDataSource {
 extension GoalsViewController: UICollectionViewDelegate {
 
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		if indexPath.section != 0, indexPath.row != viewModel.goalsToComplete.count {
-			presentGoalDetailVC(indexPath)
-		}
+		guard let goal = viewModel.objectAt(indexPath) else { return }
+		presentGoalDetailVC(goal)
 	}
 
 }

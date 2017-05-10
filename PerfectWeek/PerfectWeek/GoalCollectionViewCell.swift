@@ -16,7 +16,6 @@ final class GoalCollectionViewCell: UICollectionViewCell {
 		let label = UILabel()
 		label.font = UIFont.systemFont(ofSize: 24.0)
 		label.minimumScaleFactor = 0.6
-		label.textColor = .purple
 		label.textAlignment = .left
 		label.numberOfLines = 4
 		return label

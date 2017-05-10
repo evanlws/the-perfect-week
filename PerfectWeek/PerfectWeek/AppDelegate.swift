@@ -24,11 +24,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		navigationController.tabBarItem = UITabBarItem(title: "Goals", image: nil, tag: 1)
 		navigationController.setNavigationBarHidden(true, animated: false)
 
-		let statsViewController = UIViewController()
-		statsViewController.tabBarItem = UITabBarItem(title: "Stats", image: nil, tag: 2)
+		let settingsViewController = UIViewController()
+		settingsViewController.tabBarItem = UITabBarItem(title: "Settings", image: nil, tag: 2)
 
 		let tabBarController = UITabBarController()
-		tabBarController.viewControllers = [navigationController, statsViewController]
+		tabBarController.viewControllers = [navigationController, settingsViewController]
 		window?.rootViewController = tabBarController
 
 		window?.makeKeyAndVisible()
