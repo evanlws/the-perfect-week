@@ -66,7 +66,6 @@ final class InformationViewController: UIViewController {
 
 	init() {
 		super.init(nibName: nil, bundle: nil)
-		self.view.backgroundColor = .red
 	}
 
 	required init?(coder aDecoder: NSCoder) {
@@ -107,7 +106,6 @@ final class InformationViewController: UIViewController {
 		view.addSubview(dateLabel)
 
 		let tipsPagingView = UIView()
-		tipsPagingView.backgroundColor = .blue
 		view.addSubview(tipsPagingView)
 
 		let tipsLabel = UILabel()
@@ -120,38 +118,45 @@ final class InformationViewController: UIViewController {
 		tipsLabel.text = "I'm sure I'll put content here eventually\n\t\t\t-Evan"
 		view.addSubview(tipsLabel)
 
+		let bottomLine = UIView()
+		bottomLine.backgroundColor = .lightGray
+		view.addSubview(bottomLine)
+
 		progressView.translatesAutoresizingMaskIntoConstraints = false
-		progressView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: UIApplication.shared.statusBarFrame.size.height + 5.0).isActive = true
-		progressView.leftAnchor.constraint(equalTo: view.layoutMarginsGuide.leftAnchor).isActive = true
-		progressView.widthAnchor.constraint(equalTo: progressView.heightAnchor).isActive = true
-
 		multiplierLabel.translatesAutoresizingMaskIntoConstraints = false
-		multiplierLabel.leftAnchor.constraint(equalTo: progressView.rightAnchor, constant: 5.0).isActive = true
-		multiplierLabel.bottomAnchor.constraint(equalTo: progressView.bottomAnchor).isActive = true
-
 		weekdayLabel.translatesAutoresizingMaskIntoConstraints = false
-		weekdayLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: UIApplication.shared.statusBarFrame.size.height + 5.0).isActive = true
-		weekdayLabel.leftAnchor.constraint(equalTo: multiplierLabel.rightAnchor).isActive = true
-		weekdayLabel.rightAnchor.constraint(equalTo: view.layoutMarginsGuide.rightAnchor).isActive = true
-
 		dateLabel.translatesAutoresizingMaskIntoConstraints = false
-		dateLabel.topAnchor.constraint(equalTo: weekdayLabel.bottomAnchor, constant: 2.0).isActive = true
-		dateLabel.leftAnchor.constraint(equalTo: multiplierLabel.rightAnchor).isActive = true
-		dateLabel.bottomAnchor.constraint(lessThanOrEqualTo: progressView.bottomAnchor).isActive = true
-		dateLabel.rightAnchor.constraint(equalTo: view.layoutMarginsGuide.rightAnchor).isActive = true
-
 		tipsPagingView.translatesAutoresizingMaskIntoConstraints = false
-		tipsPagingView.topAnchor.constraint(equalTo: progressView.bottomAnchor, constant: 5.0).isActive = true
-		tipsPagingView.leftAnchor.constraint(equalTo: view.layoutMarginsGuide.leftAnchor).isActive = true
-		tipsPagingView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -5.0).isActive = true
-		tipsPagingView.rightAnchor.constraint(equalTo: view.layoutMarginsGuide.rightAnchor).isActive = true
-		tipsPagingView.heightAnchor.constraint(equalToConstant: view.bounds.size.height/3).isActive = true
-
 		tipsLabel.translatesAutoresizingMaskIntoConstraints = false
-		tipsLabel.topAnchor.constraint(equalTo: tipsPagingView.topAnchor, constant: 5.0).isActive = true
-		tipsLabel.leftAnchor.constraint(equalTo: tipsPagingView.leftAnchor, constant: 5.0).isActive = true
-		tipsLabel.bottomAnchor.constraint(equalTo: tipsPagingView.bottomAnchor, constant: 5.0).isActive = true
-		tipsLabel.rightAnchor.constraint(equalTo: tipsPagingView.rightAnchor, constant: 5.0).isActive = true
+		bottomLine.translatesAutoresizingMaskIntoConstraints = false
+
+		NSLayoutConstraint.activate([
+			progressView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: UIApplication.shared.statusBarFrame.size.height + 5.0),
+			progressView.leftAnchor.constraint(equalTo: view.layoutMarginsGuide.leftAnchor),
+			progressView.widthAnchor.constraint(equalTo: progressView.heightAnchor),
+			multiplierLabel.leftAnchor.constraint(equalTo: progressView.rightAnchor, constant: 5.0),
+			multiplierLabel.bottomAnchor.constraint(equalTo: progressView.bottomAnchor),
+			weekdayLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: UIApplication.shared.statusBarFrame.size.height + 5.0),
+			weekdayLabel.leftAnchor.constraint(equalTo: multiplierLabel.rightAnchor),
+			weekdayLabel.rightAnchor.constraint(equalTo: view.layoutMarginsGuide.rightAnchor),
+			dateLabel.topAnchor.constraint(equalTo: weekdayLabel.bottomAnchor, constant: 2.0),
+			dateLabel.leftAnchor.constraint(equalTo: multiplierLabel.rightAnchor),
+			dateLabel.bottomAnchor.constraint(lessThanOrEqualTo: progressView.bottomAnchor),
+			dateLabel.rightAnchor.constraint(equalTo: view.layoutMarginsGuide.rightAnchor),
+			tipsPagingView.topAnchor.constraint(equalTo: progressView.bottomAnchor, constant: 5.0),
+			tipsPagingView.leftAnchor.constraint(equalTo: view.layoutMarginsGuide.leftAnchor),
+			tipsPagingView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -5.0),
+			tipsPagingView.rightAnchor.constraint(equalTo: view.layoutMarginsGuide.rightAnchor),
+			tipsPagingView.heightAnchor.constraint(equalToConstant: view.bounds.size.height/3),
+			tipsLabel.topAnchor.constraint(equalTo: tipsPagingView.topAnchor, constant: 5.0),
+			tipsLabel.leftAnchor.constraint(equalTo: tipsPagingView.leftAnchor, constant: 5.0),
+			tipsLabel.bottomAnchor.constraint(equalTo: tipsPagingView.bottomAnchor, constant: 5.0),
+			tipsLabel.rightAnchor.constraint(equalTo: tipsPagingView.rightAnchor, constant: 5.0),
+			bottomLine.heightAnchor.constraint(equalToConstant: 2.0),
+			bottomLine.widthAnchor.constraint(equalTo: view.widthAnchor),
+			bottomLine.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+		])
+
 	}
 
 }
