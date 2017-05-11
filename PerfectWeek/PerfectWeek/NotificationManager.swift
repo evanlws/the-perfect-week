@@ -59,50 +59,36 @@ struct NotificationManager {
 		var dateComponents = [DateComponents]()
 		let thisSaturday = date.thisSaturday()
 
+		let sunday = weekdayComponent(.sunday, timeOfDay: .evening, date: thisSaturday)
+		let monday = weekdayComponent(.monday, timeOfDay: .morning, date: thisSaturday)
+		let wednesday = weekdayComponent(.wednesday, timeOfDay: .afternoon, date: thisSaturday)
+		let friday = weekdayComponent(.friday, timeOfDay: .evening, date: thisSaturday)
+		let saturday = weekdayComponent(.saturday, timeOfDay: .afternoon, date: thisSaturday)
+
 		switch frequency {
 		case 1:
-			let monday = weekdayComponent(.monday, timeOfDay: .morning, date: thisSaturday)
-			let wednesday = weekdayComponent(.wednesday, timeOfDay: .afternoon, date: thisSaturday)
-			let friday = weekdayComponent(.friday, timeOfDay: .evening, date: thisSaturday)
 			dateComponents.append(contentsOf: [monday, wednesday, friday])
 		case 2:
 			let tuesday = weekdayComponent(.tuesday, timeOfDay: .morning, date: thisSaturday)
 			let thursday = weekdayComponent(.thursday, timeOfDay: .evening, date: thisSaturday)
 			dateComponents.append(contentsOf: [tuesday, thursday])
 		case 3:
-			let monday = weekdayComponent(.monday, timeOfDay: .morning, date: thisSaturday)
-			let wednesday = weekdayComponent(.wednesday, timeOfDay: .afternoon, date: thisSaturday)
-			let friday = weekdayComponent(.friday, timeOfDay: .evening, date: thisSaturday)
 			dateComponents.append(contentsOf: [monday, wednesday, friday])
 		case 4:
-			let sunday = weekdayComponent(.sunday, timeOfDay: .morning, date: thisSaturday)
 			let tuesday = weekdayComponent(.tuesday, timeOfDay: .afternoon, date: thisSaturday)
 			let thursday = weekdayComponent(.thursday, timeOfDay: .evening, date: thisSaturday)
-			let friday = weekdayComponent(.friday, timeOfDay: .evening, date: thisSaturday)
 			dateComponents.append(contentsOf: [sunday, tuesday, thursday, friday])
 		case 5:
-			let monday = weekdayComponent(.monday, timeOfDay: .morning, date: thisSaturday)
 			let tuesday = weekdayComponent(.tuesday, timeOfDay: .morning, date: thisSaturday)
-			let wednesday = weekdayComponent(.wednesday, timeOfDay: .afternoon, date: thisSaturday)
 			let thursday = weekdayComponent(.thursday, timeOfDay: .evening, date: thisSaturday)
-			let friday = weekdayComponent(.friday, timeOfDay: .evening, date: thisSaturday)
 			dateComponents.append(contentsOf: [monday, tuesday, wednesday, thursday, friday])
 		case 6:
-			let monday = weekdayComponent(.monday, timeOfDay: .morning, date: thisSaturday)
 			let tuesday = weekdayComponent(.tuesday, timeOfDay: .morning, date: thisSaturday)
-			let wednesday = weekdayComponent(.wednesday, timeOfDay: .afternoon, date: thisSaturday)
 			let thursday = weekdayComponent(.thursday, timeOfDay: .evening, date: thisSaturday)
-			let friday = weekdayComponent(.friday, timeOfDay: .evening, date: thisSaturday)
-			let saturday = weekdayComponent(.saturday, timeOfDay: .afternoon, date: thisSaturday)
 			dateComponents.append(contentsOf: [monday, tuesday, wednesday, thursday, friday, saturday])
 		default:
-			let sunday = weekdayComponent(.sunday, timeOfDay: .evening, date: thisSaturday)
-			let monday = weekdayComponent(.monday, timeOfDay: .morning, date: thisSaturday)
 			let tuesday = weekdayComponent(.tuesday, timeOfDay: .morning, date: thisSaturday)
-			let wednesday = weekdayComponent(.wednesday, timeOfDay: .afternoon, date: thisSaturday)
 			let thursday = weekdayComponent(.thursday, timeOfDay: .evening, date: thisSaturday)
-			let friday = weekdayComponent(.friday, timeOfDay: .evening, date: thisSaturday)
-			let saturday = weekdayComponent(.saturday, timeOfDay: .afternoon, date: thisSaturday)
 			dateComponents.append(contentsOf: [sunday, monday, tuesday, wednesday, thursday, friday, saturday])
 		}
 

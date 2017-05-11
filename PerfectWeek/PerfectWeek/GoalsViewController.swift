@@ -65,7 +65,7 @@ final class GoalsViewController: UIViewController, UIGestureRecognizerDelegate {
 	}
 
 	private func setupGestureRecognizer() {
-		let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(completeGoal(_:)))
+		let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(didActivateLongPress(_:)))
 		longPressGestureRecognizer.minimumPressDuration = 1.0
 		longPressGestureRecognizer.delaysTouchesBegan = true
 		longPressGestureRecognizer.delegate = self
@@ -92,7 +92,7 @@ extension GoalsViewController {
 		}
 	}
 
-	func completeGoal(_ gestureRecognizer: UILongPressGestureRecognizer) {
+	func didActivateLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
 		guard gestureRecognizer.state == .began else { return }
 
 		let point = gestureRecognizer.location(in: collectionView)

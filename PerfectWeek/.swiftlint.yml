@@ -1,9 +1,5 @@
 excluded: # paths to ignore during linting. Takes precedence over `included`.
   - Carthage
 disabled_rules: # rule identifiers to exclude from running
-  - line_length
   - todo
-  - cyclomatic_complexity
-  - type_body_length
-  - file_length
-  - function_body_length
+  - line_length

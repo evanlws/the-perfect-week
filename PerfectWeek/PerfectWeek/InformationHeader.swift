@@ -64,6 +64,57 @@ final class InformationHeader {
 
 final class InformationViewController: UIViewController {
 
+	private let progressView = ProgressView()
+
+	private let multiplierLabel: UILabel = {
+		let label = UILabel()
+		label.text = "x2"
+		label.font = UIFont.systemFont(ofSize: 23)
+		return label
+	}()
+
+	private let weekdayLabel: UILabel = {
+		let label = UILabel()
+		label.font = UIFont.systemFont(ofSize: 36)
+		label.textColor = .black
+		label.textAlignment = .right
+		label.sizeToFit()
+		label.adjustsFontSizeToFitWidth = true
+		label.text = "Saturday"
+		return label
+	}()
+
+	private let dateLabel: UILabel = {
+		let label = UILabel()
+		label.font = UIFont.systemFont(ofSize: 20)
+		label.textColor = .black
+		label.textAlignment = .right
+		label.sizeToFit()
+		label.adjustsFontSizeToFitWidth = true
+		label.text = "January 28"
+		return label
+	}()
+
+	private let tipsPagingView = UIView()
+
+	private let tipsLabel: UILabel = {
+		let label = UILabel()
+		label.font = UIFont.systemFont(ofSize: 14)
+		label.textColor = .black
+		label.numberOfLines = 0
+		label.textAlignment = .center
+		label.sizeToFit()
+		label.adjustsFontSizeToFitWidth = true
+		label.text = "I'm sure I'll put content here eventually\n\t\t\t-Evan"
+		return label
+	}()
+
+	private let bottomLine: UIView = {
+		let view = UIView()
+		view.backgroundColor = .lightGray
+		return view
+	}()
+
 	init() {
 		super.init(nibName: nil, bundle: nil)
 	}
@@ -74,54 +125,22 @@ final class InformationViewController: UIViewController {
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		setupViews()
+		configureViews()
+		configureConstraints()
 	}
 
 	// MARK: - Setup
-	private func setupViews() {
-		let progressView = ProgressView()
+	private func configureViews() {
 		view.addSubview(progressView)
-
-		let multiplierLabel = UILabel()
-		multiplierLabel.text = "x2"
-		multiplierLabel.font = UIFont.systemFont(ofSize: 23)
 		view.addSubview(multiplierLabel)
-
-		let weekdayLabel = UILabel()
-		weekdayLabel.font = UIFont.systemFont(ofSize: 36)
-		weekdayLabel.textColor = .black
-		weekdayLabel.textAlignment = .right
-		weekdayLabel.sizeToFit()
-		weekdayLabel.adjustsFontSizeToFitWidth = true
-		weekdayLabel.text = "Saturday"
 		view.addSubview(weekdayLabel)
-
-		let dateLabel = UILabel()
-		dateLabel.font = UIFont.systemFont(ofSize: 20)
-		dateLabel.textColor = .black
-		dateLabel.textAlignment = .right
-		dateLabel.sizeToFit()
-		dateLabel.adjustsFontSizeToFitWidth = true
-		dateLabel.text = "January 28"
 		view.addSubview(dateLabel)
-
-		let tipsPagingView = UIView()
 		view.addSubview(tipsPagingView)
-
-		let tipsLabel = UILabel()
-		tipsLabel.font = UIFont.systemFont(ofSize: 14)
-		tipsLabel.textColor = .black
-		tipsLabel.numberOfLines = 0
-		tipsLabel.textAlignment = .center
-		tipsLabel.sizeToFit()
-		tipsLabel.adjustsFontSizeToFitWidth = true
-		tipsLabel.text = "I'm sure I'll put content here eventually\n\t\t\t-Evan"
 		view.addSubview(tipsLabel)
-
-		let bottomLine = UIView()
-		bottomLine.backgroundColor = .lightGray
 		view.addSubview(bottomLine)
+	}
 
+	private func configureConstraints() {
 		progressView.translatesAutoresizingMaskIntoConstraints = false
 		multiplierLabel.translatesAutoresizingMaskIntoConstraints = false
 		weekdayLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -156,7 +175,6 @@ final class InformationViewController: UIViewController {
 			bottomLine.widthAnchor.constraint(equalTo: view.widthAnchor),
 			bottomLine.bottomAnchor.constraint(equalTo: view.bottomAnchor)
 		])
-
 	}
 
 }

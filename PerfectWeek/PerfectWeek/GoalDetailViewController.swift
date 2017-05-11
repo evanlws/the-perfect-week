@@ -109,10 +109,22 @@ final class DetailContentView: UIView {
 		return label
 	}()
 
+	private let frequencyLabel: Label = {
+		let label = Label(style: .body)
+		label.text = "Frequency"
+		return label
+	}()
+
 	fileprivate let frequencyNumberLabel: Label = {
 		let label = Label(style: .body)
 		label.text = "4 times per week"
 		label.textAlignment = .right
+		return label
+	}()
+
+	private let completionsThisWeekLabel: Label = {
+		let label = Label(style: .body)
+		label.text = "Completions this week"
 		return label
 	}()
 
@@ -130,11 +142,18 @@ final class DetailContentView: UIView {
 		return label
 	}()
 
+	private let currentStreakLabel: Label = {
+		let label = Label(style: .body)
+		label.text = "Current Streak"
+		return label
+	}()
+
 	fileprivate let progressView = ProgressView()
 
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 		configureViews()
+		configureConstraints()
 	}
 
 	required init?(coder aDecoder: NSCoder) {
@@ -142,13 +161,6 @@ final class DetailContentView: UIView {
 	}
 
 	private func configureViews() {
-		let frequencyLabel = Label(style: .body)
-		frequencyLabel.text = "Frequency"
-		let completionsThisWeekLabel = Label(style: .body)
-		completionsThisWeekLabel.text = "Completions this week"
-		let currentStreakLabel = Label(style: .body)
-		currentStreakLabel.text = "Current Streak"
-
 		addSubview(goalNameLabel)
 		addSubview(progressView)
 		addSubview(goalDescriptionLabel)
@@ -158,7 +170,9 @@ final class DetailContentView: UIView {
 		addSubview(completionsThisWeekNumberLabel)
 		addSubview(currentStreakLabel)
 		addSubview(currentStreakNumberLabel)
+	}
 
+	private func configureConstraints() {
 		goalNameLabel.translatesAutoresizingMaskIntoConstraints = false
 		progressView.translatesAutoresizingMaskIntoConstraints = false
 		goalDescriptionLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -196,7 +210,6 @@ final class DetailContentView: UIView {
 			currentStreakNumberLabel.leadingAnchor.constraint(greaterThanOrEqualTo: currentStreakLabel.trailingAnchor, constant: 5.0),
 			currentStreakNumberLabel.bottomAnchor.constraint(greaterThanOrEqualTo: bottomAnchor)
 		])
-
 	}
 
 }
