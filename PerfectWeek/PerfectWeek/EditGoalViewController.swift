@@ -20,6 +20,7 @@ final class EditGoalViewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		navigationController?.setNavigationBarHidden(false, animated: true)
 		let cancelButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancel(_:)))
 		navigationItem.leftBarButtonItem = cancelButtonItem
 		self.view.backgroundColor = .white
@@ -61,13 +62,14 @@ final class EditGoalViewController: UIViewController {
 		nameTextField.translatesAutoresizingMaskIntoConstraints = false
 		NSLayoutConstraint.activate([
 			nameTextField.heightAnchor.constraint(equalToConstant: Label.defaultHeight),
-			nameTextField.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -10),
 			nameTextField.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
+			nameTextField.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
 			nameTextField.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10)
 		])
 	}
 
 	private func setupTimesPerWeekLabel() {
+		timesPerWeekLabel.text = "Times per week"
 		view.addSubview(timesPerWeekLabel)
 
 		timesPerWeekLabel.translatesAutoresizingMaskIntoConstraints = false

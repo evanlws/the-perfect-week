@@ -33,7 +33,7 @@ final class GoalDetailViewController: UIViewController {
 		completeGoalButton.setTitle("Complete  Goal", for: .normal)
 		completeGoalButton.addTarget(self, action: #selector(didTapCompleteGoal), for: .touchUpInside)
 
-		let detailContentView = UIView(frame: .zero)
+		let detailContentView = DetailContentView(frame: .zero)
 		detailContentView.backgroundColor = .white
 		detailContentView.layer.shadowColor = UIColor.black.cgColor
 		detailContentView.layer.shadowOffset = CGSize(width: 0, height: 1)
@@ -89,6 +89,114 @@ extension GoalDetailViewController {
 	func didTapCompleteGoal() {
 		viewModel.completeGoal()
 		_ = navigationController?.popViewController(animated: true)
+	}
+
+}
+
+final class DetailContentView: UIView {
+
+	fileprivate let goalNameLabel: Label = {
+		let label = Label(style: .body)
+		label.text = "Read a book"
+		return label
+	}()
+
+	fileprivate let goalDescriptionLabel: Label = {
+		let label = Label(style: .body)
+		label.text = "Maybe a couple chapters of 1984. Or anything else that looks interesting."
+		label.numberOfLines = 0
+		label.textAlignment = .center
+		return label
+	}()
+
+	fileprivate let frequencyNumberLabel: Label = {
+		let label = Label(style: .body)
+		label.text = "4 times per week"
+		label.textAlignment = .right
+		return label
+	}()
+
+	fileprivate let completionsThisWeekNumberLabel: Label = {
+		let label = Label(style: .body)
+		label.text = "2"
+		label.textAlignment = .right
+		return label
+	}()
+
+	fileprivate let currentStreakNumberLabel: Label = {
+		let label = Label(style: .body)
+		label.text = "4"
+		label.textAlignment = .right
+		return label
+	}()
+
+	fileprivate let progressView = ProgressView()
+
+	override init(frame: CGRect) {
+		super.init(frame: frame)
+		configureViews()
+	}
+
+	required init?(coder aDecoder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+
+	private func configureViews() {
+		let frequencyLabel = Label(style: .body)
+		frequencyLabel.text = "Frequency"
+		let completionsThisWeekLabel = Label(style: .body)
+		completionsThisWeekLabel.text = "Completions this week"
+		let currentStreakLabel = Label(style: .body)
+		currentStreakLabel.text = "Current Streak"
+
+		addSubview(goalNameLabel)
+		addSubview(progressView)
+		addSubview(goalDescriptionLabel)
+		addSubview(frequencyLabel)
+		addSubview(frequencyNumberLabel)
+		addSubview(completionsThisWeekLabel)
+		addSubview(completionsThisWeekNumberLabel)
+		addSubview(currentStreakLabel)
+		addSubview(currentStreakNumberLabel)
+
+		goalNameLabel.translatesAutoresizingMaskIntoConstraints = false
+		progressView.translatesAutoresizingMaskIntoConstraints = false
+		goalDescriptionLabel.translatesAutoresizingMaskIntoConstraints = false
+		frequencyLabel.translatesAutoresizingMaskIntoConstraints = false
+		frequencyNumberLabel.translatesAutoresizingMaskIntoConstraints = false
+		completionsThisWeekLabel.translatesAutoresizingMaskIntoConstraints = false
+		completionsThisWeekNumberLabel.translatesAutoresizingMaskIntoConstraints = false
+		currentStreakLabel.translatesAutoresizingMaskIntoConstraints = false
+		currentStreakNumberLabel.translatesAutoresizingMaskIntoConstraints = false
+
+		NSLayoutConstraint.activate([
+			goalNameLabel.centerYAnchor.constraint(equalTo: progressView.centerYAnchor),
+			goalNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10.0),
+			progressView.topAnchor.constraint(equalTo: topAnchor, constant: 10.0),
+			progressView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10.0),
+			progressView.widthAnchor.constraint(equalToConstant: 48),
+			progressView.heightAnchor.constraint(equalToConstant: 48),
+			goalDescriptionLabel.topAnchor.constraint(equalTo: progressView.bottomAnchor, constant: 5.0),
+			goalDescriptionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5.0),
+			goalDescriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5.0),
+			frequencyLabel.topAnchor.constraint(equalTo: goalDescriptionLabel.bottomAnchor, constant: 20.0),
+			frequencyLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5.0),
+			frequencyNumberLabel.topAnchor.constraint(equalTo: goalDescriptionLabel.bottomAnchor, constant: 20.0),
+			frequencyNumberLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5.0),
+			frequencyNumberLabel.leadingAnchor.constraint(greaterThanOrEqualTo: frequencyLabel.trailingAnchor, constant: 5.0),
+			completionsThisWeekLabel.topAnchor.constraint(equalTo: frequencyLabel.bottomAnchor, constant: 10.0),
+			completionsThisWeekLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5.0),
+			completionsThisWeekNumberLabel.topAnchor.constraint(equalTo: frequencyLabel.bottomAnchor, constant: 10.0),
+			completionsThisWeekNumberLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5.0),
+			completionsThisWeekNumberLabel.leadingAnchor.constraint(greaterThanOrEqualTo: completionsThisWeekLabel.trailingAnchor, constant: 5.0),
+			currentStreakLabel.topAnchor.constraint(equalTo: completionsThisWeekLabel.bottomAnchor, constant: 10.0),
+			currentStreakLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5.0),
+			currentStreakNumberLabel.topAnchor.constraint(equalTo: completionsThisWeekLabel.bottomAnchor, constant: 10.0),
+			currentStreakNumberLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5.0),
+			currentStreakNumberLabel.leadingAnchor.constraint(greaterThanOrEqualTo: currentStreakLabel.trailingAnchor, constant: 5.0),
+			currentStreakNumberLabel.bottomAnchor.constraint(greaterThanOrEqualTo: bottomAnchor)
+		])
+
 	}
 
 }
