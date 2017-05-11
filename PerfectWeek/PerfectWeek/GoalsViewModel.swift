@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class GoalsViewModel: NSObject {
+final class GoalsViewModel {
 
 	let numberOfSections = 2
 	private let library = GoalLibrary.shared

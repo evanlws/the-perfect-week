@@ -25,6 +25,8 @@
 		4F2F2DF11E8745B500684D02 /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F2DF01E8745B500684D02 /* Label.swift */; };
 		4F3AF7C01EC14D1900D074CA /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3AF7BF1EC14D1900D074CA /* ProgressView.swift */; };
 		4F3AF7C21EC375E200D074CA /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3AF7C11EC375E200D074CA /* SettingsTableViewController.swift */; };
+		4F3AF7C41EC40FC400D074CA /* GoalsCollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3AF7C31EC40FC400D074CA /* GoalsCollectionViewHeader.swift */; };
+		4F3AF7C91EC428F800D074CA /* LocalizedStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3AF7C81EC428F800D074CA /* LocalizedStrings.swift */; };
 		4F3EA2CE1EC10D9B00FDBE33 /* AddGoalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3EA2CD1EC10D9B00FDBE33 /* AddGoalCollectionViewCell.swift */; };
 		4F491E961E986A9C003BAF0D /* RealmStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F491E951E986A9C003BAF0D /* RealmStats.swift */; };
 		4F61472F1EB597A50058BF43 /* InformationHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F61472E1EB597A50058BF43 /* InformationHeader.swift */; };
@@ -87,6 +89,8 @@
 		4F2F2DF01E8745B500684D02 /* Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
 		4F3AF7BF1EC14D1900D074CA /* ProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 		4F3AF7C11EC375E200D074CA /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		4F3AF7C31EC40FC400D074CA /* GoalsCollectionViewHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalsCollectionViewHeader.swift; sourceTree = "<group>"; };
+		4F3AF7C81EC428F800D074CA /* LocalizedStrings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizedStrings.swift; sourceTree = "<group>"; };
 		4F3EA2CD1EC10D9B00FDBE33 /* AddGoalCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddGoalCollectionViewCell.swift; sourceTree = "<group>"; };
 		4F491E951E986A9C003BAF0D /* RealmStats.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmStats.swift; sourceTree = "<group>"; };
 		4F61472E1EB597A50058BF43 /* InformationHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationHeader.swift; sourceTree = "<group>"; };
@@ -159,12 +163,12 @@
 		4F1147CC1E58F71600346A1D /* PerfectWeek */ = {
 			isa = PBXGroup;
 			children = (
-				4F3AF7C11EC375E200D074CA /* SettingsTableViewController.swift */,
 				4F6147301EB640BF0058BF43 /* Header */,
 				4F2F2DE91E87349000684D02 /* Overview */,
 				4F2F2DEA1E8734AA00684D02 /* Detail */,
 				4F2F2DEB1E8734CA00684D02 /* Edit */,
 				4F2F2DEC1E8734D300684D02 /* Add */,
+				4F3AF7C71EC428E200D074CA /* Settings */,
 				4FBF57DE1EBF7249001DA75C /* Notifications */,
 				4F2F2DED1E8734DF00684D02 /* Library and Model */,
 				4F2F2DEE1E8734EC00684D02 /* UI and Extensions */,
@@ -204,6 +208,7 @@
 			isa = PBXGroup;
 			children = (
 				4FA6DD571E6B4E2400547D33 /* GoalsViewController.swift */,
+				4F3AF7C31EC40FC400D074CA /* GoalsCollectionViewHeader.swift */,
 				4FA6DD5D1E6B79DE00547D33 /* GoalsViewModel.swift */,
 				4FA6DD5B1E6B563800547D33 /* GoalCollectionViewCell.swift */,
 				4F3EA2CD1EC10D9B00FDBE33 /* AddGoalCollectionViewCell.swift */,
@@ -247,6 +252,7 @@
 				4FA6DD5F1E6B7C5A00547D33 /* GoalLibrary.swift */,
 				4FA6DD501E6B3D5300547D33 /* Goal.swift */,
 				4FD9872E1E989E2F00917F57 /* Stats.swift */,
+				4F3AF7C81EC428F800D074CA /* LocalizedStrings.swift */,
 				4F854E271E9AC0C70038A23F /* Realm */,
 			);
 			name = "Library and Model";
@@ -273,6 +279,14 @@
 				4F1147D91E58F71700346A1D /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4F3AF7C71EC428E200D074CA /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				4F3AF7C11EC375E200D074CA /* SettingsTableViewController.swift */,
+			);
+			name = Settings;
 			sourceTree = "<group>";
 		};
 		4F6147301EB640BF0058BF43 /* Header */ = {
@@ -505,10 +519,12 @@
 				4F2EB1E41E7EF39800677A3C /* GoalConverter.swift in Sources */,
 				4F7F5E401EBE2249009A1385 /* InformationHeaderObserver.swift in Sources */,
 				4FBF57DD1EBE6DB8001DA75C /* NotificationManager.swift in Sources */,
+				4F3AF7C41EC40FC400D074CA /* GoalsCollectionViewHeader.swift in Sources */,
 				4FD9872F1E989E2F00917F57 /* Stats.swift in Sources */,
 				4FA6DD511E6B3D5300547D33 /* Goal.swift in Sources */,
 				4FD987311E98A2C800917F57 /* StatsConverter.swift in Sources */,
 				4F61472F1EB597A50058BF43 /* InformationHeader.swift in Sources */,
+				4F3AF7C91EC428F800D074CA /* LocalizedStrings.swift in Sources */,
 				4F3AF7C01EC14D1900D074CA /* ProgressView.swift in Sources */,
 				4FDFD1011E6D30AC00D33353 /* AddGoalNameViewModel.swift in Sources */,
 				4F2EB1E21E7EF38E00677A3C /* RealmGoal.swift in Sources */,

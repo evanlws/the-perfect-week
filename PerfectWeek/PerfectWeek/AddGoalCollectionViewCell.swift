@@ -14,22 +14,27 @@ final class AddGoalCollectionViewCell: UICollectionViewCell {
 
 	let newGoalButton: UIButton = {
 		let button = UIButton(style: .custom)
-		button.setTitle("New Goal", for: .normal)
+		button.setTitle(LocalizedStrings.newGoal, for: .normal)
 		return button
 	}()
 
 	override init(frame: CGRect) {
 		super.init(frame: frame)
-		addSubview(newGoalButton)
-		setupConstraints()
+		configureViews()
+		configureConstraints()
 	}
 
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
 
-	private func setupConstraints() {
+	private func configureViews() {
+		addSubview(newGoalButton)
+	}
+
+	private func configureConstraints() {
 		newGoalButton.translatesAutoresizingMaskIntoConstraints = false
+
 		NSLayoutConstraint.activate([
 			newGoalButton.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor),
 			newGoalButton.leftAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leftAnchor),

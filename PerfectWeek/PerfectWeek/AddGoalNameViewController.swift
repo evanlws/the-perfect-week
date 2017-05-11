@@ -11,17 +11,38 @@ import UIKit
 final class AddGoalNameViewController: UIViewController {
 
 	var viewModel: AddGoalNameViewModel!
-	fileprivate let nextButton = UIButton()
+
+	fileprivate let nameLabel: Label = {
+		let label = Label(style: .body)
+		label.text = LocalizedStrings.enterGoalName
+		return label
+	}()
+
+	private let nameTextField: UITextField = {
+		let textField = UITextField()
+		textField.borderStyle = .line
+		textField.autocorrectionType = .no
+		textField.returnKeyType = .done
+		return textField
+	}()
+
+	private let nextButton: UIButton = {
+		let button = UIButton()
+		button.setTitle(LocalizedStrings.next, for: .normal)
+		button.backgroundColor = .purple
+		button.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
+		return button
+	}()
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		let cancelButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancel(_:)))
+		let cancelButtonItem = UIBarButtonItem(title: LocalizedStrings.cancel, style: .plain, target: self, action: #selector(didTapCancelBarButtonItem))
 		navigationItem.leftBarButtonItem = cancelButtonItem
-		self.view.backgroundColor = .white
-		self.title = "Add Goal"
-		setupNameLabel()
-		setupNameTextField()
-		setupNextButton()
+		view.backgroundColor = .white
+		title = LocalizedStrings.addGoal
+
+		configureViews()
+		configureConstraints()
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -29,67 +50,34 @@ final class AddGoalNameViewController: UIViewController {
 		InformationHeaderObserver.shouldHideInformationHeader()
 	}
 
-	private func setupNameLabel() {
-		let nameLabel = Label(style: .body)
-		nameLabel.text = "Enter a name for your goal"
+	private func configureViews() {
+		nameTextField.delegate = self
 		view.addSubview(nameLabel)
+		view.addSubview(nameTextField)
+		view.addSubview(nextButton)
+		disableNextButton()
+	}
 
+	private func configureConstraints() {
 		nameLabel.translatesAutoresizingMaskIntoConstraints = false
+		nameTextField.translatesAutoresizingMaskIntoConstraints = false
+		nextButton.translatesAutoresizingMaskIntoConstraints = false
+
 		let height: CGFloat = 30
 		NSLayoutConstraint.activate([
 			nameLabel.heightAnchor.constraint(equalToConstant: height),
 			nameLabel.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -10),
 			nameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-			nameLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant:-height)
-		])
-	}
-
-	private func setupNameTextField() {
-		let nameTextField = UITextField()
-		nameTextField.delegate = self
-		nameTextField.borderStyle = .line
-		nameTextField.autocorrectionType = .no
-		nameTextField.returnKeyType = .done
-		view.addSubview(nameTextField)
-
-		nameTextField.translatesAutoresizingMaskIntoConstraints = false
-		let height: CGFloat = 30
-		NSLayoutConstraint.activate([
+			nameLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant:-height),
 			nameTextField.heightAnchor.constraint(equalToConstant: height),
 			nameTextField.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -10),
 			nameTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-			nameTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: height)
-		])
-	}
-
-	private func setupNextButton() {
-		nextButton.setTitle("Next", for: .normal)
-		nextButton.backgroundColor = .purple
-		nextButton.addTarget(self, action: #selector(next(_:)), for: .touchUpInside)
-		view.addSubview(nextButton)
-		disableNextButton()
-
-		nextButton.translatesAutoresizingMaskIntoConstraints = false
-		NSLayoutConstraint.activate([
+			nameTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: height),
 			nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 			nextButton.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -10),
 			nextButton.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -60),
 			nextButton.heightAnchor.constraint(equalToConstant: 30)
 		])
-	}
-
-}
-
-// MARK: - Navigation
-extension AddGoalNameViewController {
-	func next(_ nextButton: UIButton) {
-		let addGoalFrequencyVC = AddGoalFrequencyViewController()
-		addGoalFrequencyVC.viewModel = AddGoalFrequencyViewModel(mutableGoal: viewModel.mutableGoal)
-		navigationController?.pushViewController(addGoalFrequencyVC, animated: true)
-	}
-
-	func cancel(_ cancelBarButtonItem: UIBarButtonItem) {
-		dismiss(animated: true, completion: nil)
 	}
 
 	fileprivate func disableNextButton() {
@@ -101,6 +89,35 @@ extension AddGoalNameViewController {
 		nextButton.alpha = 1.0
 		nextButton.isEnabled = true
 	}
+
+}
+
+// MARK: - Actions
+extension AddGoalNameViewController {
+
+	func didTapNextButton() {
+		presentAddGoalFrequencyVC()
+	}
+
+	func didTapCancelBarButtonItem() {
+		dismissCurrentVC()
+	}
+
+}
+
+// MARK: - Navigation
+extension AddGoalNameViewController {
+
+	fileprivate func presentAddGoalFrequencyVC() {
+		let addGoalFrequencyVC = AddGoalFrequencyViewController()
+		addGoalFrequencyVC.viewModel = AddGoalFrequencyViewModel(mutableGoal: viewModel.mutableGoal)
+		navigationController?.pushViewController(addGoalFrequencyVC, animated: true)
+	}
+
+	fileprivate func dismissCurrentVC() {
+		dismiss(animated: true, completion: nil)
+	}
+
 }
 
 extension AddGoalNameViewController: UITextFieldDelegate {
@@ -112,9 +129,6 @@ extension AddGoalNameViewController: UITextFieldDelegate {
 		}
 	}
 
-	// String == What the user is trying to add
-	// Text == What the user already had
-	// Updated text == What the user has altogether. Should be String + text if succeeds
 	func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
 		guard let text = textField.text, let stringRange = range.range(for: text) else {
 			return false

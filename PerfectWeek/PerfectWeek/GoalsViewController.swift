@@ -32,8 +32,9 @@ final class GoalsViewController: UIViewController, UIGestureRecognizerDelegate {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		setupGestureRecognizer()
-		setupCollectionView()
+		configureGestureRecognizer()
+		configureViews()
+		configureConstraints()
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -43,19 +44,23 @@ final class GoalsViewController: UIViewController, UIGestureRecognizerDelegate {
 	}
 
 	// MARK: - Setup
-	private func setupCollectionView() {
+	private func configureViews() {
 		collectionView.backgroundColor = .white
 		collectionView.delegate = self
 		collectionView.dataSource = self
 		collectionView.bounces = true
 		collectionView.alwaysBounceVertical = true
+
 		collectionView.register(GoalCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: GoalCollectionViewCell.self))
 		collectionView.register(AddGoalCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: AddGoalCollectionViewCell.self))
-		collectionView.register(CollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: String(describing: CollectionViewHeader.self))
+		collectionView.register(GoalsCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: String(describing: GoalsCollectionViewHeader.self))
 
 		view.addSubview(collectionView)
+	}
 
+	private func configureConstraints() {
 		collectionView.translatesAutoresizingMaskIntoConstraints = false
+
 		NSLayoutConstraint.activate([
 			collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: InformationHeader.windowSize.height),
 			collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -64,7 +69,7 @@ final class GoalsViewController: UIViewController, UIGestureRecognizerDelegate {
 		])
 	}
 
-	private func setupGestureRecognizer() {
+	private func configureGestureRecognizer() {
 		let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(didActivateLongPress(_:)))
 		longPressGestureRecognizer.minimumPressDuration = 1.0
 		longPressGestureRecognizer.delaysTouchesBegan = true
@@ -72,18 +77,7 @@ final class GoalsViewController: UIViewController, UIGestureRecognizerDelegate {
 		collectionView.addGestureRecognizer(longPressGestureRecognizer)
 	}
 
-}
-
-extension GoalsViewController {
-
-	// MARK: - Navigation
-	func presentGoalDetailVC(_ goal: Goal) {
-		let goalDetailViewController = GoalDetailViewController()
-		goalDetailViewController.viewModel = GoalDetailViewModel(goal: goal)
-		navigationController?.pushViewController(goalDetailViewController, animated: true)
-	}
-
-	func presentAddGoalVC() {
+	fileprivate func presentAddGoalNameViewController() {
 		let addGoalNameViewController = AddGoalNameViewController()
 		addGoalNameViewController.viewModel = AddGoalNameViewModel(mutableGoal: MutableGoal(objectId: UUID().uuidString))
 		let navigationController = UINavigationController(rootViewController: addGoalNameViewController)
@@ -92,19 +86,45 @@ extension GoalsViewController {
 		}
 	}
 
+	fileprivate func complete(_ goal: Goal) {
+		viewModel.complete(goal)
+	}
+
+	fileprivate func undo(_ goal: Goal) {
+		viewModel.undo(goal)
+	}
+}
+
+// MARK: - Actions
+extension GoalsViewController {
+
+	func didTapNewGoalButton() {
+		presentAddGoalNameViewController()
+	}
+
 	func didActivateLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
 		guard gestureRecognizer.state == .began else { return }
 
 		let point = gestureRecognizer.location(in: collectionView)
 		if let indexPath = collectionView.indexPathForItem(at: point), let goal = viewModel.objectAt(indexPath) {
 			if goal.progress == goal.frequency {
-				viewModel.undo(goal)
+				complete(goal)
 			} else {
-				viewModel.complete(goal)
+				undo(goal)
 			}
 
 			collectionView.reloadData()
 		}
+	}
+}
+
+// MARK: - Navigation
+extension GoalsViewController {
+
+	func presentGoalDetailVC(_ goal: Goal) {
+		let goalDetailViewController = GoalDetailViewController()
+		goalDetailViewController.viewModel = GoalDetailViewModel(goal: goal)
+		navigationController?.pushViewController(goalDetailViewController, animated: true)
 	}
 
 }
@@ -118,11 +138,11 @@ extension GoalsViewController: UICollectionViewDataSource {
 	func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
 		guard kind == UICollectionElementKindSectionHeader else { return UICollectionReusableView() }
 
-		if let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: String(describing: CollectionViewHeader.self), for: indexPath) as? CollectionViewHeader {
+		if let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: String(describing: GoalsCollectionViewHeader.self), for: indexPath) as? GoalsCollectionViewHeader {
 			if indexPath.section == 1 {
-				header.nameLabel.text = "Goals completed"
+				header.nameLabel.text = LocalizedStrings.goalsCompleted
 			} else {
-				header.nameLabel.text = "Goals to complete"
+				header.nameLabel.text = LocalizedStrings.goalsToComplete
 			}
 
 			return header
@@ -151,7 +171,6 @@ extension GoalsViewController: UICollectionViewDataSource {
 
 			cell.nameLabel.text = goal.name
 			cell.progressView.updateProgress(progress: goal.currentProgress())
-			print("Current progress \(goal.currentProgress())")
 			return cell
 
 		} else if indexPath.section == 0, indexPath.row == viewModel.goalsToComplete.count {
@@ -162,7 +181,7 @@ extension GoalsViewController: UICollectionViewDataSource {
 				cell = AddGoalCollectionViewCell()
 			}
 
-			cell.newGoalButton.addTarget(self, action: #selector(presentAddGoalVC), for: .touchUpInside)
+			cell.newGoalButton.addTarget(self, action: #selector(didTapNewGoalButton), for: .touchUpInside)
 			return cell
 		}
 
@@ -175,39 +194,6 @@ extension GoalsViewController: UICollectionViewDelegate {
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		guard let goal = viewModel.objectAt(indexPath) else { return }
 		presentGoalDetailVC(goal)
-	}
-
-}
-
-class CollectionViewHeader: UICollectionReusableView {
-
-	let nameLabel: UILabel = {
-		let label = UILabel()
-		label.font = UIFont.systemFont(ofSize: 14.0)
-		label.minimumScaleFactor = 0.6
-		label.textColor = .gray
-		label.textAlignment = .left
-		label.numberOfLines = 4
-		return label
-	}()
-
-	override init(frame: CGRect) {
-		super.init(frame: frame)
-
-		addSubview(nameLabel)
-		setupConstraints()
-	}
-
-	required init?(coder aDecoder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
-	}
-
-	private func setupConstraints() {
-		nameLabel.translatesAutoresizingMaskIntoConstraints = false
-		NSLayoutConstraint.activate([
-			nameLabel.widthAnchor.constraint(equalTo: widthAnchor),
-			nameLabel.heightAnchor.constraint(equalTo: heightAnchor)
-		])
 	}
 
 }

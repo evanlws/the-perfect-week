@@ -12,41 +12,56 @@ final class GoalDetailViewController: UIViewController {
 
 	var viewModel: GoalDetailViewModel!
 
+	private let backButton: UIButton = {
+		let button = UIButton(type: .custom)
+		button.setTitle(LocalizedStrings.back, for: .normal)
+		button.setTitleColor(.purple, for: .normal)
+		button.addTarget(self, action: #selector(didTapBack), for: .touchUpInside)
+		return button
+	}()
+
+	private let editGoalButton: UIButton = {
+		let button = UIButton(type: .custom)
+		button.setTitle(LocalizedStrings.editGoal, for: .normal)
+		button.setTitleColor(.purple, for: .normal)
+		button.addTarget(self, action: #selector(didTapEditGoal), for: .touchUpInside)
+		return button
+	}()
+
+	private let completeGoalButton: UIButton = {
+		let button = UIButton(style: .custom)
+		button.setTitle(LocalizedStrings.completeGoal, for: .normal)
+		button.addTarget(self, action: #selector(didTapCompleteGoal), for: .touchUpInside)
+		return button
+	}()
+
+	private let detailContentView: DetailContentView = {
+		let view = DetailContentView(frame: .zero)
+		view.backgroundColor = .white
+		view.layer.shadowColor = UIColor.black.cgColor
+		view.layer.shadowOffset = CGSize(width: 0, height: 1)
+		view.layer.shadowOpacity = 1
+		view.layer.shadowRadius = 1.0
+		view.clipsToBounds = false
+		view.layer.masksToBounds = false
+		return view
+	}()
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.backgroundColor = .white
 		configureViews()
+		configureConstraints()
 	}
 
 	private func configureViews() {
-		let backButton = UIButton(type: .custom)
-		backButton.setTitle("Back", for: .normal)
-		backButton.setTitleColor(.purple, for: .normal)
-		backButton.addTarget(self, action: #selector(didTapBack), for: .touchUpInside)
-
-		let editGoalButton = UIButton(type: .custom)
-		editGoalButton.setTitle("Edit Goal", for: .normal)
-		editGoalButton.setTitleColor(.purple, for: .normal)
-		editGoalButton.addTarget(self, action: #selector(didTapEditGoal), for: .touchUpInside)
-
-		let completeGoalButton = UIButton(style: .custom)
-		completeGoalButton.setTitle("Complete  Goal", for: .normal)
-		completeGoalButton.addTarget(self, action: #selector(didTapCompleteGoal), for: .touchUpInside)
-
-		let detailContentView = DetailContentView(frame: .zero)
-		detailContentView.backgroundColor = .white
-		detailContentView.layer.shadowColor = UIColor.black.cgColor
-		detailContentView.layer.shadowOffset = CGSize(width: 0, height: 1)
-		detailContentView.layer.shadowOpacity = 1
-		detailContentView.layer.shadowRadius = 1.0
-		detailContentView.clipsToBounds = false
-		detailContentView.layer.masksToBounds = false
-
 		view.addSubview(backButton)
 		view.addSubview(editGoalButton)
 		view.addSubview(detailContentView)
 		view.addSubview(completeGoalButton)
+	}
 
+	private func configureConstraints() {
 		backButton.translatesAutoresizingMaskIntoConstraints = false
 		editGoalButton.translatesAutoresizingMaskIntoConstraints = false
 		detailContentView.translatesAutoresizingMaskIntoConstraints = false
@@ -69,17 +84,11 @@ final class GoalDetailViewController: UIViewController {
 
 }
 
-// MARK: - Navigation
+// MARK: - Actions
 extension GoalDetailViewController {
 
-	private func presentEditGoalVC() {
-		let editGoalViewController = EditGoalViewController()
-		editGoalViewController.viewModel = EditGoalViewModel(goal: viewModel.goal)
-		navigationController?.pushViewController(editGoalViewController, animated: true)
-	}
-
 	func didTapBack() {
-		_ = navigationController?.popToRootViewController(animated: true)
+		presentGoalsVC()
 	}
 
 	func didTapEditGoal() {
@@ -88,7 +97,22 @@ extension GoalDetailViewController {
 
 	func didTapCompleteGoal() {
 		viewModel.completeGoal()
-		_ = navigationController?.popViewController(animated: true)
+		presentGoalsVC()
+	}
+
+}
+
+// MARK: - Navigation
+extension GoalDetailViewController {
+
+	fileprivate func presentEditGoalVC() {
+		let editGoalViewController = EditGoalViewController()
+		editGoalViewController.viewModel = EditGoalViewModel(goal: viewModel.goal)
+		navigationController?.pushViewController(editGoalViewController, animated: true)
+	}
+
+	fileprivate func presentGoalsVC() {
+		_ = navigationController?.popToRootViewController(animated: true)
 	}
 
 }
@@ -111,7 +135,7 @@ final class DetailContentView: UIView {
 
 	private let frequencyLabel: Label = {
 		let label = Label(style: .body)
-		label.text = "Frequency"
+		label.text = LocalizedStrings.frequency
 		return label
 	}()
 
@@ -124,7 +148,7 @@ final class DetailContentView: UIView {
 
 	private let completionsThisWeekLabel: Label = {
 		let label = Label(style: .body)
-		label.text = "Completions this week"
+		label.text = LocalizedStrings.completionsThisWeek
 		return label
 	}()
 
@@ -135,16 +159,16 @@ final class DetailContentView: UIView {
 		return label
 	}()
 
+	private let currentStreakLabel: Label = {
+		let label = Label(style: .body)
+		label.text = LocalizedStrings.currentStreak
+		return label
+	}()
+
 	fileprivate let currentStreakNumberLabel: Label = {
 		let label = Label(style: .body)
 		label.text = "4"
 		label.textAlignment = .right
-		return label
-	}()
-
-	private let currentStreakLabel: Label = {
-		let label = Label(style: .body)
-		label.text = "Current Streak"
 		return label
 	}()
 

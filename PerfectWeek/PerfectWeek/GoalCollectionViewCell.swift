@@ -26,34 +26,40 @@ final class GoalCollectionViewCell: UICollectionViewCell {
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 		backgroundColor = .white
-		layer.shadowColor = UIColor.black.cgColor
-		layer.shadowOffset = CGSize(width: 0, height: 1)
-		layer.shadowOpacity = 1
-		layer.shadowRadius = 1.0
-		clipsToBounds = false
-		layer.masksToBounds = false
-		addSubview(nameLabel)
-		addSubview(progressView)
-
-		setupConstraints()
+		configureViews()
+		configureConstraints()
 	}
 
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
 
-	private func setupConstraints() {
-		nameLabel.translatesAutoresizingMaskIntoConstraints = false
-		nameLabel.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor).isActive = true
-		nameLabel.leftAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leftAnchor).isActive = true
-		nameLabel.bottomAnchor.constraint(equalTo: contentView.layoutMarginsGuide.bottomAnchor).isActive = true
+	private func configureViews() {
+		layer.shadowColor = UIColor.black.cgColor
+		layer.shadowOffset = CGSize(width: 0, height: 1)
+		layer.shadowOpacity = 1
+		layer.shadowRadius = 1.0
+		clipsToBounds = false
+		layer.masksToBounds = false
 
+		addSubview(nameLabel)
+		addSubview(progressView)
+	}
+
+	private func configureConstraints() {
+		nameLabel.translatesAutoresizingMaskIntoConstraints = false
 		progressView.translatesAutoresizingMaskIntoConstraints = false
-		progressView.leftAnchor.constraint(equalTo: nameLabel.rightAnchor).isActive = true
-		progressView.rightAnchor.constraint(equalTo: contentView.layoutMarginsGuide.rightAnchor).isActive = true
-		progressView.widthAnchor.constraint(equalToConstant: 50.0).isActive = true
-		progressView.heightAnchor.constraint(equalTo: progressView.widthAnchor).isActive = true
-		progressView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
+
+		NSLayoutConstraint.activate([
+			nameLabel.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor),
+			nameLabel.leftAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leftAnchor),
+			nameLabel.bottomAnchor.constraint(equalTo: contentView.layoutMarginsGuide.bottomAnchor),
+			progressView.leftAnchor.constraint(equalTo: nameLabel.rightAnchor),
+			progressView.rightAnchor.constraint(equalTo: contentView.layoutMarginsGuide.rightAnchor),
+			progressView.widthAnchor.constraint(equalToConstant: 50.0),
+			progressView.heightAnchor.constraint(equalTo: progressView.widthAnchor),
+			progressView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+		])
 	}
 
 }
