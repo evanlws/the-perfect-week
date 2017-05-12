@@ -14,6 +14,9 @@ protocol StepperDelegate: class {
 
 final class Stepper: UIView {
 
+	var maxValue = 7
+	var minValue = 0
+
 	var counter: Int = 1 {
 		didSet {
 			numberLabel.text = String(counter)
@@ -67,7 +70,7 @@ final class Stepper: UIView {
 	}
 
 	func increment() {
-		if counter != 7 {
+		if counter != maxValue {
 			counter += 1
 			numberLabel.text = String(counter)
 			delegate?.valueChanged(counter)
@@ -75,7 +78,7 @@ final class Stepper: UIView {
 	}
 
 	func decrement() {
-		if counter != 0 {
+		if counter != minValue {
 			counter -= 1
 			numberLabel.text = String(counter)
 			delegate?.valueChanged(counter)

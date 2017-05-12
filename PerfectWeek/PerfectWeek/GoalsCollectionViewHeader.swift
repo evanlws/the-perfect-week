@@ -22,7 +22,6 @@ class GoalsCollectionViewHeader: UICollectionReusableView {
 
 	override init(frame: CGRect) {
 		super.init(frame: frame)
-
 		configureViews()
 		configureConstraints()
 	}
@@ -43,5 +42,5 @@ class GoalsCollectionViewHeader: UICollectionReusableView {
 			nameLabel.heightAnchor.constraint(equalTo: heightAnchor)
 			])
 	}
-	
+
 }

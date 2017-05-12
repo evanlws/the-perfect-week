@@ -10,7 +10,7 @@ import UIKit
 
 final class AddGoalNameViewController: UIViewController {
 
-	var viewModel: AddGoalNameViewModel!
+	var viewModel: AddGoalNameViewModel
 
 	fileprivate let nameLabel: Label = {
 		let label = Label(style: .body)
@@ -34,13 +34,17 @@ final class AddGoalNameViewController: UIViewController {
 		return button
 	}()
 
+	init(viewModel: AddGoalNameViewModel) {
+		self.viewModel = viewModel
+		super.init(nibName: nil, bundle: nil)
+	}
+
+	required init?(coder aDecoder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		let cancelButtonItem = UIBarButtonItem(title: LocalizedStrings.cancel, style: .plain, target: self, action: #selector(didTapCancelBarButtonItem))
-		navigationItem.leftBarButtonItem = cancelButtonItem
-		view.backgroundColor = .white
-		title = LocalizedStrings.addGoal
-
 		configureViews()
 		configureConstraints()
 	}
@@ -51,7 +55,12 @@ final class AddGoalNameViewController: UIViewController {
 	}
 
 	private func configureViews() {
+		let cancelButtonItem = UIBarButtonItem(title: LocalizedStrings.cancel, style: .plain, target: self, action: #selector(didTapCancelBarButtonItem))
+		navigationItem.leftBarButtonItem = cancelButtonItem
+		view.backgroundColor = .white
+		title = LocalizedStrings.addGoal
 		nameTextField.delegate = self
+
 		view.addSubview(nameLabel)
 		view.addSubview(nameTextField)
 		view.addSubview(nextButton)
@@ -109,8 +118,7 @@ extension AddGoalNameViewController {
 extension AddGoalNameViewController {
 
 	fileprivate func presentAddGoalFrequencyVC() {
-		let addGoalFrequencyVC = AddGoalFrequencyViewController()
-		addGoalFrequencyVC.viewModel = AddGoalFrequencyViewModel(mutableGoal: viewModel.mutableGoal)
+		let addGoalFrequencyVC = AddGoalFrequencyViewController(viewModel: AddGoalFrequencyViewModel(mutableGoal: viewModel.mutableGoal))
 		navigationController?.pushViewController(addGoalFrequencyVC, animated: true)
 	}
 

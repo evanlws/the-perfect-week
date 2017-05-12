@@ -10,7 +10,7 @@ import UIKit
 
 final class GoalDetailViewController: UIViewController {
 
-	var viewModel: GoalDetailViewModel!
+	var viewModel: GoalDetailViewModel
 
 	private let backButton: UIButton = {
 		let button = UIButton(type: .custom)
@@ -47,14 +47,23 @@ final class GoalDetailViewController: UIViewController {
 		return view
 	}()
 
+	init(viewModel: GoalDetailViewModel) {
+		self.viewModel = viewModel
+		super.init(nibName: nil, bundle: nil)
+	}
+
+	required init?(coder aDecoder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.backgroundColor = .white
 		configureViews()
 		configureConstraints()
 	}
 
 	private func configureViews() {
+		view.backgroundColor = .white
 		view.addSubview(backButton)
 		view.addSubview(editGoalButton)
 		view.addSubview(detailContentView)
@@ -106,8 +115,7 @@ extension GoalDetailViewController {
 extension GoalDetailViewController {
 
 	fileprivate func presentEditGoalVC() {
-		let editGoalViewController = EditGoalViewController()
-		editGoalViewController.viewModel = EditGoalViewModel(goal: viewModel.goal)
+		let editGoalViewController = EditGoalViewController(viewModel: EditGoalViewModel(goal: viewModel.goal))
 		navigationController?.pushViewController(editGoalViewController, animated: true)
 	}
 

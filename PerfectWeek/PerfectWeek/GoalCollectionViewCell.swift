@@ -25,7 +25,6 @@ final class GoalCollectionViewCell: UICollectionViewCell {
 
 	override init(frame: CGRect) {
 		super.init(frame: frame)
-		backgroundColor = .white
 		configureViews()
 		configureConstraints()
 	}
@@ -35,6 +34,7 @@ final class GoalCollectionViewCell: UICollectionViewCell {
 	}
 
 	private func configureViews() {
+		backgroundColor = .white
 		layer.shadowColor = UIColor.black.cgColor
 		layer.shadowOffset = CGSize(width: 0, height: 1)
 		layer.shadowOpacity = 1

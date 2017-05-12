@@ -18,8 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		window = UIWindow(frame: UIScreen.main.bounds)
 		window?.backgroundColor = .white
 
-		let goalsViewController = GoalsViewController()
-		goalsViewController.viewModel = GoalsViewModel()
+		let goalsViewController = GoalsViewController(viewModel: GoalsViewModel())
 		let navigationController = UINavigationController(rootViewController: goalsViewController)
 		navigationController.tabBarItem = UITabBarItem(title: "Goals", image: nil, tag: 1)
 		navigationController.setNavigationBarHidden(true, animated: false)

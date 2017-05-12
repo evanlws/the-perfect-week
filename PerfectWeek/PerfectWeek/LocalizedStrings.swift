@@ -25,4 +25,6 @@ enum LocalizedStrings {
 	static let addGoal = NSLocalizedString("ADD_GOAL", value: "Add Goal", comment: "")
 	static let enterGoalName = NSLocalizedString("ENTER_GOAL_NAME", value: "Enter a name for your goal", comment: "")
 	static let next = NSLocalizedString("NEXT", value: "Next", comment: "")
+	static let goalCompletionFrequencyPrompt = NSLocalizedString("GOAL_COMPLETION_FREQUENCY_PROMPT", value: "How often do you want to complete this goal?", comment: "")
+	static let dontForget = NSLocalizedString("DONT_FORGET", value: "Don't forget", comment: "")
 }

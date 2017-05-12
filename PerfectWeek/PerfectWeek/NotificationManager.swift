@@ -32,7 +32,7 @@ struct NotificationManager {
 		let notificationCenter = UNUserNotificationCenter.current()
 
 		let content = UNMutableNotificationContent()
-		content.title = "Don't forget"
+		content.title = LocalizedStrings.dontForget
 		content.body = goal.name
 		content.sound = UNNotificationSound.default()
 

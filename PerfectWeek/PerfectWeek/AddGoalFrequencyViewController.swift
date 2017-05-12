@@ -10,34 +10,38 @@ import UIKit
 
 final class AddGoalFrequencyViewController: UIViewController {
 
-	var viewModel: AddGoalFrequencyViewModel!
+	var viewModel: AddGoalFrequencyViewModel
 
 	private let frequencyPrompt: Label = {
 		let label = Label(style: .header)
-		label.text = "How often do you want to complete this goal?"
+		label.text = LocalizedStrings.goalCompletionFrequencyPrompt
 		label.numberOfLines = 0
 		return label
 	}()
 
 	private let timesPerWeekLabel: Label = {
 		let label = Label(style: .body)
-		label.text = "Times per week"
+		label.text = LocalizedStrings.timesPerWeek
 		return label
 	}()
 
 	private let timesPerWeekStepper = Stepper()
 
+	private let nextButton = UIButton()
+
+	init(viewModel: AddGoalFrequencyViewModel) {
+		self.viewModel = viewModel
+		super.init(nibName: nil, bundle: nil)
+	}
+
+	required init?(coder aDecoder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		let cancelButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancel(_:)))
-		navigationItem.leftBarButtonItem = cancelButtonItem
-		self.view.backgroundColor = .white
-		self.title = "Add Goal"
-
-		setupFrequencyPrompt()
-		setupTimesPerWeekLabel()
-		setupTimesPerWeekStepper()
-		setupNextButton()
+		configureViews()
+		configureConstraints()
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -46,56 +50,43 @@ final class AddGoalFrequencyViewController: UIViewController {
 	}
 
 	// MARK: - Setup
-	private func setupFrequencyPrompt() {
-		view.addSubview(frequencyPrompt)
+	private func configureViews() {
+		let cancelButtonItem = UIBarButtonItem(title: LocalizedStrings.cancel, style: .plain, target: self, action: #selector(cancel))
+		navigationItem.leftBarButtonItem = cancelButtonItem
+		self.view.backgroundColor = .white
+		self.title = LocalizedStrings.addGoal
+		timesPerWeekStepper.delegate = self
+		viewModel.mutableGoal.frequency = timesPerWeekStepper.counter
+		nextButton.setTitle(LocalizedStrings.save, for: .normal)
+		nextButton.backgroundColor = .purple
+		nextButton.addTarget(self, action: #selector(save), for: .touchUpInside)
 
+		view.addSubview(frequencyPrompt)
+		view.addSubview(timesPerWeekLabel)
+		view.addSubview(timesPerWeekStepper)
+		view.addSubview(nextButton)
+	}
+
+	private func configureConstraints() {
 		frequencyPrompt.translatesAutoresizingMaskIntoConstraints = false
+		timesPerWeekLabel.translatesAutoresizingMaskIntoConstraints = false
+		timesPerWeekStepper.translatesAutoresizingMaskIntoConstraints = false
+		nextButton.translatesAutoresizingMaskIntoConstraints = false
+
 		let navigationBarHeight = navigationController?.navigationBar.bounds.size.height ?? 0
 		NSLayoutConstraint.activate([
 			frequencyPrompt.heightAnchor.constraint(equalToConstant: 60),
 			frequencyPrompt.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -40),
 			frequencyPrompt.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: navigationBarHeight + 40),
-			frequencyPrompt.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-		])
-
-	}
-
-	private func setupTimesPerWeekLabel() {
-		view.addSubview(timesPerWeekLabel)
-
-		timesPerWeekLabel.translatesAutoresizingMaskIntoConstraints = false
-		NSLayoutConstraint.activate([
+			frequencyPrompt.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 			timesPerWeekLabel.heightAnchor.constraint(equalToConstant: 30),
 			timesPerWeekLabel.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -20),
 			timesPerWeekLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
-			timesPerWeekLabel.topAnchor.constraint(equalTo: frequencyPrompt.bottomAnchor, constant: 30)
-		])
-	}
-
-	private func setupTimesPerWeekStepper() {
-		timesPerWeekStepper.delegate = self
-		view.addSubview(timesPerWeekStepper)
-
-		viewModel.mutableGoal.frequency = timesPerWeekStepper.counter
-
-		timesPerWeekStepper.translatesAutoresizingMaskIntoConstraints = false
-		NSLayoutConstraint.activate([
+			timesPerWeekLabel.topAnchor.constraint(equalTo: frequencyPrompt.bottomAnchor, constant: 30),
 			timesPerWeekStepper.heightAnchor.constraint(equalToConstant: 100),
 			timesPerWeekStepper.widthAnchor.constraint(equalToConstant: 120),
 			timesPerWeekStepper.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
-			timesPerWeekStepper.topAnchor.constraint(equalTo: timesPerWeekLabel.bottomAnchor, constant: 15)
-		])
-	}
-
-	private func setupNextButton() {
-		let nextButton = UIButton()
-		nextButton.setTitle("Save", for: .normal)
-		nextButton.backgroundColor = .purple
-		nextButton.addTarget(self, action: #selector(save(_:)), for: .touchUpInside)
-		view.addSubview(nextButton)
-
-		nextButton.translatesAutoresizingMaskIntoConstraints = false
-		NSLayoutConstraint.activate([
+			timesPerWeekStepper.topAnchor.constraint(equalTo: timesPerWeekLabel.bottomAnchor, constant: 15),
 			nextButton.heightAnchor.constraint(equalToConstant: 30),
 			nextButton.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -30),
 			nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -108,12 +99,12 @@ final class AddGoalFrequencyViewController: UIViewController {
 // MARK: - Navigation
 extension AddGoalFrequencyViewController {
 
-	func save(_ saveButton: UIButton) {
+	func save() {
 		viewModel.addGoal()
 		dismiss(animated: true, completion: nil)
 	}
 
-	func cancel(_ cancelBarButtonItem: UIBarButtonItem) {
+	func cancel() {
 		dismiss(animated: true, completion: nil)
 	}
 

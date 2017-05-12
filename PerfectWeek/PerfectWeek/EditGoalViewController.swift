@@ -10,7 +10,7 @@ import UIKit
 
 final class EditGoalViewController: UIViewController {
 
-	var viewModel: EditGoalViewModel!
+	var viewModel: EditGoalViewModel
 
 	private let nameLabel: Label = {
 		let label = Label(style: .body)
@@ -42,14 +42,17 @@ final class EditGoalViewController: UIViewController {
 		return button
 	}()
 
+	init(viewModel: EditGoalViewModel) {
+		self.viewModel = viewModel
+		super.init(nibName: nil, bundle: nil)
+	}
+
+	required init?(coder aDecoder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		let cancelButtonItem = UIBarButtonItem(title: LocalizedStrings.cancel, style: .plain, target: self, action: #selector(didTapCancelBarButtonItem))
-		navigationItem.leftBarButtonItem = cancelButtonItem
-		navigationController?.setNavigationBarHidden(false, animated: true)
-		view.backgroundColor = .white
-		title = LocalizedStrings.editGoal
-
 		configureViews()
 		configureConstraints()
 	}
@@ -61,6 +64,11 @@ final class EditGoalViewController: UIViewController {
 
 	// MARK: - Setup
 	private func configureViews() {
+		let cancelButtonItem = UIBarButtonItem(title: LocalizedStrings.cancel, style: .plain, target: self, action: #selector(didTapCancelBarButtonItem))
+		navigationItem.leftBarButtonItem = cancelButtonItem
+		navigationController?.setNavigationBarHidden(false, animated: true)
+		view.backgroundColor = .white
+		title = LocalizedStrings.editGoal
 		nameTextField.delegate = self
 		timesPerWeekStepper.delegate = self
 		viewModel.mutableGoal.frequency = timesPerWeekStepper.counter
