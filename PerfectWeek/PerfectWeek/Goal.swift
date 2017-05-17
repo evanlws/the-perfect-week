@@ -87,6 +87,16 @@ final class ExtensionItem {
 	}
 }
 
+extension Goal: Equatable {
+
+	static func == (lhs: Goal, rhs: Goal) -> Bool {
+		return lhs.objectId == rhs.objectId &&
+		lhs.name == rhs.name &&
+		lhs.lastCompleted == rhs.lastCompleted
+	}
+
+}
+
 struct MutableGoal {
 
 	var updateValues: [String: Any]

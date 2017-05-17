@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		navigationController.tabBarItem = UITabBarItem(title: "Goals", image: nil, tag: 1)
 		navigationController.setNavigationBarHidden(true, animated: false)
 
-		let settingsViewController = UIViewController()
+		let settingsViewController = SettingsViewController(viewModel: SettingsViewModel())
 		settingsViewController.tabBarItem = UITabBarItem(title: "Settings", image: nil, tag: 2)
 
 		let tabBarController = UITabBarController()

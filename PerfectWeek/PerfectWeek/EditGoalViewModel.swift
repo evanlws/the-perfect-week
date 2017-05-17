@@ -21,4 +21,8 @@ final class EditGoalViewModel {
 		library.updateGoal(with: mutableGoal.updateValues)
 	}
 
+	func deleteGoal() {
+		library.deleteGoalWith(mutableGoal.objectId)
+	}
+
 }

@@ -17,12 +17,13 @@ final class GoalsViewModel: NSObject {
 	let numberOfSections = 2
 	private let library = GoalLibrary.shared
 
-	var goalsCompletedToday: [Goal] {
-		return fetchGoals().filter({ $0.wasCompletedToday() })
+	var goalsToComplete: [Goal] {
+		return fetchGoals().filter({ !$0.wasCompletedToday() && !$0.isPerfectGoal() })
 	}
 
-	var goalsToComplete: [Goal] {
-		return fetchGoals().filter({ !$0.wasCompletedToday() })
+	var goalsCompleted: [Goal] {
+		let goalsToComplete = self.goalsToComplete
+		return fetchGoals().filter({ !goalsToComplete.contains($0) })
 	}
 
 	var addNewGoalButtonCallback: (() -> Void)?
@@ -60,7 +61,7 @@ extension GoalsViewModel: UICollectionViewDataSource {
 	}
 
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return section == 0 ? goalsToComplete.count + 1 : goalsCompletedToday.count
+		return section == 0 ? goalsToComplete.count + 1 : goalsCompleted.count
 	}
 
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -94,7 +95,7 @@ extension GoalsViewModel: UICollectionViewDataSource {
 	func objectAt(_ indexPath: IndexPath) -> Goal? {
 		guard cellTypeFor(indexPath) == .goal else { return nil }
 
-		return indexPath.section == 0 ? goalsToComplete[indexPath.row] : goalsCompletedToday[indexPath.row]
+		return indexPath.section == 0 ? goalsToComplete[indexPath.row] : goalsCompleted[indexPath.row]
 	}
 
 	@objc func didTapNewGoalButton() {

@@ -79,12 +79,15 @@ final class GoalDetailViewController: UIViewController {
 		NSLayoutConstraint.activate([
 			backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: InformationHeader.windowSize.height + 10.0),
 			backButton.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
+
 			editGoalButton.topAnchor.constraint(equalTo: view.topAnchor, constant: InformationHeader.windowSize.height + 10.0),
 			editGoalButton.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
+
 			detailContentView.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 10.0),
 			detailContentView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 			detailContentView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -20.0),
 			detailContentView.heightAnchor.constraint(equalToConstant: 210.0),
+
 			completeGoalButton.topAnchor.constraint(equalTo: detailContentView.bottomAnchor, constant: 30.0),
 			completeGoalButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 			completeGoalButton.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -100.0)
@@ -133,13 +136,7 @@ final class DetailContentView: UIView {
 		return label
 	}()
 
-	fileprivate let goalDescriptionLabel: Label = {
-		let label = Label(style: .body)
-		label.text = "Maybe a couple chapters of 1984. Or anything else that looks interesting."
-		label.numberOfLines = 0
-		label.textAlignment = .center
-		return label
-	}()
+	fileprivate let progressView = ProgressView()
 
 	private let frequencyLabel: Label = {
 		let label = Label(style: .body)
@@ -180,7 +177,13 @@ final class DetailContentView: UIView {
 		return label
 	}()
 
-	fileprivate let progressView = ProgressView()
+	fileprivate let goalNotesTextView: UITextView = {
+		let textView = UITextView()
+		textView.text = "Maybe a couple chapters of 1984. Or anything else that looks interesting."
+		textView.isEditable = false
+		textView.isSelectable = false
+		return textView
+	}()
 
 	override init(frame: CGRect) {
 		super.init(frame: frame)
@@ -195,19 +198,19 @@ final class DetailContentView: UIView {
 	private func configureViews() {
 		addSubview(goalNameLabel)
 		addSubview(progressView)
-		addSubview(goalDescriptionLabel)
 		addSubview(frequencyLabel)
 		addSubview(frequencyNumberLabel)
 		addSubview(completionsThisWeekLabel)
 		addSubview(completionsThisWeekNumberLabel)
 		addSubview(currentStreakLabel)
 		addSubview(currentStreakNumberLabel)
+		addSubview(goalNotesTextView)
 	}
 
 	private func configureConstraints() {
 		goalNameLabel.translatesAutoresizingMaskIntoConstraints = false
 		progressView.translatesAutoresizingMaskIntoConstraints = false
-		goalDescriptionLabel.translatesAutoresizingMaskIntoConstraints = false
+		goalNotesTextView.translatesAutoresizingMaskIntoConstraints = false
 		frequencyLabel.translatesAutoresizingMaskIntoConstraints = false
 		frequencyNumberLabel.translatesAutoresizingMaskIntoConstraints = false
 		completionsThisWeekLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -218,29 +221,37 @@ final class DetailContentView: UIView {
 		NSLayoutConstraint.activate([
 			goalNameLabel.centerYAnchor.constraint(equalTo: progressView.centerYAnchor),
 			goalNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10.0),
+
 			progressView.topAnchor.constraint(equalTo: topAnchor, constant: 10.0),
 			progressView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10.0),
 			progressView.widthAnchor.constraint(equalToConstant: 48),
 			progressView.heightAnchor.constraint(equalToConstant: 48),
-			goalDescriptionLabel.topAnchor.constraint(equalTo: progressView.bottomAnchor, constant: 5.0),
-			goalDescriptionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5.0),
-			goalDescriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5.0),
-			frequencyLabel.topAnchor.constraint(equalTo: goalDescriptionLabel.bottomAnchor, constant: 20.0),
+
+			frequencyLabel.topAnchor.constraint(equalTo: progressView.bottomAnchor, constant: 5.0),
 			frequencyLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5.0),
-			frequencyNumberLabel.topAnchor.constraint(equalTo: goalDescriptionLabel.bottomAnchor, constant: 20.0),
+
+			frequencyNumberLabel.topAnchor.constraint(equalTo: progressView.bottomAnchor, constant: 5.0),
 			frequencyNumberLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5.0),
 			frequencyNumberLabel.leadingAnchor.constraint(greaterThanOrEqualTo: frequencyLabel.trailingAnchor, constant: 5.0),
+
 			completionsThisWeekLabel.topAnchor.constraint(equalTo: frequencyLabel.bottomAnchor, constant: 10.0),
 			completionsThisWeekLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5.0),
+
 			completionsThisWeekNumberLabel.topAnchor.constraint(equalTo: frequencyLabel.bottomAnchor, constant: 10.0),
 			completionsThisWeekNumberLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5.0),
 			completionsThisWeekNumberLabel.leadingAnchor.constraint(greaterThanOrEqualTo: completionsThisWeekLabel.trailingAnchor, constant: 5.0),
+
 			currentStreakLabel.topAnchor.constraint(equalTo: completionsThisWeekLabel.bottomAnchor, constant: 10.0),
 			currentStreakLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5.0),
+
 			currentStreakNumberLabel.topAnchor.constraint(equalTo: completionsThisWeekLabel.bottomAnchor, constant: 10.0),
 			currentStreakNumberLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5.0),
 			currentStreakNumberLabel.leadingAnchor.constraint(greaterThanOrEqualTo: currentStreakLabel.trailingAnchor, constant: 5.0),
-			currentStreakNumberLabel.bottomAnchor.constraint(greaterThanOrEqualTo: bottomAnchor)
+
+			goalNotesTextView.topAnchor.constraint(equalTo: currentStreakLabel.bottomAnchor, constant: 10.0),
+			goalNotesTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5.0),
+			goalNotesTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5.0),
+			goalNotesTextView.bottomAnchor.constraint(greaterThanOrEqualTo: bottomAnchor)
 		])
 	}
 

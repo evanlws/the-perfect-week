@@ -56,8 +56,8 @@ final class GoalLibrary {
 		updateGoal(with: ["objectId": goal.objectId, "progress": goal.progress - 1])
 	}
 
-	func delete(_ goal: Goal) {
-		RealmLibrary.shared.delete(goal)
+	func deleteGoalWith(_ goalObjectId: String) {
+		RealmLibrary.shared.deleteGoalWith(goalObjectId)
 	}
 
 	func updateGoal(with values: [String: Any]) {

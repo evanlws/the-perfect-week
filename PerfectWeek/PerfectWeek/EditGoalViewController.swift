@@ -59,14 +59,16 @@ final class EditGoalViewController: UIViewController {
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+		navigationController?.setNavigationBarHidden(false, animated: true)
 		InformationHeaderObserver.shouldHideInformationHeader()
 	}
 
 	// MARK: - Setup
 	private func configureViews() {
 		let cancelButtonItem = UIBarButtonItem(title: LocalizedStrings.cancel, style: .plain, target: self, action: #selector(didTapCancelBarButtonItem))
-		navigationItem.leftBarButtonItem = cancelButtonItem
-		navigationController?.setNavigationBarHidden(false, animated: true)
+		navigationItem.rightBarButtonItem = cancelButtonItem
+		let deleteBarButtonItem = UIBarButtonItem(title: LocalizedStrings.delete, style: .plain, target: self, action: #selector(didTapDeleteBarButtonItem))
+		navigationItem.leftBarButtonItem = deleteBarButtonItem
 		view.backgroundColor = .white
 		title = LocalizedStrings.editGoal
 		nameTextField.delegate = self
@@ -133,6 +135,22 @@ extension EditGoalViewController {
 
 	func didTapCancelBarButtonItem() {
 		presentGoalsVC()
+	}
+
+	func didTapDeleteBarButtonItem() {
+		let alertController = UIAlertController(title: LocalizedStrings.deleteConfirmationPromptTitle, message: LocalizedStrings.deleteConfirmationPromptMessage, preferredStyle: .alert)
+		let cancelAction = UIAlertAction(title: LocalizedStrings.cancel, style: .cancel) { _ in
+			alertController.dismiss(animated: true, completion: nil)
+		}
+
+		let deleteAction = UIAlertAction(title: LocalizedStrings.deleteConfirmationPromptAction, style: .destructive) { [weak self] _ in
+			self?.viewModel.deleteGoal()
+			self?.presentGoalsVC()
+		}
+
+		alertController.addAction(cancelAction)
+		alertController.addAction(deleteAction)
+		self.present(alertController, animated: true, completion: nil)
 	}
 
 }

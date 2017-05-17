@@ -104,7 +104,7 @@ extension GoalsViewController {
 		guard gestureRecognizer.state == .began else { return }
 
 		let point = gestureRecognizer.location(in: collectionView)
-		if let indexPath = collectionView.indexPathForItem(at: point), let goal = viewModel.objectAt(indexPath), goal.progress != goal.frequency {
+		if let indexPath = collectionView.indexPathForItem(at: point), indexPath.section == 0, let goal = viewModel.objectAt(indexPath) {
 			viewModel.complete(goal)
 			collectionView.reloadData()
 		}

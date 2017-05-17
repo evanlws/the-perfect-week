@@ -22,8 +22,4 @@ final class GoalDetailViewModel {
 		library.complete(goal)
 	}
 
-	func delete(_ goal: Goal) {
-		library.delete(goal)
-	}
-
 }
