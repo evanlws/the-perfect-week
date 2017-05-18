@@ -103,40 +103,30 @@ class NotificationManager: NSObject {
 
 	static func dateOf(_ date: Date, _ timeOfDay: TimeOfDay) -> Date {
 		guard let hoursEdit = Calendar.current.date(byAdding: .hour, value: timeOfDay.rawValue, to: date),
-		let time = Calendar.current.date(byAdding: .minute, value: 0, to: hoursEdit) else { fatalError("Could not create date component") }
+			let time = Calendar.current.date(byAdding: .minute, value: 0, to: hoursEdit) else { fatalError("Could not create date component") }
 		return time
 	}
 }
 
-// MARK: - Did Receive Notifications
+// MARK: - Completing Goal Notifications
 extension NotificationManager: UNNotificationContentExtension {
 
 	func didReceive(_ notification: UNNotification) {
-		resetNotificationsFor(notification.request.identifier)
+
 	}
 
-	func resetNotificationsFor(_ goalObjectID: String) {
+	static func cancelFutureNotificationsForGoal(_ goalObjectId: String, completion: @escaping ([UNNotificationRequest]) -> Void) {
+		var requests = [UNNotificationRequest]()
 		UNUserNotificationCenter.current().getPendingNotificationRequests { (notificationRequests) in
-			DispatchQueue.main.async {
-				self.removePendingRequests(notificationRequests, goalObjectID: goalObjectID)
-				for request in notificationRequests {
-					UNUserNotificationCenter.current().add(request) { (error) in
-						if let error = error {
-							debugPrint("Error scheduling a notification \(error)")
-						} else {
-							print("ReScheduling a notification")
-						}
-					}
+			for request in notificationRequests {
+				if NotificationParser.objectIdFrom(request.identifier) == goalObjectId {
+					requests.append(request)
+					UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [request.identifier])
 				}
 			}
-		}
 
-	}
-
-	private func removePendingRequests(_ requests: [UNNotificationRequest], goalObjectID: String) {
-		for notificationRequest in requests {
-			if NotificationParser.objectIdFrom(notificationRequest.identifier) == goalObjectID {
-				UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [notificationRequest.identifier])
+			DispatchQueue.main.async {
+				completion(requests)
 			}
 		}
 	}

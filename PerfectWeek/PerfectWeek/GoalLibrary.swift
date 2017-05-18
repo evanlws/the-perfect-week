@@ -7,6 +7,10 @@
 //
 
 import Foundation
+import UIKit
+import NotificationCenter
+import UserNotifications
+import UserNotificationsUI
 
 final class GoalLibrary {
 
@@ -43,6 +47,13 @@ final class GoalLibrary {
 		}
 
 		StatsLibrary.shared.updateStats(reason: .goalCompleted)
+		NotificationManager.cancelFutureNotificationsForGoal(goal.objectId) { (notificationRequests) in
+			//If request identifier is default, then convert the trigger to a calendar type trigger
+			//get the earliest date of the triggers
+			// set a non-repeating notification for the next date the notification should run
+			//in the userdata of the notification, make sure you get the request content and trigger
+		}
+
 		updateGoal(with: ["objectId": goal.objectId, "progress": goal.progress + 1, "lastCompleted": Date()])
 	}
 
