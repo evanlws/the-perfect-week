@@ -7,8 +7,9 @@
 //
 
 import UserNotifications
+import UserNotificationsUI
 
-struct NotificationManager {
+class NotificationManager: NSObject {
 
 	enum TimeOfDay: Int {
 		case morning = 9
@@ -105,4 +106,39 @@ struct NotificationManager {
 		let time = Calendar.current.date(byAdding: .minute, value: 0, to: hoursEdit) else { fatalError("Could not create date component") }
 		return time
 	}
+}
+
+// MARK: - Did Receive Notifications
+extension NotificationManager: UNNotificationContentExtension {
+
+	func didReceive(_ notification: UNNotification) {
+		resetNotificationsFor(notification.request.identifier)
+	}
+
+	func resetNotificationsFor(_ goalObjectID: String) {
+		UNUserNotificationCenter.current().getPendingNotificationRequests { (notificationRequests) in
+			DispatchQueue.main.async {
+				self.removePendingRequests(notificationRequests, goalObjectID: goalObjectID)
+				for request in notificationRequests {
+					UNUserNotificationCenter.current().add(request) { (error) in
+						if let error = error {
+							debugPrint("Error scheduling a notification \(error)")
+						} else {
+							print("ReScheduling a notification")
+						}
+					}
+				}
+			}
+		}
+
+	}
+
+	private func removePendingRequests(_ requests: [UNNotificationRequest], goalObjectID: String) {
+		for notificationRequest in requests {
+			if NotificationParser.objectIdFrom(notificationRequest.identifier) == goalObjectID {
+				UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [notificationRequest.identifier])
+			}
+		}
+	}
+
 }

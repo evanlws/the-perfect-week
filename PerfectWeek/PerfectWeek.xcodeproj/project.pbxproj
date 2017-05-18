@@ -13,6 +13,7 @@
 		4F1147D81E58F71700346A1D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F1147D61E58F71700346A1D /* LaunchScreen.storyboard */; };
 		4F1147E31E58F71700346A1D /* PerfectWeekTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1147E21E58F71700346A1D /* PerfectWeekTests.swift */; };
 		4F1147EE1E58F71700346A1D /* PerfectWeekUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1147ED1E58F71700346A1D /* PerfectWeekUITests.swift */; };
+		4F17DE001ECD4DFD007130BE /* NotificationParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F17DDFF1ECD4DFD007130BE /* NotificationParser.swift */; };
 		4F2EB1D61E772F3200677A3C /* AddGoalFrequencyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2EB1D51E772F3100677A3C /* AddGoalFrequencyViewController.swift */; };
 		4F2EB1DA1E787EA500677A3C /* Stepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2EB1D91E787EA500677A3C /* Stepper.swift */; };
 		4F2EB1DE1E78D23D00677A3C /* AddGoalFrequencyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2EB1DD1E78D23D00677A3C /* AddGoalFrequencyViewModel.swift */; };
@@ -79,6 +80,7 @@
 		4F1147E91E58F71700346A1D /* PerfectWeekUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PerfectWeekUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F1147ED1E58F71700346A1D /* PerfectWeekUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerfectWeekUITests.swift; sourceTree = "<group>"; };
 		4F1147EF1E58F71700346A1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4F17DDFF1ECD4DFD007130BE /* NotificationParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationParser.swift; sourceTree = "<group>"; };
 		4F2EB1D51E772F3100677A3C /* AddGoalFrequencyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddGoalFrequencyViewController.swift; sourceTree = "<group>"; };
 		4F2EB1D91E787EA500677A3C /* Stepper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stepper.swift; sourceTree = "<group>"; };
 		4F2EB1DD1E78D23D00677A3C /* AddGoalFrequencyViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddGoalFrequencyViewModel.swift; sourceTree = "<group>"; };
@@ -320,6 +322,7 @@
 			isa = PBXGroup;
 			children = (
 				4FBF57DC1EBE6DB8001DA75C /* NotificationManager.swift */,
+				4F17DDFF1ECD4DFD007130BE /* NotificationParser.swift */,
 			);
 			name = Notifications;
 			sourceTree = "<group>";
@@ -519,6 +522,7 @@
 				4F854E2F1E9B556C0038A23F /* RealmLibrary.swift in Sources */,
 				4F491E961E986A9C003BAF0D /* RealmStats.swift in Sources */,
 				4FA6DD581E6B4E2400547D33 /* GoalsViewController.swift in Sources */,
+				4F17DE001ECD4DFD007130BE /* NotificationParser.swift in Sources */,
 				4F2F2DF11E8745B500684D02 /* Label.swift in Sources */,
 				4FA6DD5E1E6B79DE00547D33 /* GoalsViewModel.swift in Sources */,
 				4FA6DD5C1E6B563800547D33 /* GoalCollectionViewCell.swift in Sources */,
