@@ -33,4 +33,5 @@ enum LocalizedStrings {
 	static let save = NSLocalizedString("SAVE", value: "Save", comment: "")
 	static let sendFeedback = NSLocalizedString("SEND_FEEDBACK", value: "Send Feedback", comment: "")
 	static let timesPerWeek = NSLocalizedString("TIMES_PER_WEEK", value: "Times per week", comment: "")
+	static let addNotesPrompt = NSLocalizedString("ADD_NOTES_PROMPT", value: "Add Notes (optional)", comment: "")
 }
