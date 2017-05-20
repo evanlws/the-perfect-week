@@ -55,7 +55,7 @@ final class InformationHeader {
 	}
 
 	deinit {
-		debugPrint("WARNING: Information header is being released")
+		print("WARNING: Information header is being released")
 		NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: InformationHeaderObserver.showInformationHeaderNotification), object: nil)
 		NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: InformationHeaderObserver.hideInformationHeaderNotification), object: nil)
 	}

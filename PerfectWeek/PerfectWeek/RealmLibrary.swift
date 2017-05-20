@@ -37,7 +37,7 @@ class RealmLibrary {
 				realm.add(GoalConverter.converted(goal))
 			}
 		} catch {
-			debugPrint("Could not add goal")
+			print("Could not add goal")
 			completion(false)
 		}
 
@@ -50,7 +50,7 @@ class RealmLibrary {
 				realm.create(RealmGoal.self, value: values, update: true)
 			}
 		} catch let error {
-			debugPrint("Could not update goal: \(error.localizedDescription)")
+			print("Could not update goal: \(error.localizedDescription)")
 		}
 	}
 
@@ -60,13 +60,13 @@ class RealmLibrary {
 				realm.create(RealmStats.self, value: values, update: true)
 			}
 		} catch let error {
-			debugPrint("Could not update stats: \(error.localizedDescription)")
+			print("Could not update stats: \(error.localizedDescription)")
 		}
 	}
 
 	func deleteGoalWith(_ goalObjectId: String) {
 		guard let realmGoal = realm.object(ofType: RealmGoal.self, forPrimaryKey: goalObjectId) else {
-			debugPrint("Guard failure warning: Could not find object with id")
+			print("Guard failure warning: Could not find object with id")
 			return
 		}
 
@@ -75,7 +75,7 @@ class RealmLibrary {
 				realm.delete(realmGoal)
 			}
 		} catch {
-			debugPrint("Could not delete goal")
+			print("Could not delete goal")
 		}
 	}
 
@@ -90,7 +90,7 @@ class RealmLibrary {
 			return StatsConverter.converted(stats)
 		}
 
-		debugPrint("Could not fetch stats object. Creating a new one.")
+		print("Could not fetch stats object. Creating a new one.")
 		let newStats = Stats(objectId: NSUUID().uuidString)
 
 		do {

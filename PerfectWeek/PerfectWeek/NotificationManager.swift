@@ -24,9 +24,14 @@ class NotificationManager: NSObject {
 	static func requestNotificationsPermission() {
 		UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) {(accepted, _) in
 			if !accepted {
-				debugPrint("Notification access denied.")
+				print("Notification access denied.")
 			}
 		}
+	}
+
+	static func clearAllNotifications() {
+		UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+		UNUserNotificationCenter.current().removeAllDeliveredNotifications()
 	}
 
 	static func scheduleNotificationFor(_ goal: Goal) {
@@ -35,20 +40,20 @@ class NotificationManager: NSObject {
 		let content = UNMutableNotificationContent()
 		content.title = LocalizedStrings.dontForget
 		content.body = goal.name
-		content.sound = UNNotificationSound.default()
+		content.sound = .default()
 
 		for dateComponents in weeklyDateComponentsFor(goal.frequency, date: Date()) {
 			let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
 			guard let hour = dateComponents.hour, let minute = dateComponents.minute, let weekday = dateComponents.weekday else {
-				debugPrint("Guard failure warning: One or more components in dateComponents are nil")
+				print("Guard failure warning: One or more components in dateComponents are nil")
 				continue
 			}
 
-			let identifier = "\(weekday)$\(hour)$\(minute)$DEFAULT$\(goal.objectId)"
+			let identifier = NotificationParser.generateNotificationIdentifier(weekday, hour: hour, minute: minute, type: "DEFAULT", objectId: goal.objectId)
 			let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
 			notificationCenter.add(request) { (error) in
 				if let error = error {
-					debugPrint("Error scheduling a notification \(error)")
+					print("Error scheduling a notification \(error)")
 				} else {
 					print("Scheduling a notification for \(goal.name) on weekday \(weekday) at: \(hour):\(minute)")
 				}
@@ -96,12 +101,12 @@ class NotificationManager: NSObject {
 		return dateComponents
 	}
 
-	static func weekdayComponent(_ dayOfWeek: DayOfWeek, timeOfDay: TimeOfDay, date: Date) -> DateComponents {
+	fileprivate static func weekdayComponent(_ dayOfWeek: DayOfWeek, timeOfDay: TimeOfDay, date: Date) -> DateComponents {
 		guard let weekday = Calendar.current.date(byAdding: .weekday, value: dayOfWeek.rawValue, to: date) else { fatalError("Tried to create a date that didn't exist") }
 		return Calendar.current.dateComponents([.weekday, .hour, .minute], from: dateOf(weekday, timeOfDay))
 	}
 
-	static func dateOf(_ date: Date, _ timeOfDay: TimeOfDay) -> Date {
+	private static func dateOf(_ date: Date, _ timeOfDay: TimeOfDay) -> Date {
 		guard let hoursEdit = Calendar.current.date(byAdding: .hour, value: timeOfDay.rawValue, to: date),
 			let time = Calendar.current.date(byAdding: .minute, value: 0, to: hoursEdit) else { fatalError("Could not create date component") }
 		return time
@@ -112,10 +117,32 @@ class NotificationManager: NSObject {
 extension NotificationManager: UNNotificationContentExtension {
 
 	func didReceive(_ notification: UNNotification) {
-
+		if NotificationParser.notificationTypeFrom(notification.request.identifier) == "TEMP" {
+			let requests = NotificationManager.unarchivedRequests(data: notification.request.content.userInfo["requests"] as? Data)
+			for request in requests {
+				UNUserNotificationCenter.current().add(request) { (error) in
+					if let error = error {
+						print("Error scheduling a notification \(error)")
+					} else {
+						print("ReScheduling a notification for \(request.identifier)")
+					}
+				}
+			}
+		}
 	}
 
-	static func cancelFutureNotificationsForGoal(_ goalObjectId: String, completion: @escaping ([UNNotificationRequest]) -> Void) {
+	static func updateNotificationForGoal(_ goalObjectId: String) {
+		NotificationManager.cancelFutureNotificationsForGoal(goalObjectId) { (requests) in
+			guard let firstRequest = earliestRequest(requests: requests) else {
+				print("Guard failure warning: There was no earliest request")
+				return
+			}
+
+			scheduleTempRequest(firstRequest, requests: requests)
+		}
+	}
+
+	private static func cancelFutureNotificationsForGoal(_ goalObjectId: String, completion: @escaping ([UNNotificationRequest]) -> Void) {
 		var requests = [UNNotificationRequest]()
 		UNUserNotificationCenter.current().getPendingNotificationRequests { (notificationRequests) in
 			for request in notificationRequests {
@@ -125,10 +152,60 @@ extension NotificationManager: UNNotificationContentExtension {
 				}
 			}
 
-			DispatchQueue.main.async {
-				completion(requests)
+			completion(requests)
+		}
+	}
+
+	private static func scheduleTempRequest(_ request: UNNotificationRequest, requests: [UNNotificationRequest]) {
+		let notificationCenter = UNUserNotificationCenter.current()
+
+		let content = UNMutableNotificationContent()
+		content.title = request.content.title
+		content.body = request.content.body
+		content.sound = .default()
+		content.userInfo["requests"] = archived(requests)
+
+		let identifier = request.identifier.replacingOccurrences(of: "\"type\":\"DEFAULT\"", with: "\"type\":\"TEMP\"")
+
+		guard let requestTrigger = request.trigger as? UNCalendarNotificationTrigger else { fatalError("Could not get request trigger") }
+		let tempRequestTrigger = UNCalendarNotificationTrigger(dateMatching: requestTrigger.dateComponents, repeats: false)
+
+		let tempRequest = UNNotificationRequest(identifier: identifier, content: content, trigger: tempRequestTrigger)
+		notificationCenter.add(tempRequest) { (error) in
+			if let error = error {
+				print("Error scheduling a notification \(error)")
+			} else {
+				print("Scheduling a TEMP notification for \(tempRequest.identifier)")
 			}
 		}
 	}
 
+	private static func archived(_ requests: [UNNotificationRequest]) -> Data {
+		return NSKeyedArchiver.archivedData(withRootObject: requests)
+	}
+
+	private static func unarchivedRequests(data: Data?) -> [UNNotificationRequest] {
+		guard let data = data, let requests = NSKeyedUnarchiver.unarchiveObject(with: data) as? [UNNotificationRequest] else { return [UNNotificationRequest]() }
+		return requests
+	}
+
+	private static func earliestRequest(requests: [UNNotificationRequest]) -> UNNotificationRequest? {
+		var nextRequest: UNNotificationRequest?
+
+		for currentRequest in requests {
+			if nextRequest == nil {
+				nextRequest = currentRequest
+				continue
+			}
+
+			guard let currentRequestTrigger = currentRequest.trigger as? UNCalendarNotificationTrigger,
+				let nextRequestTrigger = nextRequest?.trigger as? UNCalendarNotificationTrigger else { continue }
+
+			if currentRequestTrigger.dateComponents < nextRequestTrigger.dateComponents {
+				nextRequest = currentRequest
+			}
+		}
+
+		return nextRequest
+	}
 }

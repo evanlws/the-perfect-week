@@ -70,10 +70,40 @@ extension NSRange {
 }
 
 extension UIButton {
+
 	convenience init(style: UIButtonType) {
 		self.init(type: style)
 
 		self.setTitleColor(.white, for: .normal)
 		self.backgroundColor = .purple
 	}
+
+}
+
+extension DateComponents: Comparable {
+
+	public static func < (lhs: DateComponents, rhs: DateComponents) -> Bool {
+		if (lhs.year != nil && rhs.year != nil) ||
+			(lhs.month != nil && rhs.month != nil) ||
+			(lhs.day != nil && rhs.day != nil),
+			let lhsDate = lhs.date,
+			let rhsDate = rhs.date {
+			return lhsDate < rhsDate
+		}
+
+		if let lhsWeekday = lhs.weekday {
+			if let rhsWeekday = rhs.weekday {
+				if lhsWeekday == rhsWeekday, let lhsDate = lhs.date, let rhsDate = rhs.date {
+					return lhsDate < rhsDate
+				} else {
+					return lhsWeekday < rhsWeekday
+				}
+			} else {
+				return true
+			}
+		}
+
+		return false
+	}
+
 }

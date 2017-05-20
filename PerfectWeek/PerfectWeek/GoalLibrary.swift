@@ -42,24 +42,18 @@ final class GoalLibrary {
 
 	func complete(_ goal: Goal) {
 		guard !goal.isPerfectGoal(), !goal.wasCompletedToday() else {
-			debugPrint("Guard failure warning: \(goal.name) was already completed")
+			print("Guard failure warning: \(goal.name) was already completed")
 			return
 		}
 
 		StatsLibrary.shared.updateStats(reason: .goalCompleted)
-		NotificationManager.cancelFutureNotificationsForGoal(goal.objectId) { (notificationRequests) in
-			//If request identifier is default, then convert the trigger to a calendar type trigger
-			//get the earliest date of the triggers
-			// set a non-repeating notification for the next date the notification should run
-			//in the userdata of the notification, make sure you get the request content and trigger
-		}
-
+		NotificationManager.updateNotificationForGoal(goal.objectId)
 		updateGoal(with: ["objectId": goal.objectId, "progress": goal.progress + 1, "lastCompleted": Date()])
 	}
 
 	func undo(_ goal: Goal) {
 		guard goal.progress > 0 else {
-			debugPrint("Guard failure warning: Could not undo \(goal.name)")
+			print("Guard failure warning: Could not undo \(goal.name)")
 			return
 		}
 
