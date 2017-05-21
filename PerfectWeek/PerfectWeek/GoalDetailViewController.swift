@@ -62,6 +62,12 @@ final class GoalDetailViewController: UIViewController {
 		configureConstraints()
 	}
 
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		InformationHeaderObserver.shouldShowInformationHeader()
+		navigationController?.setNavigationBarHidden(true, animated: true)
+	}
+
 	private func configureViews() {
 		view.backgroundColor = .white
 		view.addSubview(backButton)

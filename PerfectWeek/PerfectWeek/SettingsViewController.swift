@@ -29,6 +29,12 @@ final class SettingsViewController: UIViewController {
 		configureConstraints()
 	}
 
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		navigationController?.setNavigationBarHidden(true, animated: true)
+		InformationHeaderObserver.shouldShowInformationHeader()
+	}
+
 	// MARK: - Setup
 	private func configureViews() {
 		tableView.delegate = self

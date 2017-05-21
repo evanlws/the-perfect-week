@@ -63,6 +63,8 @@ final class AddGoalFrequencyViewController: UIViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		NotificationManager.requestNotificationsPermission()
+		navigationController?.setNavigationBarHidden(true, animated: true)
+		InformationHeaderObserver.shouldHideInformationHeader()
 	}
 
 	// MARK: - Setup

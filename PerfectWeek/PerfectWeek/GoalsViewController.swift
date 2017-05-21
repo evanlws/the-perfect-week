@@ -44,6 +44,7 @@ final class GoalsViewController: UIViewController, UIGestureRecognizerDelegate {
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+		navigationController?.setNavigationBarHidden(true, animated: true)
 		InformationHeaderObserver.shouldShowInformationHeader()
 		collectionView.reloadData()
 	}
