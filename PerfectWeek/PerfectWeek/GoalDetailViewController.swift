@@ -68,6 +68,11 @@ final class GoalDetailViewController: UIViewController {
 		view.addSubview(editGoalButton)
 		view.addSubview(detailContentView)
 		view.addSubview(completeGoalButton)
+
+		detailContentView.goalNameLabel.text = viewModel.goal.name
+		detailContentView.frequencyNumberLabel.text = "\(viewModel.goal.frequency)"
+		detailContentView.completionsThisWeekNumberLabel.text = "\(viewModel.goal.progress)"
+		detailContentView.goalNotesTextView.text = viewModel.goal.notes
 	}
 
 	private func configureConstraints() {
@@ -130,11 +135,7 @@ extension GoalDetailViewController {
 
 final class DetailContentView: UIView {
 
-	fileprivate let goalNameLabel: Label = {
-		let label = Label(style: .body)
-		label.text = "Read a book"
-		return label
-	}()
+	fileprivate let goalNameLabel = Label(style: .body)
 
 	fileprivate let progressView = ProgressView()
 
@@ -144,12 +145,7 @@ final class DetailContentView: UIView {
 		return label
 	}()
 
-	fileprivate let frequencyNumberLabel: Label = {
-		let label = Label(style: .body)
-		label.text = "4 times per week"
-		label.textAlignment = .right
-		return label
-	}()
+	fileprivate let frequencyNumberLabel = Label(style: .body)
 
 	private let completionsThisWeekLabel: Label = {
 		let label = Label(style: .body)
@@ -157,12 +153,7 @@ final class DetailContentView: UIView {
 		return label
 	}()
 
-	fileprivate let completionsThisWeekNumberLabel: Label = {
-		let label = Label(style: .body)
-		label.text = "2"
-		label.textAlignment = .right
-		return label
-	}()
+	fileprivate let completionsThisWeekNumberLabel = Label(style: .body)
 
 	private let currentStreakLabel: Label = {
 		let label = Label(style: .body)
@@ -172,16 +163,16 @@ final class DetailContentView: UIView {
 
 	fileprivate let currentStreakNumberLabel: Label = {
 		let label = Label(style: .body)
-		label.text = "4"
+		label.text = "Over 9000"
 		label.textAlignment = .right
 		return label
 	}()
 
 	fileprivate let goalNotesTextView: UITextView = {
 		let textView = UITextView()
-		textView.text = "Maybe a couple chapters of 1984. Or anything else that looks interesting."
 		textView.isEditable = false
 		textView.isSelectable = false
+		textView.textAlignment = .center
 		return textView
 	}()
 

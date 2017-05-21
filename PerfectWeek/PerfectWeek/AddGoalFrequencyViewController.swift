@@ -34,7 +34,9 @@ final class AddGoalFrequencyViewController: UIViewController {
 		return label
 	}()
 
-	private let notesTextView = UITextView()
+	fileprivate let notesTextView = UITextView()
+
+	private let notesTextViewButton = UIButton()
 
 	private let nextButton: UIButton = {
 		let button = UIButton()
@@ -72,11 +74,16 @@ final class AddGoalFrequencyViewController: UIViewController {
 		timesPerWeekStepper.delegate = self
 		viewModel.mutableGoal.frequency = timesPerWeekStepper.counter
 		nextButton.addTarget(self, action: #selector(save), for: .touchUpInside)
+		notesTextView.backgroundColor = .gray
+		notesTextViewButton.setTitle("", for: .normal)
+		notesTextViewButton.addTarget(self, action: #selector(didTapNotesTextViewButton), for: .touchUpInside)
 
 		view.addSubview(frequencyPrompt)
 		view.addSubview(timesPerWeekLabel)
 		view.addSubview(timesPerWeekStepper)
+		view.addSubview(notesTextLabel)
 		view.addSubview(notesTextView)
+		view.addSubview(notesTextViewButton)
 		view.addSubview(nextButton)
 	}
 
@@ -84,7 +91,9 @@ final class AddGoalFrequencyViewController: UIViewController {
 		frequencyPrompt.translatesAutoresizingMaskIntoConstraints = false
 		timesPerWeekLabel.translatesAutoresizingMaskIntoConstraints = false
 		timesPerWeekStepper.translatesAutoresizingMaskIntoConstraints = false
+		notesTextLabel.translatesAutoresizingMaskIntoConstraints = false
 		notesTextView.translatesAutoresizingMaskIntoConstraints = false
+		notesTextViewButton.translatesAutoresizingMaskIntoConstraints = false
 		nextButton.translatesAutoresizingMaskIntoConstraints = false
 
 		let navigationBarHeight = navigationController?.navigationBar.bounds.size.height ?? 0
@@ -94,22 +103,58 @@ final class AddGoalFrequencyViewController: UIViewController {
 			frequencyPrompt.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: navigationBarHeight + 40),
 			frequencyPrompt.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 			timesPerWeekLabel.heightAnchor.constraint(equalToConstant: 30),
-			timesPerWeekLabel.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -20),
 			timesPerWeekLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
+			timesPerWeekLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
 			timesPerWeekLabel.topAnchor.constraint(equalTo: frequencyPrompt.bottomAnchor, constant: 30),
 			timesPerWeekStepper.heightAnchor.constraint(equalToConstant: 100),
 			timesPerWeekStepper.widthAnchor.constraint(equalToConstant: 120),
 			timesPerWeekStepper.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
 			timesPerWeekStepper.topAnchor.constraint(equalTo: timesPerWeekLabel.bottomAnchor, constant: 15),
-			notesTextView.topAnchor.constraint(equalTo: timesPerWeekStepper.bottomAnchor, constant: 30),
+			notesTextLabel.topAnchor.constraint(equalTo: timesPerWeekStepper.bottomAnchor, constant: 30),
+			notesTextLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
+			notesTextLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
+			notesTextView.topAnchor.constraint(equalTo: notesTextLabel.bottomAnchor, constant: 15),
 			notesTextView.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
 			notesTextView.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
 			notesTextView.heightAnchor.constraint(equalToConstant: 150),
+			notesTextViewButton.topAnchor.constraint(equalTo: notesTextLabel.bottomAnchor, constant: 15),
+			notesTextViewButton.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
+			notesTextViewButton.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
+			notesTextViewButton.heightAnchor.constraint(equalToConstant: 150),
 			nextButton.heightAnchor.constraint(equalToConstant: 30),
 			nextButton.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -30),
 			nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 			nextButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30)
 		])
+	}
+
+}
+
+// MARK: - Actions
+extension AddGoalFrequencyViewController {
+
+	func didTapNotesTextViewButton() {
+		let alertController = UIAlertController(title: LocalizedStrings.addNotesPrompt, message: nil, preferredStyle: .alert)
+
+		let cancelAction = UIAlertAction(title: LocalizedStrings.cancel, style: .cancel) { _ in
+			alertController.dismiss(animated: true, completion: nil)
+		}
+
+		let saveAction = UIAlertAction(title: LocalizedStrings.save, style: .default) { [weak self] _ in
+			if let textField = alertController.textFields?.first {
+				self?.viewModel.mutableGoal.notes = textField.text
+				self?.notesTextView.text = textField.text
+			}
+
+			alertController.dismiss(animated: true, completion: nil)
+		}
+
+		alertController.addAction(cancelAction)
+		alertController.addAction(saveAction)
+
+		alertController.addTextField(configurationHandler: nil)
+
+		self.present(alertController, animated: true, completion: nil)
 	}
 
 }

@@ -14,18 +14,21 @@ final class Goal {
 	let name: String
 	let frequency: Int
 	let progress: Int
+	var notes: String?
 	var lastCompleted: Date?
 	var extensionItem: ExtensionItem?
 
 	init(objectId: String,
 	     name: String,
 	     frequency: Int,
+	     notes: String?,
 	     extensionItem: ExtensionItem?,
 	     lastCompleted: Date?,
 	     progress: Int = 0) {
 		self.objectId = objectId
 		self.name = name
 		self.frequency = frequency
+		self.notes = notes
 		self.progress = progress
 		self.lastCompleted = lastCompleted
 		self.extensionItem = extensionItem
@@ -33,7 +36,7 @@ final class Goal {
 
 	convenience init?(_ mutableGoal: MutableGoal) {
 		guard let name = mutableGoal.name, let frequency = mutableGoal.frequency else { return nil }
-		self.init(objectId: mutableGoal.objectId, name: name, frequency: frequency, extensionItem: mutableGoal.extensionItem, lastCompleted: nil)
+		self.init(objectId: mutableGoal.objectId, name: name, frequency: frequency, notes: mutableGoal.notes, extensionItem: mutableGoal.extensionItem, lastCompleted: nil)
 	}
 
 	func wasCompletedToday() -> Bool {
@@ -45,12 +48,12 @@ final class Goal {
 		return progress == frequency
 	}
 
-	func currentProgress() -> Int {
+	func currentProgressPercentage() -> Int {
 		return Int(Float(progress) / Float(frequency) * 100.0)
 	}
 
 	var description: String {
-		return "\nGoal:\n\tObjectID: \(objectId)\n\tName: \(name)\n\tLast Completed: \(String(describing: lastCompleted))\n\tFrequency: \(frequency)\n\tProgress: \(progress)\n\tExtension: \(String(describing: extensionItem?.description))\n"
+		return "\nGoal:\n\tObjectID: \(objectId)\n\tName: \(name)\n\tLast Completed: \(String(describing: lastCompleted))\n\tFrequency: \(frequency)\n\tNotes: \(String(describing: notes))\n\tProgress: \(progress)\n\tExtension: \(String(describing: extensionItem?.description))\n"
 	}
 
 }
@@ -118,6 +121,14 @@ struct MutableGoal {
 		}
 	}
 
+	var notes: String? {
+		didSet {
+			if notes != oldValue {
+				updateValues["notes"] = notes
+			}
+		}
+	}
+
 	var progress: Int? {
 		didSet {
 			if progress != oldValue {
@@ -139,6 +150,7 @@ struct MutableGoal {
 		self.objectId = goal.objectId
 		self.name = goal.name
 		self.frequency = goal.frequency
+		self.notes = goal.notes
 		self.updateValues = ["objectId": objectId]
 	}
 

@@ -33,6 +33,7 @@ final class SettingsViewController: UIViewController {
 	private func configureViews() {
 		tableView.delegate = self
 		tableView.dataSource = viewModel
+		tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
 		tableView.register(UITableViewCell.self, forCellReuseIdentifier: String(describing: UITableViewCell.self))
 		view.addSubview(tableView)
 	}

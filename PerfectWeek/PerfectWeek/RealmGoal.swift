@@ -16,6 +16,7 @@ class RealmGoal: Object {
 	dynamic var frequency = 0
 	dynamic var progress = 0
 	dynamic var lastCompleted: NSDate?
+	dynamic var notes: String?
 
 	// MARK: - Extension
 	var extensionType = RealmOptional<Int>()

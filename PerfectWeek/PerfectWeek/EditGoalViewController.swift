@@ -34,6 +34,17 @@ final class EditGoalViewController: UIViewController {
 
 	private let timesPerWeekStepper = Stepper()
 
+	private let notesTextLabel: Label = {
+		let label = Label(style: .body)
+		label.text = LocalizedStrings.addNotesPrompt
+		label.numberOfLines = 0
+		return label
+	}()
+
+	fileprivate let notesTextView = UITextView()
+
+	private let notesTextViewButton = UIButton()
+
 	fileprivate let saveButton: UIButton = {
 		let button = UIButton()
 		button.setTitle(LocalizedStrings.save, for: .normal)
@@ -73,13 +84,26 @@ final class EditGoalViewController: UIViewController {
 		title = LocalizedStrings.editGoal
 		nameTextField.delegate = self
 		timesPerWeekStepper.delegate = self
-		viewModel.mutableGoal.frequency = timesPerWeekStepper.counter
+		notesTextView.backgroundColor = .gray
+		notesTextViewButton.setTitle("", for: .normal)
+		notesTextViewButton.addTarget(self, action: #selector(didTapNotesTextViewButton), for: .touchUpInside)
+
+		populateData()
 
 		view.addSubview(nameLabel)
 		view.addSubview(nameTextField)
 		view.addSubview(timesPerWeekLabel)
 		view.addSubview(timesPerWeekStepper)
+		view.addSubview(notesTextLabel)
+		view.addSubview(notesTextView)
+		view.addSubview(notesTextViewButton)
 		view.addSubview(saveButton)
+	}
+
+	private func populateData() {
+		nameTextField.text = viewModel.mutableGoal.name
+		timesPerWeekStepper.counter = viewModel.mutableGoal.frequency ?? 1
+		notesTextView.text = viewModel.mutableGoal.notes
 	}
 
 	private func configureConstraints() {
@@ -87,6 +111,9 @@ final class EditGoalViewController: UIViewController {
 		nameTextField.translatesAutoresizingMaskIntoConstraints = false
 		timesPerWeekLabel.translatesAutoresizingMaskIntoConstraints = false
 		timesPerWeekStepper.translatesAutoresizingMaskIntoConstraints = false
+		notesTextLabel.translatesAutoresizingMaskIntoConstraints = false
+		notesTextView.translatesAutoresizingMaskIntoConstraints = false
+		notesTextViewButton.translatesAutoresizingMaskIntoConstraints = false
 		saveButton.translatesAutoresizingMaskIntoConstraints = false
 
 		NSLayoutConstraint.activate([
@@ -106,10 +133,21 @@ final class EditGoalViewController: UIViewController {
 			timesPerWeekStepper.widthAnchor.constraint(equalToConstant: 120),
 			timesPerWeekStepper.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
 			timesPerWeekStepper.topAnchor.constraint(equalTo: timesPerWeekLabel.bottomAnchor, constant: 15),
+			notesTextLabel.topAnchor.constraint(equalTo: timesPerWeekStepper.bottomAnchor, constant: 30),
+			notesTextLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
+			notesTextLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
+			notesTextView.topAnchor.constraint(equalTo: notesTextLabel.bottomAnchor, constant: 15),
+			notesTextView.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
+			notesTextView.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
+			notesTextView.heightAnchor.constraint(equalToConstant: 150),
+			notesTextViewButton.topAnchor.constraint(equalTo: notesTextLabel.bottomAnchor, constant: 15),
+			notesTextViewButton.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
+			notesTextViewButton.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
+			notesTextViewButton.heightAnchor.constraint(equalToConstant: 150),
+			saveButton.topAnchor.constraint(equalTo: notesTextView.bottomAnchor, constant: 30),
 			saveButton.heightAnchor.constraint(equalToConstant: Label.defaultHeight),
 			saveButton.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -30),
-			saveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-			saveButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50)
+			saveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
 		])
 	}
 
@@ -150,6 +188,32 @@ extension EditGoalViewController {
 
 		alertController.addAction(cancelAction)
 		alertController.addAction(deleteAction)
+		self.present(alertController, animated: true, completion: nil)
+	}
+
+	func didTapNotesTextViewButton() {
+		let alertController = UIAlertController(title: LocalizedStrings.addNotesPrompt, message: nil, preferredStyle: .alert)
+
+		let cancelAction = UIAlertAction(title: LocalizedStrings.cancel, style: .cancel) { _ in
+			alertController.dismiss(animated: true, completion: nil)
+		}
+
+		let saveAction = UIAlertAction(title: LocalizedStrings.save, style: .default) { [weak self] _ in
+			if let textField = alertController.textFields?.first {
+				self?.viewModel.mutableGoal.notes = textField.text
+				self?.notesTextView.text = textField.text
+			}
+
+			alertController.dismiss(animated: true, completion: nil)
+		}
+
+		alertController.addAction(cancelAction)
+		alertController.addAction(saveAction)
+
+		alertController.addTextField { [weak self] (textField) in
+			textField.text = self?.viewModel.mutableGoal.notes
+		}
+
 		self.present(alertController, animated: true, completion: nil)
 	}
 
