@@ -10,7 +10,7 @@ import UIKit
 
 final class GoalCollectionViewCell: UICollectionViewCell {
 
-	static let size = CGSize(width: UIScreen.main.bounds.size.width - (collectionViewInset * 4), height: 64.0)
+	static let size = CGSize(width: UIScreen.main.bounds.size.width - (collectionViewInset * 3), height: 64.0)
 
 	let nameLabel: UILabel = {
 		let label = UILabel()
@@ -38,7 +38,7 @@ final class GoalCollectionViewCell: UICollectionViewCell {
 		layer.shadowColor = UIColor.black.cgColor
 		layer.shadowOffset = CGSize(width: 0, height: 1)
 		layer.shadowOpacity = 1
-		layer.shadowRadius = 1.0
+		layer.shadowRadius = 1.5
 		clipsToBounds = false
 		layer.masksToBounds = false
 

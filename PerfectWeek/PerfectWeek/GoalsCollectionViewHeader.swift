@@ -38,9 +38,10 @@ class GoalsCollectionViewHeader: UICollectionReusableView {
 		nameLabel.translatesAutoresizingMaskIntoConstraints = false
 
 		NSLayoutConstraint.activate([
-			nameLabel.widthAnchor.constraint(equalTo: widthAnchor),
-			nameLabel.heightAnchor.constraint(equalTo: heightAnchor)
-			])
+			nameLabel.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.size.width - (collectionViewInset * 3)),
+			nameLabel.heightAnchor.constraint(equalToConstant: 16),
+			nameLabel.centerXAnchor.constraint(equalTo: centerXAnchor)
+		])
 	}
 
 }

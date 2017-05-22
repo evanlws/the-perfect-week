@@ -19,10 +19,10 @@ final class GoalsViewController: UIViewController, UIGestureRecognizerDelegate {
 		self.viewModel = viewModel
 		let collectionViewFlowLayout = UICollectionViewFlowLayout()
 		collectionViewFlowLayout.scrollDirection = .vertical
-		collectionViewFlowLayout.itemSize = CGSize(width: GoalCollectionViewCell.size.width, height: GoalCollectionViewCell.size.height)
-		collectionViewFlowLayout.headerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: 30)
+		collectionViewFlowLayout.headerReferenceSize = CGSize(width: UIScreen.main.bounds.size.width - (collectionViewInset * 3), height: 30)
 		collectionViewFlowLayout.sectionInset = UIEdgeInsets(top: collectionViewInset, left: collectionViewInset, bottom: collectionViewInset, right: collectionViewInset)
-		collectionViewFlowLayout.minimumInteritemSpacing = 10.0
+		collectionViewFlowLayout.minimumInteritemSpacing = 16.0
+		collectionViewFlowLayout.minimumLineSpacing = 16.0
 		self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout)
 		super.init(nibName: nil, bundle: nil)
 
@@ -122,11 +122,15 @@ extension GoalsViewController {
 
 }
 
-extension GoalsViewController: UICollectionViewDelegate {
+extension GoalsViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
 	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		guard let goal = viewModel.objectAt(indexPath) else { return }
 		presentGoalDetailVC(goal)
+	}
+
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+		return viewModel.cellSize(collectionView, indexPath: indexPath)
 	}
 
 }

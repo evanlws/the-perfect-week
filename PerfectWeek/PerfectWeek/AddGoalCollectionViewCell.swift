@@ -10,7 +10,7 @@ import UIKit
 
 final class AddGoalCollectionViewCell: UICollectionViewCell {
 
-	static let size = CGSize(width: UIScreen.main.bounds.size.width - (collectionViewInset * 4), height: 64.0)
+	static let size = CGSize(width: UIScreen.main.bounds.size.width - (collectionViewInset * 3), height: 34.0)
 
 	let newGoalButton: UIButton = {
 		let button = UIButton(style: .custom)
@@ -36,10 +36,10 @@ final class AddGoalCollectionViewCell: UICollectionViewCell {
 		newGoalButton.translatesAutoresizingMaskIntoConstraints = false
 
 		NSLayoutConstraint.activate([
-			newGoalButton.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor),
-			newGoalButton.leftAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leftAnchor),
-			newGoalButton.bottomAnchor.constraint(equalTo: contentView.layoutMarginsGuide.bottomAnchor),
-			newGoalButton.rightAnchor.constraint(equalTo: contentView.layoutMarginsGuide.rightAnchor)
+			newGoalButton.topAnchor.constraint(equalTo: contentView.topAnchor),
+			newGoalButton.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+			newGoalButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+			newGoalButton.rightAnchor.constraint(equalTo: contentView.rightAnchor)
 		])
 	}
 }

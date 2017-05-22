@@ -16,7 +16,7 @@ final class InformationHeader {
 	init() {
 		guard let keyWindow = UIApplication.shared.keyWindow else { fatalError("Must have a key window") }
 
-		informationWindow = UIWindow(frame: CGRect(x: 0, y: 0, width: keyWindow.bounds.size.width, height: keyWindow.bounds.size.height / 3.8))
+		informationWindow = UIWindow(frame: CGRect(x: 0, y: 0, width: keyWindow.bounds.size.width, height: 176))
 		InformationHeader.windowSize = CGSize(width: informationWindow.bounds.width, height: informationWindow.bounds.height)
 		informationWindow.windowLevel = UIWindowLevelNormal
 		informationWindow.isHidden = false
