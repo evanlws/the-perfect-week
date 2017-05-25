@@ -15,24 +15,28 @@ final class AddGoalNameViewController: UIViewController {
 	fileprivate let nameLabel: Label = {
 		let label = Label(style: .body)
 		label.text = LocalizedStrings.enterGoalName
+		label.textAlignment = .center
 		return label
 	}()
 
 	private let nameTextField: UITextField = {
 		let textField = UITextField()
-		textField.borderStyle = .line
+		textField.borderStyle = .none
 		textField.autocorrectionType = .no
 		textField.returnKeyType = .done
+		textField.textAlignment = .center
+		textField.contentVerticalAlignment = .bottom
 		return textField
 	}()
 
 	private let nextButton: UIButton = {
-		let button = UIButton()
+		let button = Button.initialize(type: .basicBox)
 		button.setTitle(LocalizedStrings.next, for: .normal)
-		button.backgroundColor = .purple
 		button.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
 		return button
 	}()
+
+	var path: UIBezierPath?
 
 	init(viewModel: AddGoalNameViewModel) {
 		self.viewModel = viewModel
@@ -53,18 +57,35 @@ final class AddGoalNameViewController: UIViewController {
 		super.viewWillAppear(animated)
 		navigationController?.setNavigationBarHidden(false, animated: true)
 		InformationHeaderObserver.shouldHideInformationHeader()
+		navigationController?.navigationBar.tintColor = .black
+	}
+
+	override func viewDidLayoutSubviews() {
+		super.viewDidLayoutSubviews()
+
+		if path == nil {
+			path = UIBezierPath()
+			path?.move(to: CGPoint(x: 0, y: nameTextField.frame.size.height))
+			path?.addLine(to: CGPoint(x: nameTextField.frame.size.width, y: nameTextField.frame.size.height))
+			let underline = CAShapeLayer()
+			underline.path = path?.cgPath
+			underline.lineWidth = 2.0
+			underline.strokeColor = UIColor.black.cgColor
+			nameTextField.layer.addSublayer(underline)
+		}
 	}
 
 	private func configureViews() {
 		let cancelButtonItem = UIBarButtonItem(title: LocalizedStrings.cancel, style: .plain, target: self, action: #selector(didTapCancelBarButtonItem))
-		navigationItem.leftBarButtonItem = cancelButtonItem
+		navigationItem.rightBarButtonItem = cancelButtonItem
 		view.backgroundColor = .white
 		title = LocalizedStrings.addGoal
-		nameTextField.delegate = self
 
+		nameTextField.delegate = self
 		view.addSubview(nameLabel)
 		view.addSubview(nameTextField)
 		view.addSubview(nextButton)
+
 		disableNextButton()
 	}
 
@@ -80,14 +101,15 @@ final class AddGoalNameViewController: UIViewController {
 			nameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 			nameLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant:-height),
 			nameTextField.heightAnchor.constraint(equalToConstant: height),
-			nameTextField.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -10),
+			nameTextField.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -64),
 			nameTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 			nameTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: height),
 			nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-			nextButton.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -10),
-			nextButton.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -60),
+			nextButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80),
+			nextButton.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -112),
 			nextButton.heightAnchor.constraint(equalToConstant: 30)
 		])
+
 	}
 
 	fileprivate func disableNextButton() {

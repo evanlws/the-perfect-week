@@ -13,7 +13,7 @@ final class AddGoalCollectionViewCell: UICollectionViewCell {
 	static let size = CGSize(width: UIScreen.main.bounds.size.width - (collectionViewInset * 3), height: 34.0)
 
 	let newGoalButton: UIButton = {
-		let button = UIButton(style: .custom)
+		let button = Button.initialize(type: .basicBox)
 		button.setTitle(LocalizedStrings.newGoal, for: .normal)
 		return button
 	}()
@@ -37,9 +37,9 @@ final class AddGoalCollectionViewCell: UICollectionViewCell {
 
 		NSLayoutConstraint.activate([
 			newGoalButton.topAnchor.constraint(equalTo: contentView.topAnchor),
-			newGoalButton.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+			newGoalButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
 			newGoalButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-			newGoalButton.rightAnchor.constraint(equalTo: contentView.rightAnchor)
+			newGoalButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
 		])
 	}
 }

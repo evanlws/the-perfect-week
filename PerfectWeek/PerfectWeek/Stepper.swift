@@ -15,7 +15,7 @@ protocol StepperDelegate: class {
 final class Stepper: UIView {
 
 	var maxValue = 7
-	var minValue = 0
+	var minValue = 1
 
 	var counter: Int = 1 {
 		didSet {
@@ -29,28 +29,34 @@ final class Stepper: UIView {
 	init() {
 		super.init(frame: .zero)
 		backgroundColor = .purple
-		setupStackViews()
+		configureViews()
 	}
 
-	private func setupStackViews() {
+	private func configureViews() {
 		numberLabel.text = String(counter)
 		numberLabel.font = UIFont.systemFont(ofSize: 28)
-		numberLabel.textColor = .white
-		numberLabel.backgroundColor = .orange
+		numberLabel.textColor = ColorLibrary.UIPalette.primary
+		numberLabel.backgroundColor = .white
+		numberLabel.layer.borderColor = UIColor.black.cgColor
+		numberLabel.layer.borderWidth = 1
 		numberLabel.textAlignment = .center
 
 		let plusButton = UIButton()
 		plusButton.setTitle("+", for: .normal)
 		plusButton.titleLabel?.font = UIFont.systemFont(ofSize: 28)
-		plusButton.backgroundColor = .green
-		plusButton.tintColor = .white
+		plusButton.backgroundColor = .white
+		plusButton.layer.borderColor = UIColor.black.cgColor
+		plusButton.layer.borderWidth = 1
+		plusButton.setTitleColor(ColorLibrary.UIPalette.primary, for: .normal)
 		plusButton.addTarget(self, action: #selector(increment), for: .touchUpInside)
 
 		let minusButton = UIButton()
 		minusButton.setTitle("-", for: .normal)
 		minusButton.titleLabel?.font = UIFont.systemFont(ofSize: 28)
-		minusButton.backgroundColor = .green
-		minusButton.tintColor = .blue
+		minusButton.backgroundColor = .white
+		minusButton.layer.borderColor = UIColor.black.cgColor
+		minusButton.layer.borderWidth = 1
+		minusButton.setTitleColor(ColorLibrary.UIPalette.primary, for: .normal)
 		minusButton.addTarget(self, action: #selector(decrement), for: .touchUpInside)
 
 		let stepperStackView = UIStackView(arrangedSubviews: [plusButton, minusButton])

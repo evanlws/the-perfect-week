@@ -13,7 +13,7 @@ final class Label: UILabel {
 	static let defaultHeight: CGFloat = 30.0
 
 	enum Style {
-		case body, header
+		case body, header, header2
 	}
 
 	init(style: Style) {
@@ -27,6 +27,11 @@ final class Label: UILabel {
 			self.textAlignment = .left
 		case .header:
 			self.font = UIFont.systemFont(ofSize: 22)
+			self.minimumScaleFactor = 0.6
+			self.textColor = .black
+			self.textAlignment = .center
+		case .header2:
+			self.font = UIFont.systemFont(ofSize: 20)
 			self.minimumScaleFactor = 0.6
 			self.textColor = .black
 			self.textAlignment = .center

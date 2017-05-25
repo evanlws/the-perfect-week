@@ -14,6 +14,7 @@ class ProgressView: UIView {
 		let label = UILabel()
 		label.text = "0%"
 		label.font = UIFont.systemFont(ofSize: 16.0)
+		label.textColor = .white
 		label.textAlignment = .center
 		return label
 	}()
@@ -21,7 +22,7 @@ class ProgressView: UIView {
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 
-		backgroundColor = .green
+		backgroundColor = ColorLibrary.UIPalette.accent
 		addSubview(progressLabel)
 		setupConstraints()
 	}

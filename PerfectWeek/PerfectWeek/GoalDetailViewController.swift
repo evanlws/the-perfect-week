@@ -15,7 +15,7 @@ final class GoalDetailViewController: UIViewController {
 	private let backButton: UIButton = {
 		let button = UIButton(type: .custom)
 		button.setTitle(LocalizedStrings.back, for: .normal)
-		button.setTitleColor(.purple, for: .normal)
+		button.setTitleColor(ColorLibrary.UIPalette.primary, for: .normal)
 		button.addTarget(self, action: #selector(didTapBack), for: .touchUpInside)
 		return button
 	}()
@@ -23,13 +23,13 @@ final class GoalDetailViewController: UIViewController {
 	private let editGoalButton: UIButton = {
 		let button = UIButton(type: .custom)
 		button.setTitle(LocalizedStrings.editGoal, for: .normal)
-		button.setTitleColor(.purple, for: .normal)
+		button.setTitleColor(ColorLibrary.UIPalette.primary, for: .normal)
 		button.addTarget(self, action: #selector(didTapEditGoal), for: .touchUpInside)
 		return button
 	}()
 
 	private let completeGoalButton: UIButton = {
-		let button = UIButton(style: .custom)
+		let button = Button.initialize(type: .basicBox)
 		button.setTitle(LocalizedStrings.completeGoal, for: .normal)
 		button.addTarget(self, action: #selector(didTapCompleteGoal), for: .touchUpInside)
 		return button
@@ -176,6 +176,8 @@ final class DetailContentView: UIView {
 
 	fileprivate let goalNotesTextView: UITextView = {
 		let textView = UITextView()
+		textView.font = UIFont.systemFont(ofSize: 17.0)
+		textView.textColor = .darkGray
 		textView.isEditable = false
 		textView.isSelectable = false
 		textView.textAlignment = .center

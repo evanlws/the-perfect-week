@@ -69,17 +69,6 @@ extension NSRange {
 
 }
 
-extension UIButton {
-
-	convenience init(style: UIButtonType) {
-		self.init(type: style)
-
-		self.setTitleColor(.white, for: .normal)
-		self.backgroundColor = .purple
-	}
-
-}
-
 extension DateComponents: Comparable {
 
 	public static func < (lhs: DateComponents, rhs: DateComponents) -> Bool {
