@@ -27,7 +27,15 @@ final class GoalLibrary {
 	private init() {
 		if Date() > stats.weekEnd {
 			StatsLibrary.shared.updateStats(reason: .newWeek)
-			goals.forEach { updateGoal(with: ["objectId": $0.objectId, "progress": 0]) }
+			for goal in goals {
+				var currentStreak = 0
+
+				if goal.isPerfectGoal() {
+					currentStreak = goal.currentStreak + 1
+				}
+
+				updateGoal(with: ["objectId": goal.objectId, "progress": 0, "currentStreak": currentStreak])
+			}
 		}
 	}
 
@@ -46,19 +54,9 @@ final class GoalLibrary {
 			return
 		}
 
-		StatsLibrary.shared.updateStats(reason: .goalCompleted)
-		NotificationManager.updateNotificationForGoal(goal.objectId)
 		updateGoal(with: ["objectId": goal.objectId, "progress": goal.progress + 1, "lastCompleted": Date()])
-	}
-
-	func undo(_ goal: Goal) {
-		guard goal.progress > 0 else {
-			print("Guard failure warning: Could not undo \(goal.name)")
-			return
-		}
-
-		StatsLibrary.shared.updateStats(reason: .undoGoal)
-		updateGoal(with: ["objectId": goal.objectId, "progress": goal.progress - 1])
+		StatsLibrary.shared.updateStats(reason: .goalCompleted)
+		InformationHeaderObserver.updateInformationHeader()
 	}
 
 	func deleteGoalWith(_ goalObjectId: String) {

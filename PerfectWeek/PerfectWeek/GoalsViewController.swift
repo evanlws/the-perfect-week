@@ -49,6 +49,11 @@ final class GoalsViewController: UIViewController, UIGestureRecognizerDelegate {
 		collectionView.reloadData()
 	}
 
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		InformationHeaderObserver.updateInformationHeader()
+	}
+
 	// MARK: - Setup
 	private func configureViews() {
 		collectionView.backgroundColor = .white

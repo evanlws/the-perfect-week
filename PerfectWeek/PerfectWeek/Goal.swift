@@ -14,6 +14,7 @@ final class Goal {
 	let name: String
 	let frequency: Int
 	let progress: Int
+	let currentStreak: Int
 	var notes: String?
 	var lastCompleted: Date?
 	var extensionItem: ExtensionItem?
@@ -24,11 +25,13 @@ final class Goal {
 	     notes: String?,
 	     extensionItem: ExtensionItem?,
 	     lastCompleted: Date?,
+	     currentStreak: Int = 0,
 	     progress: Int = 0) {
 		self.objectId = objectId
 		self.name = name
 		self.frequency = frequency
 		self.notes = notes
+		self.currentStreak = currentStreak
 		self.progress = progress
 		self.lastCompleted = lastCompleted
 		self.extensionItem = extensionItem
@@ -53,7 +56,7 @@ final class Goal {
 	}
 
 	var description: String {
-		return "\nGoal:\n\tObjectID: \(objectId)\n\tName: \(name)\n\tLast Completed: \(String(describing: lastCompleted))\n\tFrequency: \(frequency)\n\tNotes: \(String(describing: notes))\n\tProgress: \(progress)\n\tExtension: \(String(describing: extensionItem?.description))\n"
+		return "\nGoal:\n\tObjectID: \(objectId)\n\tName: \(name)\n\tLast Completed: \(String(describing: lastCompleted))\n\tFrequency: \(frequency)\n\tNotes: \(String(describing: notes))\n\tProgress: \(progress)\n\tCurrent Streak: \(currentStreak)\n\tExtension: \(String(describing: extensionItem?.description))\n"
 	}
 
 }
@@ -133,6 +136,14 @@ struct MutableGoal {
 		didSet {
 			if progress != oldValue {
 				updateValues["progress"] = progress
+			}
+		}
+	}
+
+	var currentStreak: Int? {
+		didSet {
+			if currentStreak != oldValue {
+				updateValues["currentStreak"] = currentStreak
 			}
 		}
 	}

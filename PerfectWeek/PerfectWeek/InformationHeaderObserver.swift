@@ -12,6 +12,7 @@ struct InformationHeaderObserver {
 
 	static let showInformationHeaderNotification = "ShowInformationHeader"
 	static let hideInformationHeaderNotification = "HideInformationHeader"
+	static let updateInformationHeaderNotification = "UpdateInformationHeader"
 
 	static func shouldShowInformationHeader() {
 		NotificationCenter.default.post(name: Notification.Name(rawValue: InformationHeaderObserver.showInformationHeaderNotification), object: nil)
@@ -21,4 +22,7 @@ struct InformationHeaderObserver {
 		NotificationCenter.default.post(name: Notification.Name(rawValue: InformationHeaderObserver.hideInformationHeaderNotification), object: nil)
 	}
 
+	static func updateInformationHeader() {
+		NotificationCenter.default.post(name: Notification.Name(rawValue: InformationHeaderObserver.updateInformationHeaderNotification), object: nil)
+	}
 }

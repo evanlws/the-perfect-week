@@ -14,6 +14,7 @@ class RealmGoal: Object {
 	dynamic var objectId = ""
 	dynamic var name = ""
 	dynamic var frequency = 0
+	dynamic var currentStreak = 0
 	dynamic var progress = 0
 	dynamic var lastCompleted: NSDate?
 	dynamic var notes: String?

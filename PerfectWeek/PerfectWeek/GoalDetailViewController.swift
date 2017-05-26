@@ -78,6 +78,7 @@ final class GoalDetailViewController: UIViewController {
 		detailContentView.goalNameLabel.text = viewModel.goal.name
 		detailContentView.frequencyNumberLabel.text = "\(viewModel.goal.frequency)"
 		detailContentView.completionsThisWeekNumberLabel.text = "\(viewModel.goal.progress)"
+		detailContentView.currentStreakNumberLabel.text = "\(viewModel.goal.currentStreak)"
 		detailContentView.goalNotesTextView.text = viewModel.goal.notes
 	}
 
@@ -167,12 +168,7 @@ final class DetailContentView: UIView {
 		return label
 	}()
 
-	fileprivate let currentStreakNumberLabel: Label = {
-		let label = Label(style: .body)
-		label.text = "Over 9000"
-		label.textAlignment = .right
-		return label
-	}()
+	fileprivate let currentStreakNumberLabel = Label(style: .body)
 
 	fileprivate let goalNotesTextView: UITextView = {
 		let textView = UITextView()
