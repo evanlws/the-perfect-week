@@ -26,7 +26,6 @@ final class InformationViewController: UIViewController {
 		label.textAlignment = .right
 		label.sizeToFit()
 		label.adjustsFontSizeToFitWidth = true
-		label.text = "\(DateFormatter().weekdaySymbols[Calendar.current.component(.weekday, from: Date())])"
 		return label
 	}()
 

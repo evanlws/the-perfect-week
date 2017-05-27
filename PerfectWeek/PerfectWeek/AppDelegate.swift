@@ -20,14 +20,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 		let goalsViewController = GoalsViewController(viewModel: GoalsViewModel())
 		let navigationController = UINavigationController(rootViewController: goalsViewController)
-		navigationController.tabBarItem = UITabBarItem(title: "Goals", image: nil, tag: 1)
+		navigationController.tabBarItem = UITabBarItem(title: "Goals", image: #imageLiteral(resourceName: "goals_icon"), tag: 1)
 		navigationController.setNavigationBarHidden(true, animated: false)
 
 		let settingsViewController = SettingsViewController(viewModel: SettingsViewModel())
-		settingsViewController.tabBarItem = UITabBarItem(title: "Settings", image: nil, tag: 2)
+		settingsViewController.tabBarItem = UITabBarItem(title: "Settings", image: #imageLiteral(resourceName: "settings_icon"), tag: 2)
 
 		let tabBarController = UITabBarController()
 		tabBarController.viewControllers = [navigationController, settingsViewController]
+		tabBarController.tabBar.tintColor = ColorLibrary.UIPalette.accent
 		window?.rootViewController = tabBarController
 
 		window?.makeKeyAndVisible()

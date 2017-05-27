@@ -27,6 +27,7 @@ final class GoalLibrary {
 	private init() {
 		if Date() > stats.weekEnd {
 			StatsLibrary.shared.updateStats(reason: .newWeek)
+			NotificationManager.clearAllNotifications()
 			for goal in goals {
 				var currentStreak = 0
 
@@ -35,6 +36,7 @@ final class GoalLibrary {
 				}
 
 				updateGoal(with: ["objectId": goal.objectId, "progress": 0, "currentStreak": currentStreak])
+				NotificationManager.scheduleNotification(for: goal)
 			}
 		}
 	}
@@ -43,7 +45,7 @@ final class GoalLibrary {
 		RealmLibrary.shared.add(newGoal) { (success) in
 			if success {
 				print("Successfully created \(newGoal.description)")
-				NotificationManager.scheduleNotificationFor(newGoal)
+				NotificationManager.scheduleNotification(for: newGoal)
 			}
 		}
 	}
