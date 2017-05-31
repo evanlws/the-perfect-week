@@ -43,34 +43,33 @@ class NotificationManager: NSObject {
 
 		for dateComponents in weeklyDateComponents(for: goal.frequency, date: date) {
 			scheduleNotification(with: content, dateComponents: dateComponents, goal: goal)
-			//let nextWeekDateComponents = nextWeek(dateComponents: dateComponents, date: date)
-			//scheduleNotification(with: content, dateComponents: nextWeekDateComponents, goal: goal)
+			let nextWeekDateComponents = nextWeek(dateComponents: dateComponents, date: date)
+			scheduleNotification(with: content, dateComponents: nextWeekDateComponents, goal: goal)
+		}
+	}
+
+	private static func scheduleNotification(with content: UNMutableNotificationContent, dateComponents: DateComponents, goal: Goal) {
+		let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+		guard let triggerDate = trigger.nextTriggerDate() else {
+			print("Guard failure warning: Trigger has no date")
+			return
+		}
+
+		let identifier = NotificationParser.generateNotificationIdentifier(date: triggerDate, type: "DEFAULT", objectId: goal.objectId)
+		let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+		UNUserNotificationCenter.current().add(request) { (error) in
+			if let error = error {
+				print("Error scheduling a notification \(error)")
+			} else {
+				print("Scheduling a notification: \(request.identifier)")
+			}
 		}
 	}
 
 	private static func nextWeek(dateComponents: DateComponents, date: Date) -> DateComponents {
 		guard let date = Calendar.current.date(from: dateComponents),
 			let newDate = Calendar.current.date(byAdding: .day, value: 7, to: date) else { fatalError("Could not create date from components") }
-		return Calendar.current.dateComponents([.year, .month, .day, .weekday, .hour, .minute], from: newDate)
-	}
-
-	private static func scheduleNotification(with content: UNMutableNotificationContent, dateComponents: DateComponents, goal: Goal) {
-		let notificationCenter = UNUserNotificationCenter.current()
-		let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
-		guard let date = Calendar.current.date(from: dateComponents) else {
-			print("Guard failure warning: One or more components in dateComponents are nil")
-			return
-		}
-
-		let identifier = NotificationParser.generateNotificationIdentifier(date: date, type: "DEFAULT", objectId: goal.objectId)
-		let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
-		notificationCenter.add(request) { (error) in
-			if let error = error {
-				print("Error scheduling a notification \(error)")
-			} else {
-				print("Scheduling a notification for \(goal.name) for \(identifier) ::::: \(Date())")
-			}
-		}
+		return Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: newDate)
 	}
 
 	static func weeklyDateComponents(for frequency: Int, date: Date) -> [DateComponents] {
@@ -114,9 +113,8 @@ class NotificationManager: NSObject {
 
 	fileprivate static func weekdayComponent(_ dayOfWeek: DayOfWeek, timeOfDay: (hour: Int, minute: Int), date: Date) -> DateComponents {
 		guard let weekdayAddedDate = Calendar.current.date(bySetting: .weekday, value: dayOfWeek.rawValue, of: date),
-		let hourAddedDate = Calendar.current.date(bySetting: .hour, value: timeOfDay.hour, of: weekdayAddedDate),
-		let minuteAddedDate = Calendar.current.date(bySetting: .minute, value: timeOfDay.minute, of: hourAddedDate) else { fatalError("Tried to create a date that didn't exist") }
-		return Calendar.current.dateComponents([.year, .month, .day, .weekday, .hour, .minute], from: minuteAddedDate)
+			let dateAddedDate = Calendar.current.date(bySettingHour: timeOfDay.hour, minute: timeOfDay.minute, second: 0, of: weekdayAddedDate) else { fatalError("Tried to create a date that didn't exist") }
+		return Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: dateAddedDate)
 	}
 
 }
@@ -128,8 +126,8 @@ extension NotificationManager {
 		UNUserNotificationCenter.current().getPendingNotificationRequests { (requests) in
 			for request in requests {
 				guard NotificationParser.getObjectId(from: request.identifier) == goal.objectId,
-				let trigger = request.trigger as? UNCalendarNotificationTrigger,
-				let triggerDate = trigger.nextTriggerDate() else { continue }
+					let trigger = request.trigger as? UNCalendarNotificationTrigger,
+					let triggerDate = trigger.nextTriggerDate() else { continue }
 
 				if triggerDate < Date().nextSunday() {
 					UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [request.identifier])
