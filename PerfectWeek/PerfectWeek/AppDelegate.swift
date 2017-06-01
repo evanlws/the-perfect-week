@@ -8,6 +8,8 @@
 
 import UIKit
 import UserNotifications
+import Fabric
+import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +18,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	var informationHeader: InformationHeader?
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+
+		#if RELEASE
+			Fabric.with([Crashlytics.self])
+		#endif
+
 		window = UIWindow(frame: UIScreen.main.bounds)
 		window?.backgroundColor = .white
 

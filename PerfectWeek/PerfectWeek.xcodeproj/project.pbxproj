@@ -36,6 +36,8 @@
 		4F854E2D1E9B55540038A23F /* StatsLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F854E2C1E9B55540038A23F /* StatsLibrary.swift */; };
 		4F854E2F1E9B556C0038A23F /* RealmLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F854E2E1E9B556C0038A23F /* RealmLibrary.swift */; };
 		4F933E1A1ED0C390001FF278 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F933E191ED0C390001FF278 /* Logging.swift */; };
+		4FA54D691EDFA65200A8C26B /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FA54D671EDFA65200A8C26B /* Fabric.framework */; };
+		4FA54D6A1EDFA65200A8C26B /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FA54D681EDFA65200A8C26B /* Crashlytics.framework */; };
 		4FA6DD511E6B3D5300547D33 /* Goal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA6DD501E6B3D5300547D33 /* Goal.swift */; };
 		4FA6DD581E6B4E2400547D33 /* GoalsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA6DD571E6B4E2400547D33 /* GoalsViewController.swift */; };
 		4FA6DD5C1E6B563800547D33 /* GoalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA6DD5B1E6B563800547D33 /* GoalCollectionViewCell.swift */; };
@@ -107,6 +109,8 @@
 		4F854E2C1E9B55540038A23F /* StatsLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsLibrary.swift; sourceTree = "<group>"; };
 		4F854E2E1E9B556C0038A23F /* RealmLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmLibrary.swift; sourceTree = "<group>"; };
 		4F933E191ED0C390001FF278 /* Logging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
+		4FA54D671EDFA65200A8C26B /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		4FA54D681EDFA65200A8C26B /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		4FA6DD501E6B3D5300547D33 /* Goal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Goal.swift; sourceTree = "<group>"; };
 		4FA6DD571E6B4E2400547D33 /* GoalsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalsViewController.swift; sourceTree = "<group>"; };
 		4FA6DD5B1E6B563800547D33 /* GoalCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -133,6 +137,8 @@
 			files = (
 				4FDFD1031E6E4E9F00D33353 /* Realm.framework in Frameworks */,
 				4FDFD1051E6E4EA100D33353 /* RealmSwift.framework in Frameworks */,
+				4FA54D6A1EDFA65200A8C26B /* Crashlytics.framework in Frameworks */,
+				4FA54D691EDFA65200A8C26B /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -213,6 +219,8 @@
 		4F1147FB1E5904A900346A1D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4FA54D671EDFA65200A8C26B /* Fabric.framework */,
+				4FA54D681EDFA65200A8C26B /* Crashlytics.framework */,
 				4FDFD1041E6E4EA100D33353 /* RealmSwift.framework */,
 				4FDFD1021E6E4E9F00D33353 /* Realm.framework */,
 			);
@@ -360,6 +368,7 @@
 				4F1148001E5904D600346A1D /* ShellScript */,
 				4F1148021E5A1AC500346A1D /* ShellScript */,
 				4FA6DD561E6B4ABD00547D33 /* ShellScript */,
+				4FA54D661EDFA61200A8C26B /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -514,6 +523,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
+		4FA54D661EDFA61200A8C26B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run 2dc7fcb0503f1e8d4ab624535a9f5d48db7d596a b9a9b1123a61d00895b7f4d3986f94eb8059971ecb398ac16a006ae6182a1af2";
 		};
 		4FA6DD561E6B4ABD00547D33 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -721,11 +743,13 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_ACTIVITY_MODE = "";
 				"DEBUG_ACTIVITY_MODE[sdk=iphonesimulator*]" = disable;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 7ZE54HDXZR;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SRCROOT)/Carthage/Build/iOS",
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = PerfectWeek/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -744,14 +768,17 @@
 				CODE_SIGN_ENTITLEMENTS = PerfectWeek/PerfectWeek.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_ACTIVITY_MODE = "";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 7ZE54HDXZR;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SRCROOT)/Carthage/Build/iOS",
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = PerfectWeek/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "-D RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = com.evanlewis.perfectweek;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Crashlytics
 
 let collectionViewInset: CGFloat = 10.0
 
@@ -103,6 +104,7 @@ final class GoalsViewController: UIViewController, UIGestureRecognizerDelegate {
 extension GoalsViewController {
 
 	func didTapNewGoalButton() {
+		Answers.logCustomEvent(withName: "New Goal Button Tapped", customAttributes: nil)
 		presentAddGoalNameViewController()
 	}
 
