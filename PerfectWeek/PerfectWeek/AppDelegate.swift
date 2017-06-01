@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -39,6 +40,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			print("First launch, setting UserDefaults.")
 			UserDefaults.standard.set(true, forKey: "thisIsTheFirstLaunch")
 			NotificationManager.clearAllNotifications()
+		}
+
+		UNUserNotificationCenter.current().getPendingNotificationRequests { (requests) in
+			for request in requests {
+				print(request.identifier)
+			}
 		}
 
 		return true
