@@ -428,7 +428,7 @@
 					4F1147C91E58F71600346A1D = {
 						CreatedOnToolsVersion = 8.2;
 						DevelopmentTeam = 7ZE54HDXZR;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 1;
@@ -756,6 +756,8 @@
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.evanlewis.perfectweek;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "102fc4ec-ef06-4d54-9510-58aa956382aa";
+				PROVISIONING_PROFILE_SPECIFIER = "The Perfect Week Development";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -781,6 +783,8 @@
 				OTHER_SWIFT_FLAGS = "-D RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = com.evanlewis.perfectweek;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "102fc4ec-ef06-4d54-9510-58aa956382aa";
+				PROVISIONING_PROFILE_SPECIFIER = "The Perfect Week Development";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
