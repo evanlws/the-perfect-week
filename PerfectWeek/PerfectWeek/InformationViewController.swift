@@ -10,11 +10,12 @@ import UIKit
 
 final class InformationViewController: UIViewController {
 
+	private let viewModel = InformationViewModel()
+
 	private let progressView = ProgressView()
 
 	private let multiplierLabel: UILabel = {
 		let label = UILabel()
-		label.text = "x\(StatsLibrary.shared.stats.currentStreak)"
 		label.font = UIFont.systemFont(ofSize: 23)
 		return label
 	}()
@@ -123,34 +124,10 @@ final class InformationViewController: UIViewController {
 	}
 
 	func updateInformation() {
-		multiplierLabel.text = "x\(StatsLibrary.shared.stats.currentStreak)"
-		let dateItems = currentDate()
-		weekdayLabel.text = dateItems.weekday
-		dateLabel.text = dateItems.date
-		progressView.updateProgress(progress: currentWeekProgress())
-	}
-
-	private func currentDate() -> (date: String, weekday: String) {
-		let currentDate = Date()
-		let locale = Locale.autoupdatingCurrent
-		let weekdayDateFormat = DateFormatter.dateFormat(fromTemplate: "EEEE", options: 0, locale: locale)
-		let dateFormatter = DateFormatter()
-		dateFormatter.dateFormat = weekdayDateFormat
-		let weekday = dateFormatter.string(from: currentDate)
-
-		let dateFormat = DateFormatter.dateFormat(fromTemplate: "dMMM", options: 0, locale: locale)
-		dateFormatter.dateFormat = dateFormat
-		let date = dateFormatter.string(from: currentDate)
-
-		return (date, weekday)
-	}
-
-	private func currentWeekProgress() -> Int {
-		let goals = GoalLibrary.shared.goals
-		guard goals.count > 0 else { return 0 }
-		let totalProgress = goals.reduce(0, { $0 + $1.progress })
-		let totalFrequency = goals.reduce(0, { $0 + $1.frequency })
-		return Int(Float(totalProgress) / Float(totalFrequency) * 100.0)
+		multiplierLabel.text = viewModel.streak
+		weekdayLabel.text = viewModel.weekday
+		dateLabel.text = viewModel.date
+		progressView.updateProgress(progress: viewModel.currentWeekProgress())
 	}
 
 }
