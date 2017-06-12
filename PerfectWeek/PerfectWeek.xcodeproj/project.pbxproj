@@ -30,6 +30,8 @@
 		4F3AF7C41EC40FC400D074CA /* GoalsCollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3AF7C31EC40FC400D074CA /* GoalsCollectionViewHeader.swift */; };
 		4F3AF7C91EC428F800D074CA /* LocalizedStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3AF7C81EC428F800D074CA /* LocalizedStrings.swift */; };
 		4F3EA2CE1EC10D9B00FDBE33 /* AddGoalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3EA2CD1EC10D9B00FDBE33 /* AddGoalCollectionViewCell.swift */; };
+		4F4748561EEE303B00022697 /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4748551EEE303B00022697 /* StatsViewController.swift */; };
+		4F4748591EEE306700022697 /* StatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4748581EEE306700022697 /* StatsViewModel.swift */; };
 		4F491E961E986A9C003BAF0D /* RealmStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F491E951E986A9C003BAF0D /* RealmStats.swift */; };
 		4F61472F1EB597A50058BF43 /* InformationHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F61472E1EB597A50058BF43 /* InformationHeader.swift */; };
 		4F7F5E401EBE2249009A1385 /* InformationHeaderObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7F5E3F1EBE2249009A1385 /* InformationHeaderObserver.swift */; };
@@ -104,6 +106,8 @@
 		4F3AF7C31EC40FC400D074CA /* GoalsCollectionViewHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalsCollectionViewHeader.swift; sourceTree = "<group>"; };
 		4F3AF7C81EC428F800D074CA /* LocalizedStrings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizedStrings.swift; sourceTree = "<group>"; };
 		4F3EA2CD1EC10D9B00FDBE33 /* AddGoalCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddGoalCollectionViewCell.swift; sourceTree = "<group>"; };
+		4F4748551EEE303B00022697 /* StatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
+		4F4748581EEE306700022697 /* StatsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsViewModel.swift; sourceTree = "<group>"; };
 		4F491E951E986A9C003BAF0D /* RealmStats.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmStats.swift; sourceTree = "<group>"; };
 		4F61472E1EB597A50058BF43 /* InformationHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationHeader.swift; sourceTree = "<group>"; };
 		4F7F5E3F1EBE2249009A1385 /* InformationHeaderObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationHeaderObserver.swift; sourceTree = "<group>"; };
@@ -188,6 +192,7 @@
 				4F6147301EB640BF0058BF43 /* Header */,
 				4F2F2DE91E87349000684D02 /* Overview */,
 				4F2F2DEA1E8734AA00684D02 /* Detail */,
+				4F4748571EEE304200022697 /* Stats */,
 				4F2F2DEB1E8734CA00684D02 /* Edit */,
 				4F2F2DEC1E8734D300684D02 /* Add */,
 				4F3AF7C71EC428E200D074CA /* Settings */,
@@ -316,6 +321,15 @@
 				4F0AA7AB1ECBDE770029D9AD /* SettingsViewModel.swift */,
 			);
 			name = Settings;
+			sourceTree = "<group>";
+		};
+		4F4748571EEE304200022697 /* Stats */ = {
+			isa = PBXGroup;
+			children = (
+				4F4748551EEE303B00022697 /* StatsViewController.swift */,
+				4F4748581EEE306700022697 /* StatsViewModel.swift */,
+			);
+			name = Stats;
 			sourceTree = "<group>";
 		};
 		4F6147301EB640BF0058BF43 /* Header */ = {
@@ -588,6 +602,7 @@
 				4FDFD1011E6D30AC00D33353 /* AddGoalNameViewModel.swift in Sources */,
 				4F2EB1E21E7EF38E00677A3C /* RealmGoal.swift in Sources */,
 				4F2EB1E01E7DEE8900677A3C /* Extensions.swift in Sources */,
+				4F4748591EEE306700022697 /* StatsViewModel.swift in Sources */,
 				4F2EB1DA1E787EA500677A3C /* Stepper.swift in Sources */,
 				4F0AA7AC1ECBDE770029D9AD /* SettingsViewModel.swift in Sources */,
 				4F3EA2CE1EC10D9B00FDBE33 /* AddGoalCollectionViewCell.swift in Sources */,
@@ -600,6 +615,7 @@
 				4F2EB1DE1E78D23D00677A3C /* AddGoalFrequencyViewModel.swift in Sources */,
 				4F854E2D1E9B55540038A23F /* StatsLibrary.swift in Sources */,
 				4FCA78E01ED7AE6000998A9F /* InformationViewController.swift in Sources */,
+				4F4748561EEE303B00022697 /* StatsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

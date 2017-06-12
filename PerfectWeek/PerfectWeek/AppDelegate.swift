@@ -31,11 +31,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		navigationController.tabBarItem = UITabBarItem(title: "Goals", image: #imageLiteral(resourceName: "goals_icon"), tag: 1)
 		navigationController.setNavigationBarHidden(true, animated: false)
 
+		let statsViewController = StatsViewController(viewModel: StatsViewModel())
+		statsViewController.tabBarItem = UITabBarItem(title: "Stats", image: #imageLiteral(resourceName: "stats_icon"), tag: 2)
+
 		let settingsViewController = SettingsViewController(viewModel: SettingsViewModel())
-		settingsViewController.tabBarItem = UITabBarItem(title: "Settings", image: #imageLiteral(resourceName: "settings_icon"), tag: 2)
+		settingsViewController.tabBarItem = UITabBarItem(title: "Settings", image: #imageLiteral(resourceName: "settings_icon"), tag: 3)
 
 		let tabBarController = UITabBarController()
-		tabBarController.viewControllers = [navigationController, settingsViewController]
+		tabBarController.viewControllers = [navigationController, statsViewController, settingsViewController]
 		tabBarController.tabBar.tintColor = ColorLibrary.UIPalette.accent
 		window?.rootViewController = tabBarController
 
