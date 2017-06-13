@@ -32,6 +32,7 @@
 		4F3EA2CE1EC10D9B00FDBE33 /* AddGoalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3EA2CD1EC10D9B00FDBE33 /* AddGoalCollectionViewCell.swift */; };
 		4F4748561EEE303B00022697 /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4748551EEE303B00022697 /* StatsViewController.swift */; };
 		4F4748591EEE306700022697 /* StatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4748581EEE306700022697 /* StatsViewModel.swift */; };
+		4F47485E1EEF6B5600022697 /* ScrollableGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F47485D1EEF6B5600022697 /* ScrollableGraphView.swift */; };
 		4F491E961E986A9C003BAF0D /* RealmStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F491E951E986A9C003BAF0D /* RealmStats.swift */; };
 		4F61472F1EB597A50058BF43 /* InformationHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F61472E1EB597A50058BF43 /* InformationHeader.swift */; };
 		4F7F5E401EBE2249009A1385 /* InformationHeaderObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7F5E3F1EBE2249009A1385 /* InformationHeaderObserver.swift */; };
@@ -108,6 +109,7 @@
 		4F3EA2CD1EC10D9B00FDBE33 /* AddGoalCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddGoalCollectionViewCell.swift; sourceTree = "<group>"; };
 		4F4748551EEE303B00022697 /* StatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
 		4F4748581EEE306700022697 /* StatsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsViewModel.swift; sourceTree = "<group>"; };
+		4F47485D1EEF6B5600022697 /* ScrollableGraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ScrollableGraphView.swift; path = External/ScrollableGraphView.swift; sourceTree = "<group>"; };
 		4F491E951E986A9C003BAF0D /* RealmStats.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmStats.swift; sourceTree = "<group>"; };
 		4F61472E1EB597A50058BF43 /* InformationHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationHeader.swift; sourceTree = "<group>"; };
 		4F7F5E3F1EBE2249009A1385 /* InformationHeaderObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationHeaderObserver.swift; sourceTree = "<group>"; };
@@ -305,6 +307,7 @@
 			isa = PBXGroup;
 			children = (
 				4F1147CD1E58F71700346A1D /* AppDelegate.swift */,
+				4F47485C1EEF6A4C00022697 /* External */,
 				4FBF57DF1EBF72DA001DA75C /* PerfectWeek.entitlements */,
 				4F1147D41E58F71700346A1D /* Assets.xcassets */,
 				4F1147D61E58F71700346A1D /* LaunchScreen.storyboard */,
@@ -330,6 +333,14 @@
 				4F4748581EEE306700022697 /* StatsViewModel.swift */,
 			);
 			name = Stats;
+			sourceTree = "<group>";
+		};
+		4F47485C1EEF6A4C00022697 /* External */ = {
+			isa = PBXGroup;
+			children = (
+				4F47485D1EEF6B5600022697 /* ScrollableGraphView.swift */,
+			);
+			name = External;
 			sourceTree = "<group>";
 		};
 		4F6147301EB640BF0058BF43 /* Header */ = {
@@ -602,6 +613,7 @@
 				4FDFD1011E6D30AC00D33353 /* AddGoalNameViewModel.swift in Sources */,
 				4F2EB1E21E7EF38E00677A3C /* RealmGoal.swift in Sources */,
 				4F2EB1E01E7DEE8900677A3C /* Extensions.swift in Sources */,
+				4F47485E1EEF6B5600022697 /* ScrollableGraphView.swift in Sources */,
 				4F4748591EEE306700022697 /* StatsViewModel.swift in Sources */,
 				4F2EB1DA1E787EA500677A3C /* Stepper.swift in Sources */,
 				4F0AA7AC1ECBDE770029D9AD /* SettingsViewModel.swift in Sources */,
