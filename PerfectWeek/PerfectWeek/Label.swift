@@ -13,18 +13,13 @@ final class Label: UILabel {
 	static let defaultHeight: CGFloat = 30.0
 
 	enum Style {
-		case body, header, header2
+		case header, header2, reportHeader, body, reportBody
 	}
 
 	init(style: Style) {
 		super.init(frame: .zero)
 
 		switch style {
-		case .body:
-			self.font = UIFont.systemFont(ofSize: 18)
-			self.minimumScaleFactor = 0.6
-			self.textColor = .black
-			self.textAlignment = .left
 		case .header:
 			self.font = UIFont.systemFont(ofSize: 22)
 			self.minimumScaleFactor = 0.6
@@ -35,6 +30,21 @@ final class Label: UILabel {
 			self.minimumScaleFactor = 0.6
 			self.textColor = .black
 			self.textAlignment = .center
+		case .reportHeader:
+			self.font = UIFont.systemFont(ofSize: 23)
+			self.minimumScaleFactor = 0.6
+			self.textColor = .white
+			self.textAlignment = .center
+		case .body:
+			self.font = UIFont.systemFont(ofSize: 18)
+			self.minimumScaleFactor = 0.6
+			self.textColor = .black
+			self.textAlignment = .left
+		case .reportBody:
+			self.font = UIFont.systemFont(ofSize: 16)
+			self.minimumScaleFactor = 0.6
+			self.textColor = .white
+			self.textAlignment = .left
 		}
 
 	}
