@@ -49,6 +49,7 @@ final class GoalCollectionViewCell: UICollectionViewCell {
 	private func configureConstraints() {
 		nameLabel.translatesAutoresizingMaskIntoConstraints = false
 		progressView.translatesAutoresizingMaskIntoConstraints = false
+		let progressViewWidth: CGFloat = 50.0
 
 		NSLayoutConstraint.activate([
 			nameLabel.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor),
@@ -56,10 +57,12 @@ final class GoalCollectionViewCell: UICollectionViewCell {
 			nameLabel.bottomAnchor.constraint(equalTo: contentView.layoutMarginsGuide.bottomAnchor),
 			progressView.leftAnchor.constraint(equalTo: nameLabel.rightAnchor),
 			progressView.rightAnchor.constraint(equalTo: contentView.layoutMarginsGuide.rightAnchor),
-			progressView.widthAnchor.constraint(equalToConstant: 50.0),
+			progressView.widthAnchor.constraint(equalToConstant: progressViewWidth),
 			progressView.heightAnchor.constraint(equalTo: progressView.widthAnchor),
 			progressView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
 		])
+
+		progressView.layer.cornerRadius = progressViewWidth / 2
 	}
 
 }

@@ -75,6 +75,11 @@ final class InformationViewController: UIViewController {
 		updateInformation()
 	}
 
+	override func viewDidLayoutSubviews() {
+		super.viewDidLayoutSubviews()
+		progressView.layer.cornerRadius = progressView.frame.width / 2
+	}
+
 	// MARK: - Setup
 	private func configureViews() {
 		view.addSubview(progressView)

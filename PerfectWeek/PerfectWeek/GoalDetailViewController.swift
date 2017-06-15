@@ -68,6 +68,11 @@ final class GoalDetailViewController: UIViewController {
 		navigationController?.setNavigationBarHidden(true, animated: true)
 	}
 
+	override func viewDidLayoutSubviews() {
+		super.viewDidLayoutSubviews()
+		detailContentView.progressView.layer.cornerRadius = detailContentView.progressView.frame.width / 2
+	}
+
 	private func configureViews() {
 		view.backgroundColor = .white
 		view.addSubview(backButton)
