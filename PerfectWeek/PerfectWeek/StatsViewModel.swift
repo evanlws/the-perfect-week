@@ -36,9 +36,15 @@ final class StatsViewModel {
 			return
 		}
 
-		dateRange = "\(monthDayFormatter.string(from: lastWeek.lowerBound)) - \(monthDayFormatter.string(from: lastSaturday))"
+		statsTableViewItems = zip(statsTableViewItems, tableViewStats(stats: stats, date: date)).map { ($0.0.title, $0.1) }
 
 		let completed = goalsCompleted(in: lastWeek, statsDays: stats.days)
+		if completed == 0 {
+			return
+		}
+
+		dateRange = "\(monthDayFormatter.string(from: lastWeek.lowerBound)) - \(monthDayFormatter.string(from: lastSaturday))"
+
 		let total = totalGoals(in: lastWeek)
 		goalsCompleted = "\(completed) out of \(total)"
 
@@ -49,8 +55,6 @@ final class StatsViewModel {
 		}
 
 		suggestion = "Perfect Week Steak: \(StatsLibrary.shared.stats.perfectWeeks)"
-
-		statsTableViewItems = zip(statsTableViewItems, tableViewStats(stats: stats, date: date)).map { ($0.0.title, $0.1) }
 	}
 
 	private func goalsCompletedByDay(_ stats: [Date: Int]) -> [Double] {

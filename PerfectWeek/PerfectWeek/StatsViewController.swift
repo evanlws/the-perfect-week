@@ -67,11 +67,17 @@ final class StatsViewController: UIViewController {
 
 	private func configureStats() {
 		graphView.set(data: viewModel.graphData, withLabels: viewModel.graphLabels)
+		statsTableView.reloadData()
+
+		if viewModel.dateRange.isBlank {
+			graphReportScrollView.isScrollEnabled = false
+			pageControl.isHidden = true
+		}
+		
 		reportView.dateRangeLabel.text = viewModel.dateRange
 		reportView.goalsCompleted.text = viewModel.goalsCompleted
 		reportView.results.text = viewModel.results
 		reportView.suggestion.text = viewModel.suggestion
-		statsTableView.reloadData()
 	}
 
 	private func configureConstraints() {
