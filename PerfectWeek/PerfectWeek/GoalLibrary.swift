@@ -52,13 +52,15 @@ final class GoalLibrary {
 
 	func complete(_ goal: Goal) {
 		guard !goal.isPerfectGoal(), !goal.wasCompletedToday() else {
-			print("Guard failure warning: \(goal.name) was already completed")
+			print("\(goal.name) was already completed")
 			return
 		}
 
 		updateGoal(with: ["objectId": goal.objectId, "progress": goal.progress + 1, "lastCompleted": Date()])
-		StatsLibrary.shared.updateStats(reason: .goalCompleted)
-		InformationHeaderObserver.updateInformationHeader()
+		//if goal.dateAdded > Date().thisWeekSunday() {
+			StatsLibrary.shared.updateStats(reason: .goalCompleted)
+			InformationHeaderObserver.updateInformationHeader()
+		//}
 	}
 
 	func deleteGoalWith(_ goalObjectId: String) {

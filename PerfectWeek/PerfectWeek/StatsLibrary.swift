@@ -26,16 +26,17 @@ final class StatsLibrary {
 
 		switch reason {
 		case .goalCompleted:
-			let goalsCompleted = stats.days[Date().startOfDay()]
-			stats.days[Date().startOfDay()] = (goalsCompleted ?? 0) + 1
-			statsUpdateValues["days"] = StatsConverter.converted(days: stats.days)
+			let goalsCompleted = stats.days[Date().startOfDay()] ?? 0
+			var days = stats.days
+			days[Date().startOfDay()] = goalsCompleted + 1
+			statsUpdateValues["days"] = StatsConverter.converted(days: days)
 		case .undoGoal:
 			guard let goalsCompleted = stats.days[Date().startOfDay()], goalsCompleted > 0 else { return }
 				stats.days[Date().startOfDay()] = goalsCompleted - 1
 
 			statsUpdateValues["days"] = StatsConverter.converted(days: stats.days)
 		case .newWeek:
-			statsUpdateValues["weekEnd"] = Date().nextSunday().addingTimeInterval(1)
+			statsUpdateValues["weekEnd"] = Date().nextWeekSunday().addingTimeInterval(1)
 		}
 
 		RealmLibrary.shared.updateStats(with: statsUpdateValues)

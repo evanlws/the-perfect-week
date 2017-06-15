@@ -10,6 +10,7 @@ import UIKit
 import UserNotifications
 import Fabric
 import Crashlytics
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,6 +24,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			Fabric.with([Crashlytics.self])
 		#endif
 
+		configureTabBar()
+
+		informationHeader = InformationHeader()
+
+		if UserDefaults.standard.bool(forKey: "thisIsTheFirstLaunch") == false {
+			print("First launch, setting UserDefaults.")
+			UserDefaults.standard.set(true, forKey: "thisIsTheFirstLaunch")
+			NotificationManager.clearAllNotifications()
+		}
+
+//		UNUserNotificationCenter.current().getPendingNotificationRequests { (requests) in
+//			for request in requests {
+//				print(request.identifier)
+//			}
+//		}
+
+		return true
+	}
+
+	private func configureTabBar() {
 		window = UIWindow(frame: UIScreen.main.bounds)
 		window?.backgroundColor = .white
 
@@ -43,22 +64,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		window?.rootViewController = tabBarController
 
 		window?.makeKeyAndVisible()
-
-		informationHeader = InformationHeader()
-
-		if UserDefaults.standard.bool(forKey: "thisIsTheFirstLaunch") == false {
-			print("First launch, setting UserDefaults.")
-			UserDefaults.standard.set(true, forKey: "thisIsTheFirstLaunch")
-			NotificationManager.clearAllNotifications()
-		}
-
-		UNUserNotificationCenter.current().getPendingNotificationRequests { (requests) in
-			for request in requests {
-				print(request.identifier)
-			}
-		}
-
-		return true
 	}
 
 }

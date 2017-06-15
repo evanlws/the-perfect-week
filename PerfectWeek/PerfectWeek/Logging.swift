@@ -13,3 +13,10 @@ func print(_ item: @autoclosure () -> Any, separator: String = " ", terminator: 
 		Swift.print(item(), separator:separator, terminator: terminator)
 	#endif
 }
+
+@discardableResult
+func guardFailureWarning(_ message: String) -> String {
+	let warningMessage = "Guard failure warning: \(message)"
+	print(warningMessage)
+	return warningMessage
+}

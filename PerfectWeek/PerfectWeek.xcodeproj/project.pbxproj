@@ -307,12 +307,12 @@
 			isa = PBXGroup;
 			children = (
 				4F1147CD1E58F71700346A1D /* AppDelegate.swift */,
+				4F933E191ED0C390001FF278 /* Logging.swift */,
 				4F47485C1EEF6A4C00022697 /* External */,
 				4FBF57DF1EBF72DA001DA75C /* PerfectWeek.entitlements */,
 				4F1147D41E58F71700346A1D /* Assets.xcassets */,
 				4F1147D61E58F71700346A1D /* LaunchScreen.storyboard */,
 				4F1147D91E58F71700346A1D /* Info.plist */,
-				4F933E191ED0C390001FF278 /* Logging.swift */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";

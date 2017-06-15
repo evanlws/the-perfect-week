@@ -48,7 +48,7 @@ struct StatsConverter {
 	static func converted(realmDays: List<RealmDay>) -> [Date: Int] {
 		var days = [Date: Int]()
 		realmDays.forEach {
-			guard let nsDate = $0.date else { fatalError("Could not cast object. Due date is nil") }
+			guard let nsDate = $0.date else { fatalError(guardFailureWarning("Could not cast object. Due date is nil")) }
 			let date = nsDate as Date
 			days[date] = $0.goalsCompleted
 		}

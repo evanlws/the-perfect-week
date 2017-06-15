@@ -17,6 +17,7 @@ struct GoalConverter {
 		realmGoal.objectId = goal.objectId
 		realmGoal.name = goal.name
 		realmGoal.frequency = goal.frequency
+		realmGoal.dateAdded = goal.dateAdded as NSDate
 		realmGoal.notes = goal.notes
 		realmGoal.currentStreak = goal.currentStreak
 		realmGoal.progress = goal.progress
@@ -32,7 +33,7 @@ struct GoalConverter {
 	static func converted(_ realmGoal: RealmGoal) -> Goal {
 		let extensionItem = ExtensionItem(name: realmGoal.name, itemType: ExtensionItem.ItemType(rawValue: realmGoal.extensionType.value ?? -1))
 
-		let goal = Goal(objectId: realmGoal.objectId, name: realmGoal.name, frequency: realmGoal.frequency, notes: realmGoal.notes, extensionItem: extensionItem, lastCompleted: realmGoal.lastCompleted as Date?, currentStreak: realmGoal.currentStreak, progress: realmGoal.progress)
+		let goal = Goal(objectId: realmGoal.objectId, name: realmGoal.name, frequency: realmGoal.frequency, dateAdded: realmGoal.dateAdded as Date, notes: realmGoal.notes, extensionItem: extensionItem, lastCompleted: realmGoal.lastCompleted as Date?, currentStreak: realmGoal.currentStreak, progress: realmGoal.progress)
 
 		return goal
 	}

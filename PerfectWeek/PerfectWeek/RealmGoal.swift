@@ -17,6 +17,7 @@ class RealmGoal: Object {
 	dynamic var currentStreak = 0
 	dynamic var progress = 0
 	dynamic var lastCompleted: NSDate?
+	dynamic var dateAdded = NSDate()
 	dynamic var notes: String?
 
 	// MARK: - Extension

@@ -15,6 +15,7 @@ final class Goal {
 	let frequency: Int
 	let progress: Int
 	let currentStreak: Int
+	var dateAdded: Date
 	var notes: String?
 	var lastCompleted: Date?
 	var extensionItem: ExtensionItem?
@@ -22,6 +23,7 @@ final class Goal {
 	init(objectId: String,
 	     name: String,
 	     frequency: Int,
+	     dateAdded: Date,
 	     notes: String?,
 	     extensionItem: ExtensionItem?,
 	     lastCompleted: Date?,
@@ -30,6 +32,7 @@ final class Goal {
 		self.objectId = objectId
 		self.name = name
 		self.frequency = frequency
+		self.dateAdded = dateAdded
 		self.notes = notes
 		self.currentStreak = currentStreak
 		self.progress = progress
@@ -39,7 +42,8 @@ final class Goal {
 
 	convenience init?(_ mutableGoal: MutableGoal) {
 		guard let name = mutableGoal.name, let frequency = mutableGoal.frequency else { return nil }
-		self.init(objectId: mutableGoal.objectId, name: name, frequency: frequency, notes: mutableGoal.notes, extensionItem: mutableGoal.extensionItem, lastCompleted: nil)
+		let dateAdded = Date()
+		self.init(objectId: mutableGoal.objectId, name: name, frequency: frequency, dateAdded: dateAdded, notes: mutableGoal.notes, extensionItem: mutableGoal.extensionItem, lastCompleted: nil)
 	}
 
 	func wasCompletedToday() -> Bool {
@@ -56,7 +60,7 @@ final class Goal {
 	}
 
 	var description: String {
-		return "\nGoal:\n\tObjectID: \(objectId)\n\tName: \(name)\n\tLast Completed: \(String(describing: lastCompleted))\n\tFrequency: \(frequency)\n\tNotes: \(String(describing: notes))\n\tProgress: \(progress)\n\tCurrent Streak: \(currentStreak)\n\tExtension: \(String(describing: extensionItem?.description))\n"
+		return "\nGoal:\n\tObjectID: \(objectId)\n\tName: \(name)\n\tDate Added: \(String(describing: dateAdded))\n\tLast Completed: \(String(describing: lastCompleted))\n\tFrequency: \(frequency)\n\tNotes: \(String(describing: notes))\n\tProgress: \(progress)\n\tCurrent Streak: \(currentStreak)\n\tExtension: \(String(describing: extensionItem?.description))\n"
 	}
 
 }
@@ -152,12 +156,14 @@ struct MutableGoal {
 
 	var extensionItem: ExtensionItem?
 
-	init(objectId: String) { // Used when creating a goal
+	// MARK: - Used when creating a goal
+	init(objectId: String) {
 		self.objectId = objectId
 		self.updateValues = ["objectId": objectId]
 	}
 
-	init(_ goal: Goal) { // Used when updating a goal
+	// MARK: - Used when updating a goal
+	init(_ goal: Goal) {
 		self.objectId = goal.objectId
 		self.name = goal.name
 		self.frequency = goal.frequency

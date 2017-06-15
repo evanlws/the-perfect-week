@@ -24,19 +24,22 @@ extension String {
 
 extension Date {
 
-	func nextSunday() -> Date {
-		guard let nextWeek = Calendar.current.date(byAdding: .day, value: 7, to: self),
-			let sunday = Calendar.current.date(bySetting: .weekday, value: 1, of: nextWeek) else { fatalError("Could not create Date object") }
-
-		let cal = Calendar(identifier: .gregorian)
-		return cal.startOfDay(for: sunday)
+	func nextWeekSunday() -> Date {
+		let calendar = Calendar(identifier: .gregorian)
+		guard let nextSunday = calendar.date(byAdding: .day, value: 7, to: self.thisWeekSunday()) else { fatalError(guardFailureWarning("Could not create Date object")) }
+		return calendar.startOfDay(for: nextSunday)
 	}
 
-	func thisSaturday() -> Date {
-		guard let saturday = Calendar.current.date(bySetting: .weekday, value: 7, of: self) else { fatalError("Could not create Date object") }
+	func thisWeekSunday() -> Date {
+		let calendar = Calendar(identifier: .gregorian)
+		guard let sunday = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self)) else { fatalError(guardFailureWarning("Could not create Date object")) }
+		return calendar.startOfDay(for: sunday)
+	}
 
-		let cal = Calendar(identifier: .gregorian)
-		return cal.startOfDay(for: saturday)
+	func thisWeekSaturday() -> Date {
+		let calendar = Calendar(identifier: .gregorian)
+		guard let saturday = calendar.date(bySetting: .weekday, value: 7, of: self) else { fatalError(guardFailureWarning("Could not create Date object")) }
+		return calendar.startOfDay(for: saturday)
 	}
 
 	func currentWeekday() -> Int {
@@ -44,7 +47,7 @@ extension Date {
 			return weekday
 		}
 
-		fatalError("Current weekday is nil")
+		fatalError(guardFailureWarning("Current weekday is nil"))
 	}
 
 	func startOfDay() -> Date {
@@ -93,6 +96,29 @@ extension DateComponents: Comparable {
 		}
 
 		return false
+	}
+
+}
+
+extension UIColor {
+
+	convenience init(hex: String) {
+		let scanner = Scanner(string: hex)
+		scanner.scanLocation = 0
+
+		var rgbValue: UInt64 = 0
+
+		scanner.scanHexInt64(&rgbValue)
+
+		let r = (rgbValue & 0xff0000) >> 16
+		let g = (rgbValue & 0xff00) >> 8
+		let b = rgbValue & 0xff
+
+		self.init(
+			red: CGFloat(r) / 0xff,
+			green: CGFloat(g) / 0xff,
+			blue: CGFloat(b) / 0xff, alpha: 1
+		)
 	}
 
 }

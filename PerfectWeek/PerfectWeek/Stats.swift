@@ -16,7 +16,7 @@ final class Stats {
 	var currentStreak: Int
 	var weekEnd: Date
 
-	init(objectId: String, days: [Date: Int] = [:], perfectWeeks: Int = 0, currentStreak: Int = 0, weekEnd: Date = Date().nextSunday().addingTimeInterval(1)) {
+	init(objectId: String, days: [Date: Int] = [:], perfectWeeks: Int = 0, currentStreak: Int = 0, weekEnd: Date = Date().nextWeekSunday().addingTimeInterval(1)) {
 		self.objectId = objectId
 		self.days = days
 		self.perfectWeeks = perfectWeeks

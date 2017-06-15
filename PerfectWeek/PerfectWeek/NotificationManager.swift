@@ -51,7 +51,7 @@ class NotificationManager: NSObject {
 	private static func scheduleNotification(with content: UNMutableNotificationContent, dateComponents: DateComponents, goal: Goal) {
 		let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
 		guard let triggerDate = trigger.nextTriggerDate() else {
-			print("Guard failure warning: Trigger has no date")
+			guardFailureWarning("Trigger has no date")
 			return
 		}
 
@@ -60,8 +60,6 @@ class NotificationManager: NSObject {
 		UNUserNotificationCenter.current().add(request) { (error) in
 			if let error = error {
 				print("Error scheduling a notification \(error)")
-			} else {
-				print("Scheduling a notification: \(request.identifier)")
 			}
 		}
 	}
@@ -113,7 +111,7 @@ class NotificationManager: NSObject {
 
 	fileprivate static func weekdayComponent(_ dayOfWeek: DayOfWeek, timeOfDay: (hour: Int, minute: Int), date: Date) -> DateComponents {
 		guard let weekdayAddedDate = Calendar.current.date(bySetting: .weekday, value: dayOfWeek.rawValue, of: date),
-			let dateAddedDate = Calendar.current.date(bySettingHour: timeOfDay.hour, minute: timeOfDay.minute, second: 0, of: weekdayAddedDate) else { fatalError("Tried to create a date that didn't exist") }
+			let dateAddedDate = Calendar.current.date(bySettingHour: timeOfDay.hour, minute: timeOfDay.minute, second: 0, of: weekdayAddedDate) else { fatalError(guardFailureWarning("Tried to create a date that didn't exist")) }
 		return Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: dateAddedDate)
 	}
 
@@ -129,7 +127,7 @@ extension NotificationManager {
 					let trigger = request.trigger as? UNCalendarNotificationTrigger,
 					let triggerDate = trigger.nextTriggerDate() else { continue }
 
-				if triggerDate < Date().nextSunday() {
+				if triggerDate < Date().nextWeekSunday() {
 					UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [request.identifier])
 				}
 			}
