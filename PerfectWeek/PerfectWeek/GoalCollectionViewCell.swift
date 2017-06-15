@@ -21,7 +21,7 @@ final class GoalCollectionViewCell: UICollectionViewCell {
 		return label
 	}()
 
-	let progressView = ProgressView()
+	let progressView = ProgressView(frame: .zero, height: 50.0)
 
 	override init(frame: CGRect) {
 		super.init(frame: frame)

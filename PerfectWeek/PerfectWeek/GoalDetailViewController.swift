@@ -149,7 +149,7 @@ final class DetailContentView: UIView {
 
 	fileprivate let goalNameLabel = Label(style: .body)
 
-	fileprivate let progressView = ProgressView()
+	fileprivate let progressView = ProgressView(frame: .zero, height: 50.0)
 
 	private let frequencyLabel: Label = {
 		let label = Label(style: .body)

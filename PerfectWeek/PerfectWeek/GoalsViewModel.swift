@@ -71,7 +71,6 @@ extension GoalsViewModel: UICollectionViewDataSource {
 				let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: GoalCollectionViewCell.self), for: indexPath) as? GoalCollectionViewCell else { break }
 
 			cell.nameLabel.text = goal.name
-			cell.progressView.height = 50.0
 			cell.progressView.updateProgress(progress: goal.currentProgressPercentage())
 			return cell
 		case .addGoal:

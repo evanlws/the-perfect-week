@@ -10,27 +10,29 @@ import UIKit
 
 class ProgressView: UIView {
 
-	private var progressLabel: UILabel = {
-		let label = UILabel()
-		label.text = "0%"
-		label.font = UIFont.systemFont(ofSize: 16.0)
-		label.textColor = .white
-		label.textAlignment = .center
-		return label
-	}()
-
 	private var progressBar = UIView()
+	private var circleOutline = UIView()
+	private let gradientLayer = CAGradientLayer()
 	private var heightConstraint: NSLayoutConstraint?
-	var height: CGFloat?
+	let height: CGFloat
 
-	override init(frame: CGRect) {
+	init(frame: CGRect, height: CGFloat) {
+		self.height = height
 		super.init(frame: frame)
 
 		backgroundColor = ColorLibrary.UIPalette.accent
 		clipsToBounds = true
-		progressBar.backgroundColor = .green
+		progressBar.backgroundColor = .white
+		circleOutline.backgroundColor = .clear
+		circleOutline.layer.borderColor = UIColor.gray.cgColor
+		circleOutline.layer.borderWidth = 1.0
+		circleOutline.layer.cornerRadius = height / 2
+		progressBar.addSubview(circleOutline)
+		progressBar.clipsToBounds = true
+		gradientLayer.frame = CGRect(x: 0, y: 0, width: height, height: height)
+		gradientLayer.colors = [ColorLibrary.UIPalette.accent.cgColor, ColorLibrary.UIPalette.primary.cgColor]
+		layer.insertSublayer(gradientLayer, at: 0)
 		addSubview(progressBar)
-		addSubview(progressLabel)
 		setupConstraints()
 	}
 
@@ -39,14 +41,14 @@ class ProgressView: UIView {
 	}
 
 	private func setupConstraints() {
-		progressLabel.translatesAutoresizingMaskIntoConstraints = false
 		progressBar.translatesAutoresizingMaskIntoConstraints = false
+		circleOutline.translatesAutoresizingMaskIntoConstraints = false
 
 		NSLayoutConstraint.activate([
-			progressLabel.topAnchor.constraint(equalTo: topAnchor),
-			progressLabel.leftAnchor.constraint(equalTo: leftAnchor),
-			progressLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
-			progressLabel.rightAnchor.constraint(equalTo: rightAnchor),
+			circleOutline.topAnchor.constraint(equalTo: topAnchor),
+			circleOutline.leftAnchor.constraint(equalTo: leftAnchor),
+			circleOutline.bottomAnchor.constraint(equalTo: bottomAnchor),
+			circleOutline.rightAnchor.constraint(equalTo: rightAnchor),
 			progressBar.topAnchor.constraint(equalTo: topAnchor),
 			progressBar.leftAnchor.constraint(equalTo: leftAnchor),
 			progressBar.rightAnchor.constraint(equalTo: rightAnchor)
@@ -57,10 +59,9 @@ class ProgressView: UIView {
 	}
 
 	func updateProgress(progress: Int) {
-		guard let height = height, height > 0 else { fatalError(guardFailureWarning("Height is 0")) }
-		progressLabel.text = "\(progress)%"
+		guard height > 0 else { fatalError(guardFailureWarning("Height is 0")) }
 		UIView.animate(withDuration: 1) {
-			self.heightConstraint?.constant = CGFloat(progress) / 100 * height
+			self.heightConstraint?.constant = self.height - (CGFloat(progress) / 100 * self.height)
 			self.layoutIfNeeded()
 		}
 	}

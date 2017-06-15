@@ -12,7 +12,7 @@ final class InformationViewController: UIViewController {
 
 	private let viewModel = InformationViewModel()
 
-	private let progressView = ProgressView()
+	private let progressView = ProgressView(frame: .zero, height: progressViewHeight)
 
 	private let multiplierLabel: UILabel = {
 		let label = UILabel()
@@ -60,7 +60,7 @@ final class InformationViewController: UIViewController {
 		return view
 	}()
 
-	private let progressViewHeight = Constraints.gridBlock * 9
+	static let progressViewHeight = Constraints.gridBlock * 9
 
 	init() {
 		super.init(nibName: nil, bundle: nil)
@@ -79,8 +79,7 @@ final class InformationViewController: UIViewController {
 
 	// MARK: - Setup
 	private func configureViews() {
-		progressView.layer.cornerRadius = progressViewHeight / 2
-		progressView.height = progressViewHeight
+		progressView.layer.cornerRadius = InformationViewController.progressViewHeight / 2
 		view.addSubview(progressView)
 		view.addSubview(multiplierLabel)
 		view.addSubview(weekdayLabel)
@@ -102,7 +101,7 @@ final class InformationViewController: UIViewController {
 		NSLayoutConstraint.activate([
 			progressView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: UIApplication.shared.statusBarFrame.size.height + 5.0),
 			progressView.leftAnchor.constraint(equalTo: view.layoutMarginsGuide.leftAnchor),
-			progressView.heightAnchor.constraint(equalToConstant: progressViewHeight),
+			progressView.heightAnchor.constraint(equalToConstant: InformationViewController.progressViewHeight),
 			progressView.widthAnchor.constraint(equalTo: progressView.heightAnchor),
 			multiplierLabel.leftAnchor.constraint(equalTo: progressView.rightAnchor, constant: 5.0),
 			multiplierLabel.bottomAnchor.constraint(equalTo: progressView.bottomAnchor),
