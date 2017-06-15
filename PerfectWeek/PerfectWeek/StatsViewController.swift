@@ -52,6 +52,8 @@ final class StatsViewController: UIViewController {
 		graphReportScrollView.delegate = self
 
 		graphView.frame = CGRect(x: 0, y: 0, width: graphReportScrollView.frame.width, height: graphReportScrollView.frame.height)
+		graphView.dataPointFillColor = ColorLibrary.UIPalette.primary
+		graphView.lineColor = ColorLibrary.UIPalette.gray
 		reportView.frame = CGRect(x: graphReportScrollView.frame.width, y: 0, width: graphReportScrollView.frame.width, height: graphReportScrollView.frame.height)
 
 		statsTableView.dataSource = self
@@ -73,7 +75,7 @@ final class StatsViewController: UIViewController {
 			graphReportScrollView.isScrollEnabled = false
 			pageControl.isHidden = true
 		}
-		
+
 		reportView.dateRangeLabel.text = viewModel.dateRange
 		reportView.goalsCompleted.text = viewModel.goalsCompleted
 		reportView.results.text = viewModel.results
