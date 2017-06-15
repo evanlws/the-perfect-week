@@ -10,7 +10,7 @@ import UIKit
 
 final class GoalCollectionViewCell: UICollectionViewCell {
 
-	static let size = CGSize(width: UIScreen.main.bounds.size.width - (collectionViewInset * 3), height: 64.0)
+	static let size = CGSize(width: UIScreen.main.bounds.size.width - (collectionViewInset * 3), height: Constraints.gridBlock * 8)
 
 	let nameLabel: UILabel = {
 		let label = UILabel()

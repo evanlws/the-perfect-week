@@ -60,6 +60,8 @@ final class InformationViewController: UIViewController {
 		return view
 	}()
 
+	private let progressViewHeight = Constraints.gridBlock * 9
+
 	init() {
 		super.init(nibName: nil, bundle: nil)
 	}
@@ -75,13 +77,10 @@ final class InformationViewController: UIViewController {
 		updateInformation()
 	}
 
-	override func viewDidLayoutSubviews() {
-		super.viewDidLayoutSubviews()
-		progressView.layer.cornerRadius = progressView.frame.width / 2
-	}
-
 	// MARK: - Setup
 	private func configureViews() {
+		progressView.layer.cornerRadius = progressViewHeight / 2
+		progressView.height = progressViewHeight
 		view.addSubview(progressView)
 		view.addSubview(multiplierLabel)
 		view.addSubview(weekdayLabel)
@@ -103,6 +102,7 @@ final class InformationViewController: UIViewController {
 		NSLayoutConstraint.activate([
 			progressView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: UIApplication.shared.statusBarFrame.size.height + 5.0),
 			progressView.leftAnchor.constraint(equalTo: view.layoutMarginsGuide.leftAnchor),
+			progressView.heightAnchor.constraint(equalToConstant: progressViewHeight),
 			progressView.widthAnchor.constraint(equalTo: progressView.heightAnchor),
 			multiplierLabel.leftAnchor.constraint(equalTo: progressView.rightAnchor, constant: 5.0),
 			multiplierLabel.bottomAnchor.constraint(equalTo: progressView.bottomAnchor),
@@ -113,7 +113,6 @@ final class InformationViewController: UIViewController {
 			dateLabel.leftAnchor.constraint(equalTo: multiplierLabel.rightAnchor),
 			dateLabel.bottomAnchor.constraint(lessThanOrEqualTo: progressView.bottomAnchor),
 			dateLabel.rightAnchor.constraint(equalTo: view.layoutMarginsGuide.rightAnchor),
-			tipsPagingView.topAnchor.constraint(equalTo: progressView.bottomAnchor, constant: 5.0),
 			tipsPagingView.leftAnchor.constraint(equalTo: view.layoutMarginsGuide.leftAnchor),
 			tipsPagingView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -5.0),
 			tipsPagingView.rightAnchor.constraint(equalTo: view.layoutMarginsGuide.rightAnchor),
