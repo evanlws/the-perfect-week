@@ -57,10 +57,10 @@ final class GoalLibrary {
 		}
 
 		updateGoal(with: ["objectId": goal.objectId, "progress": goal.progress + 1, "lastCompleted": Date()])
-		//if goal.dateAdded > Date().thisWeekSunday() {
+		if goal.dateAdded > Date().thisWeekSunday() {
 			StatsLibrary.shared.updateStats(reason: .goalCompleted)
 			InformationHeaderObserver.updateInformationHeader()
-		//}
+		}
 	}
 
 	func deleteGoalWith(_ goalObjectId: String) {
