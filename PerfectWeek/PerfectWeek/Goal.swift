@@ -6,7 +6,7 @@
 //  Copyright © 2017 evanlewis. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 final class Goal {
 
@@ -55,8 +55,8 @@ final class Goal {
 		return progress == frequency
 	}
 
-	func currentProgressPercentage() -> Int {
-		return Int(Float(progress) / Float(frequency) * 100.0)
+	func currentProgressPercentage() -> CGFloat {
+		return CGFloat(progress) / CGFloat(frequency) * 100.0
 	}
 
 	var description: String {

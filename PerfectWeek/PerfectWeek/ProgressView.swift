@@ -14,25 +14,30 @@ class ProgressView: UIView {
 	private var circleOutline = UIView()
 	private let gradientLayer = CAGradientLayer()
 	private var heightConstraint: NSLayoutConstraint?
-	let height: CGFloat
+	private var progress: CGFloat = 0.0
+	var height: CGFloat
 
-	init(frame: CGRect, height: CGFloat) {
+	init(height: CGFloat) {
 		self.height = height
-		super.init(frame: frame)
-
+		super.init(frame: .zero)
 		backgroundColor = ColorLibrary.UIPalette.accent
 		clipsToBounds = true
-		progressBar.backgroundColor = .white
+		layer.cornerRadius = height / 2
+
 		circleOutline.backgroundColor = .clear
 		circleOutline.layer.borderColor = UIColor.gray.cgColor
 		circleOutline.layer.borderWidth = 1.0
 		circleOutline.layer.cornerRadius = height / 2
-		progressBar.addSubview(circleOutline)
-		progressBar.clipsToBounds = true
+
 		gradientLayer.frame = CGRect(x: 0, y: 0, width: height, height: height)
 		gradientLayer.colors = [ColorLibrary.UIPalette.accent.cgColor, ColorLibrary.UIPalette.primary.cgColor]
 		layer.insertSublayer(gradientLayer, at: 0)
 		addSubview(progressBar)
+
+		progressBar.backgroundColor = .white
+		progressBar.addSubview(circleOutline)
+		progressBar.clipsToBounds = true
+
 		setupConstraints()
 	}
 
@@ -58,11 +63,19 @@ class ProgressView: UIView {
 		progressBar.addConstraint(heightConstraint!)
 	}
 
-	func updateProgress(progress: Int) {
-		guard height > 0 else { fatalError(guardFailureWarning("Height is 0")) }
-		UIView.animate(withDuration: 1) {
-			self.heightConstraint?.constant = self.height - (CGFloat(progress) / 100 * self.height)
-			self.layoutIfNeeded()
+	func updateProgress(progress: CGFloat, animated: Bool) {
+		guard height > 0 else {
+			print("View is trying to update but the frame is 0")
+			return
+		}
+
+		if animated {
+			UIView.animate(withDuration: 1, animations: {
+				self.heightConstraint?.constant = self.height - (progress / 100 * self.height)
+				self.layoutIfNeeded()
+			})
+		} else {
+			heightConstraint?.constant = height - (progress / 100 * height)
 		}
 	}
 

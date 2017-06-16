@@ -12,7 +12,7 @@ final class InformationViewController: UIViewController {
 
 	private let viewModel = InformationViewModel()
 
-	private let progressView = ProgressView(frame: .zero, height: progressViewHeight)
+	private let progressView = ProgressView(height: Constraints.gridBlock * 9)
 
 	private let multiplierLabel: UILabel = {
 		let label = UILabel()
@@ -60,8 +60,6 @@ final class InformationViewController: UIViewController {
 		return view
 	}()
 
-	static let progressViewHeight = Constraints.gridBlock * 9
-
 	init() {
 		super.init(nibName: nil, bundle: nil)
 	}
@@ -74,12 +72,10 @@ final class InformationViewController: UIViewController {
 		super.viewWillAppear(animated)
 		configureViews()
 		configureConstraints()
-		updateInformation()
 	}
 
 	// MARK: - Setup
 	private func configureViews() {
-		progressView.layer.cornerRadius = InformationViewController.progressViewHeight / 2
 		view.addSubview(progressView)
 		view.addSubview(multiplierLabel)
 		view.addSubview(weekdayLabel)
@@ -101,25 +97,32 @@ final class InformationViewController: UIViewController {
 		NSLayoutConstraint.activate([
 			progressView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: UIApplication.shared.statusBarFrame.size.height + 5.0),
 			progressView.leftAnchor.constraint(equalTo: view.layoutMarginsGuide.leftAnchor),
-			progressView.heightAnchor.constraint(equalToConstant: InformationViewController.progressViewHeight),
+			progressView.heightAnchor.constraint(equalToConstant: progressView.height),
 			progressView.widthAnchor.constraint(equalTo: progressView.heightAnchor),
+
 			multiplierLabel.leftAnchor.constraint(equalTo: progressView.rightAnchor, constant: 5.0),
 			multiplierLabel.bottomAnchor.constraint(equalTo: progressView.bottomAnchor),
+
 			weekdayLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: UIApplication.shared.statusBarFrame.size.height + 5.0),
 			weekdayLabel.leftAnchor.constraint(equalTo: multiplierLabel.rightAnchor),
 			weekdayLabel.rightAnchor.constraint(equalTo: view.layoutMarginsGuide.rightAnchor),
+
 			dateLabel.topAnchor.constraint(equalTo: weekdayLabel.bottomAnchor, constant: 2.0),
 			dateLabel.leftAnchor.constraint(equalTo: multiplierLabel.rightAnchor),
 			dateLabel.bottomAnchor.constraint(lessThanOrEqualTo: progressView.bottomAnchor),
 			dateLabel.rightAnchor.constraint(equalTo: view.layoutMarginsGuide.rightAnchor),
+
+			tipsPagingView.topAnchor.constraint(greaterThanOrEqualTo: progressView.bottomAnchor, constant: 5.0),
 			tipsPagingView.leftAnchor.constraint(equalTo: view.layoutMarginsGuide.leftAnchor),
 			tipsPagingView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -5.0),
 			tipsPagingView.rightAnchor.constraint(equalTo: view.layoutMarginsGuide.rightAnchor),
-			tipsPagingView.heightAnchor.constraint(equalToConstant: view.bounds.size.height/3),
+			tipsPagingView.heightAnchor.constraint(equalToConstant: view.bounds.size.height / 3),
+
 			tipsLabel.topAnchor.constraint(equalTo: tipsPagingView.topAnchor, constant: 5.0),
 			tipsLabel.leftAnchor.constraint(equalTo: tipsPagingView.leftAnchor, constant: 5.0),
 			tipsLabel.bottomAnchor.constraint(equalTo: tipsPagingView.bottomAnchor, constant: 5.0),
 			tipsLabel.rightAnchor.constraint(equalTo: tipsPagingView.rightAnchor, constant: 5.0),
+
 			bottomLine.heightAnchor.constraint(equalToConstant: 2.0),
 			bottomLine.widthAnchor.constraint(equalTo: view.widthAnchor),
 			bottomLine.bottomAnchor.constraint(equalTo: view.bottomAnchor)
@@ -130,7 +133,7 @@ final class InformationViewController: UIViewController {
 		multiplierLabel.text = viewModel.streak
 		weekdayLabel.text = viewModel.weekday
 		dateLabel.text = viewModel.date
-		progressView.updateProgress(progress: viewModel.currentWeekProgress())
+		progressView.updateProgress(progress: viewModel.currentWeekProgress(), animated: true)
 	}
 
 }

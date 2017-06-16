@@ -68,17 +68,13 @@ final class GoalDetailViewController: UIViewController {
 		navigationController?.setNavigationBarHidden(true, animated: true)
 	}
 
-	override func viewDidLayoutSubviews() {
-		super.viewDidLayoutSubviews()
-		detailContentView.progressView.layer.cornerRadius = detailContentView.progressView.frame.width / 2
-	}
-
 	private func configureViews() {
 		view.backgroundColor = .white
 		view.addSubview(backButton)
 		view.addSubview(editGoalButton)
 		view.addSubview(detailContentView)
 		view.addSubview(completeGoalButton)
+		detailContentView.progressView.updateProgress(progress: viewModel.goal.currentProgressPercentage(), animated: false)
 
 		detailContentView.goalNameLabel.text = viewModel.goal.name
 		detailContentView.frequencyNumberLabel.text = "\(viewModel.goal.frequency)"
@@ -149,7 +145,7 @@ final class DetailContentView: UIView {
 
 	fileprivate let goalNameLabel = Label(style: .body)
 
-	fileprivate let progressView = ProgressView(frame: .zero, height: 50.0)
+	fileprivate let progressView = ProgressView(height: Constraints.gridBlock * 6)
 
 	private let frequencyLabel: Label = {
 		let label = Label(style: .body)
@@ -221,11 +217,12 @@ final class DetailContentView: UIView {
 		NSLayoutConstraint.activate([
 			goalNameLabel.centerYAnchor.constraint(equalTo: progressView.centerYAnchor),
 			goalNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10.0),
+			goalNameLabel.rightAnchor.constraint(lessThanOrEqualTo: progressView.leftAnchor),
 
 			progressView.topAnchor.constraint(equalTo: topAnchor, constant: 10.0),
-			progressView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10.0),
-			progressView.widthAnchor.constraint(equalToConstant: 48),
-			progressView.heightAnchor.constraint(equalToConstant: 48),
+			progressView.rightAnchor.constraint(equalTo: rightAnchor, constant: -10.0),
+			progressView.heightAnchor.constraint(equalToConstant: progressView.height),
+			progressView.widthAnchor.constraint(equalTo: progressView.heightAnchor),
 
 			frequencyLabel.topAnchor.constraint(equalTo: progressView.bottomAnchor, constant: 5.0),
 			frequencyLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5.0),

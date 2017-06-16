@@ -6,7 +6,7 @@
 //  Copyright © 2017 evanlewis. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 struct InformationViewModel {
 
@@ -22,12 +22,12 @@ struct InformationViewModel {
 		return currentDate().date
 	}
 
-	func currentWeekProgress() -> Int {
+	func currentWeekProgress() -> CGFloat {
 		let goals = GoalLibrary.shared.goals
 		guard goals.count > 0 else { return 0 }
 		let totalProgress = goals.reduce(0, { $0 + $1.progress })
 		let totalFrequency = goals.reduce(0, { $0 + $1.frequency })
-		return Int(Float(totalProgress) / Float(totalFrequency) * 100.0)
+		return CGFloat(totalProgress) / CGFloat(totalFrequency) * 100.0
 	}
 
 	private func currentDate() -> (date: String, weekday: String) {
