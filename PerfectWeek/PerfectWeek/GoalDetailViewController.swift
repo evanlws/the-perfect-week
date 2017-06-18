@@ -74,7 +74,7 @@ final class GoalDetailViewController: UIViewController {
 		view.addSubview(editGoalButton)
 		view.addSubview(detailContentView)
 		view.addSubview(completeGoalButton)
-		detailContentView.progressView.updateProgress(progress: viewModel.goal.currentProgressPercentage(), animated: false)
+		detailContentView.progressView.updateProgress(progress: viewModel.goal.currentProgressPercentage(), animated: false, completion: {})
 
 		detailContentView.goalNameLabel.text = viewModel.goal.name
 		detailContentView.frequencyNumberLabel.text = "\(viewModel.goal.frequency)"

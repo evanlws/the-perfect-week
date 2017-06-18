@@ -63,16 +63,18 @@ class ProgressView: UIView {
 		progressBar.addConstraint(heightConstraint!)
 	}
 
-	func updateProgress(progress: CGFloat, animated: Bool) {
+	func updateProgress(progress: CGFloat, animated: Bool, completion: @escaping () -> Void) {
 		guard height > 0 else {
 			print("View is trying to update but the frame is 0")
 			return
 		}
 
 		if animated {
-			UIView.animate(withDuration: 1, animations: {
+			UIView.animate(withDuration: 0.6, delay: 0, options: .curveEaseOut, animations: {
 				self.heightConstraint?.constant = self.height - (progress / 100 * self.height)
 				self.layoutIfNeeded()
+			}, completion: { _ in
+				completion()
 			})
 		} else {
 			heightConstraint?.constant = height - (progress / 100 * height)

@@ -133,7 +133,8 @@ final class InformationViewController: UIViewController {
 		multiplierLabel.text = viewModel.streak
 		weekdayLabel.text = viewModel.weekday
 		dateLabel.text = viewModel.date
-		progressView.updateProgress(progress: viewModel.currentWeekProgress(), animated: true)
+		progressView.updateProgress(progress: viewModel.currentWeekProgress(), animated: true, completion: {
+		})
 	}
 
 }

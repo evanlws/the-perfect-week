@@ -113,8 +113,12 @@ extension GoalsViewController {
 
 		let point = gestureRecognizer.location(in: collectionView)
 		if let indexPath = collectionView.indexPathForItem(at: point), indexPath.section == 0, let goal = viewModel.objectAt(indexPath) {
-			viewModel.complete(goal)
-			collectionView.reloadData()
+			if let cell = collectionView.cellForItem(at: indexPath) as? GoalCollectionViewCell {
+				cell.progressView.updateProgress(progress: 100.0, animated: true) {
+					self.viewModel.complete(goal)
+					self.collectionView.reloadData()
+				}
+			}
 		}
 	}
 }
