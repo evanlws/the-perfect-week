@@ -44,7 +44,7 @@ final class StatsViewController: UIViewController {
 		pageControl.numberOfPages = 2
 		pageControl.currentPage = 0
 		pageControl.currentPageIndicatorTintColor = ColorLibrary.UIPalette.primary
-		pageControl.pageIndicatorTintColor = ColorLibrary.UIPalette.gray
+		pageControl.pageIndicatorTintColor = ColorLibrary.BlackAndWhite.gray1
 
 		graphReportScrollView.frame = CGRect(x: 0, y: InformationHeader.windowSize.height, width: self.view.frame.width, height: Constraints.gridBlock * 28)
 		graphReportScrollView.contentSize = CGSize(width: graphReportScrollView.frame.size.width * 2, height: graphReportScrollView.frame.size.height)
@@ -53,7 +53,7 @@ final class StatsViewController: UIViewController {
 
 		graphView.frame = CGRect(x: 0, y: 0, width: graphReportScrollView.frame.width, height: graphReportScrollView.frame.height)
 		graphView.dataPointFillColor = ColorLibrary.UIPalette.primary
-		graphView.lineColor = ColorLibrary.UIPalette.gray
+		graphView.lineColor = ColorLibrary.BlackAndWhite.gray1
 		reportView.frame = CGRect(x: graphReportScrollView.frame.width, y: 0, width: graphReportScrollView.frame.width, height: graphReportScrollView.frame.height)
 
 		statsTableView.dataSource = self
@@ -140,12 +140,12 @@ class StatTableViewCell: UITableViewCell {
 
 final class ReportView: UIView {
 
-	fileprivate let lastWeekReportLabel = Label(style: .reportHeader)
-	fileprivate let dateRangeLabel = Label(style: .reportBody)
-	fileprivate let goalsCompletedLabel = Label(style: .reportHeader)
-	fileprivate let goalsCompleted = Label(style: .reportBody)
-	fileprivate let results = Label(style: .reportHeader)
-	fileprivate let suggestion = Label(style: .reportHeader)
+	fileprivate let lastWeekReportLabel = Label(style: .body1, color: ColorLibrary.BlackAndWhite.white)
+	fileprivate let dateRangeLabel = Label(style: .body4, color: ColorLibrary.BlackAndWhite.white)
+	fileprivate let goalsCompletedLabel = Label(style: .body1, color: ColorLibrary.BlackAndWhite.white)
+	fileprivate let goalsCompleted = Label(style: .body4, color: ColorLibrary.BlackAndWhite.white)
+	fileprivate let results = Label(style: .body1, color: ColorLibrary.BlackAndWhite.white)
+	fileprivate let suggestion = Label(style: .body1, color: ColorLibrary.BlackAndWhite.white)
 
 	fileprivate let backgroundView = UIView()
 
@@ -165,6 +165,9 @@ final class ReportView: UIView {
 		lastWeekReportLabel.text = LocalizedStrings.lastWeekReport
 		goalsCompletedLabel.text = LocalizedStrings.goalsCompleted
 		goalsCompletedLabel.textAlignment = .left
+		results.minimumScaleFactor = 0.8
+		results.adjustsFontSizeToFitWidth = true
+		results.sizeToFit()
 
 		addSubview(backgroundView)
 		backgroundView.addSubview(lastWeekReportLabel)
@@ -206,9 +209,14 @@ final class ReportView: UIView {
 
 			results.topAnchor.constraint(equalTo: goalsCompleted.bottomAnchor, constant: Constraints.gridBlock * 2),
 			results.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor),
+			results.leftAnchor.constraint(equalTo: backgroundView.leftAnchor, constant: Constraints.gridBlock),
+			results.rightAnchor.constraint(equalTo: backgroundView.rightAnchor, constant: -Constraints.gridBlock),
 
 			suggestion.topAnchor.constraint(equalTo: results.bottomAnchor, constant: Constraints.gridBlock * 2),
-			suggestion.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor)
+			suggestion.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor),
+			suggestion.leftAnchor.constraint(equalTo: backgroundView.leftAnchor, constant: Constraints.gridBlock),
+			suggestion.rightAnchor.constraint(equalTo: backgroundView.rightAnchor, constant: -Constraints.gridBlock),
+			suggestion.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -Constraints.gridBlock * 2)
 		])
 	}
 

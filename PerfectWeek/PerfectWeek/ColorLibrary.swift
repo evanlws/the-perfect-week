@@ -14,7 +14,13 @@ enum ColorLibrary {
 		static let primary = UIColor(red: 0.43, green: 0.27, blue: 0.89, alpha: 1.0)
 		static let warning = UIColor(red: 0.82, green: 0.00, blue: 0.11, alpha: 1.0)
 		static let accent = UIColor(red: 0.53, green: 0.83, blue: 0.81, alpha: 1.0)
-		static let gray = UIColor(red: 0.85, green: 0.85, blue: 0.85, alpha: 1.0)
+	}
+
+	enum BlackAndWhite {
+		static let black = UIColor.black
+		static let gray1 = UIColor(red: 0.85, green: 0.85, blue: 0.85, alpha: 1.0)
+		static let gray2 = UIColor(hex: "979797")
+		static let white = UIColor.white
 	}
 
 }

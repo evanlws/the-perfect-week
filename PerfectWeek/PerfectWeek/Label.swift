@@ -10,43 +10,32 @@ import UIKit
 
 final class Label: UILabel {
 
-	static let defaultHeight: CGFloat = 30.0
+	static let defaultHeight: CGFloat = Constraints.gridBlock * 4
 
 	enum Style {
-		case header, header2, reportHeader, body, reportBody
+		case heading1, heading2, body1, body2, body3, body4
 	}
 
-	init(style: Style) {
+	init(style: Style, color: UIColor = UIColor.black, alignment: NSTextAlignment = NSTextAlignment.natural) {
 		super.init(frame: .zero)
 
 		switch style {
-		case .header:
-			self.font = UIFont.systemFont(ofSize: 22)
-			self.minimumScaleFactor = 0.6
-			self.textColor = .black
-			self.textAlignment = .center
-		case .header2:
-			self.font = UIFont.systemFont(ofSize: 20)
-			self.minimumScaleFactor = 0.6
-			self.textColor = .black
-			self.textAlignment = .center
-		case .reportHeader:
+		case .heading1:
+			self.font = UIFont.boldSystemFont(ofSize: 40)
+		case .heading2:
+			self.font = UIFont.systemFont(ofSize: 22, weight: UIFontWeightSemibold)
+		case .body1:
 			self.font = UIFont.systemFont(ofSize: 23)
-			self.minimumScaleFactor = 0.6
-			self.textColor = .white
-			self.textAlignment = .center
-		case .body:
+		case .body2:
+			self.font = UIFont.systemFont(ofSize: 22, weight: UIFontWeightMedium)
+		case .body3:
 			self.font = UIFont.systemFont(ofSize: 18)
-			self.minimumScaleFactor = 0.6
-			self.textColor = .black
-			self.textAlignment = .left
-		case .reportBody:
-			self.font = UIFont.systemFont(ofSize: 16)
-			self.minimumScaleFactor = 0.6
-			self.textColor = .white
-			self.textAlignment = .left
+		case .body4:
+			self.font = UIFont.systemFont(ofSize: 15)
 		}
 
+		self.textColor = color
+		self.textAlignment = alignment
 	}
 
 	required init?(coder aDecoder: NSCoder) {

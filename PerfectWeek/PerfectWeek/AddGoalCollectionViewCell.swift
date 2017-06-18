@@ -10,7 +10,7 @@ import UIKit
 
 final class AddGoalCollectionViewCell: UICollectionViewCell {
 
-	static let size = CGSize(width: UIScreen.main.bounds.size.width - (collectionViewInset * 3), height: 34.0)
+	static let size = CGSize(width: UIScreen.main.bounds.size.width - (collectionViewInset * 3), height: Constraints.gridBlock * 4)
 
 	let newGoalButton: UIButton = {
 		let button = Button.initialize(type: .basicBox)

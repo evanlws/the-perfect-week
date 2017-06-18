@@ -12,11 +12,8 @@ final class GoalCollectionViewCell: UICollectionViewCell {
 
 	static let size = CGSize(width: UIScreen.main.bounds.size.width - (collectionViewInset * 3), height: Constraints.gridBlock * 8)
 
-	let nameLabel: UILabel = {
-		let label = UILabel()
-		label.font = UIFont.systemFont(ofSize: 24.0)
-		label.minimumScaleFactor = 0.6
-		label.textAlignment = .left
+	let nameLabel: Label = {
+		let label = Label(style: .body2)
 		label.numberOfLines = 4
 		return label
 	}()
@@ -36,6 +33,7 @@ final class GoalCollectionViewCell: UICollectionViewCell {
 	private func configureViews() {
 		backgroundColor = .white
 		layer.shadowColor = UIColor.black.cgColor
+		layer.cornerRadius = Constraints.gridBlock
 		layer.shadowOffset = CGSize(width: 0, height: 1)
 		layer.shadowOpacity = 1
 		layer.shadowRadius = 1.5
@@ -51,12 +49,11 @@ final class GoalCollectionViewCell: UICollectionViewCell {
 		progressView.translatesAutoresizingMaskIntoConstraints = false
 
 		NSLayoutConstraint.activate([
-			nameLabel.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor),
-			nameLabel.leftAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leftAnchor),
-			nameLabel.bottomAnchor.constraint(equalTo: contentView.layoutMarginsGuide.bottomAnchor),
-			nameLabel.rightAnchor.constraint(lessThanOrEqualTo: progressView.leftAnchor),
+			nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constraints.gridBlock),
+			nameLabel.trailingAnchor.constraint(lessThanOrEqualTo: progressView.leadingAnchor),
+			nameLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
 
-			progressView.rightAnchor.constraint(equalTo: contentView.layoutMarginsGuide.rightAnchor),
+			progressView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Constraints.gridBlock),
 			progressView.heightAnchor.constraint(equalToConstant: progressView.height),
 			progressView.widthAnchor.constraint(equalTo: progressView.heightAnchor),
 			progressView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)

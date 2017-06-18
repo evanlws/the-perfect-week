@@ -9,7 +9,7 @@
 import UIKit
 import Crashlytics
 
-let collectionViewInset: CGFloat = 10.0
+let collectionViewInset: CGFloat = 8.0
 
 final class GoalsViewController: UIViewController, UIGestureRecognizerDelegate {
 
@@ -20,7 +20,7 @@ final class GoalsViewController: UIViewController, UIGestureRecognizerDelegate {
 		self.viewModel = viewModel
 		let collectionViewFlowLayout = UICollectionViewFlowLayout()
 		collectionViewFlowLayout.scrollDirection = .vertical
-		collectionViewFlowLayout.headerReferenceSize = CGSize(width: UIScreen.main.bounds.size.width - (collectionViewInset * 3), height: 30)
+		collectionViewFlowLayout.headerReferenceSize = CGSize(width: UIScreen.main.bounds.size.width - (collectionViewInset * 3), height: Constraints.gridBlock * 4)
 		collectionViewFlowLayout.sectionInset = UIEdgeInsets(top: collectionViewInset, left: collectionViewInset, bottom: collectionViewInset, right: collectionViewInset)
 		collectionViewFlowLayout.minimumInteritemSpacing = 16.0
 		collectionViewFlowLayout.minimumLineSpacing = 16.0
@@ -113,10 +113,12 @@ extension GoalsViewController {
 
 		let point = gestureRecognizer.location(in: collectionView)
 		if let indexPath = collectionView.indexPathForItem(at: point), indexPath.section == 0, let goal = viewModel.objectAt(indexPath) {
+			self.viewModel.complete(goal)
+
 			if let cell = collectionView.cellForItem(at: indexPath) as? GoalCollectionViewCell {
-				cell.progressView.updateProgress(progress: 100.0, animated: true) {
-					self.viewModel.complete(goal)
+				cell.progressView.updateProgress(progress: goal.currentProgressPercentage(), animated: true) {
 					self.collectionView.reloadData()
+					InformationHeaderObserver.updateInformationHeader()
 				}
 			}
 		}

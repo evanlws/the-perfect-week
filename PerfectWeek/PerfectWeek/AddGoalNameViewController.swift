@@ -13,7 +13,7 @@ final class AddGoalNameViewController: UIViewController {
 	var viewModel: AddGoalNameViewModel
 
 	fileprivate let nameLabel: Label = {
-		let label = Label(style: .body)
+		let label = Label(style: .body3, alignment: .center)
 		label.text = LocalizedStrings.enterGoalName
 		label.textAlignment = .center
 		return label

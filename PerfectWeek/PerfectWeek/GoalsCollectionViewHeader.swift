@@ -10,15 +10,7 @@ import UIKit
 
 class GoalsCollectionViewHeader: UICollectionReusableView {
 
-	let nameLabel: UILabel = {
-		let label = UILabel()
-		label.font = UIFont.systemFont(ofSize: 14.0)
-		label.minimumScaleFactor = 0.6
-		label.textColor = .gray
-		label.textAlignment = .left
-		label.numberOfLines = 4
-		return label
-	}()
+	let nameLabel = Label(style: .body4, color: ColorLibrary.BlackAndWhite.gray2)
 
 	override init(frame: CGRect) {
 		super.init(frame: frame)
@@ -39,7 +31,7 @@ class GoalsCollectionViewHeader: UICollectionReusableView {
 
 		NSLayoutConstraint.activate([
 			nameLabel.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.size.width - (collectionViewInset * 3)),
-			nameLabel.heightAnchor.constraint(equalToConstant: 16),
+			nameLabel.heightAnchor.constraint(equalToConstant: Constraints.gridBlock * 2),
 			nameLabel.centerXAnchor.constraint(equalTo: centerXAnchor)
 		])
 	}

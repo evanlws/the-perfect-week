@@ -25,7 +25,7 @@ class ProgressView: UIView {
 		layer.cornerRadius = height / 2
 
 		circleOutline.backgroundColor = .clear
-		circleOutline.layer.borderColor = UIColor.gray.cgColor
+		circleOutline.layer.borderColor = ColorLibrary.BlackAndWhite.gray1.cgColor
 		circleOutline.layer.borderWidth = 1.0
 		circleOutline.layer.cornerRadius = height / 2
 

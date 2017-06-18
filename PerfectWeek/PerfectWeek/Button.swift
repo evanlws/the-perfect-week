@@ -18,6 +18,7 @@ struct Button {
 		let button = UIButton(type: .custom)
 		button.backgroundColor = ColorLibrary.UIPalette.primary
 		button.titleLabel?.textColor = .white
+		button.layer.cornerRadius = Constraints.gridBlock
 		return button
 	}
 

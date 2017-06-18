@@ -13,14 +13,14 @@ final class AddGoalFrequencyViewController: UIViewController {
 	var viewModel: AddGoalFrequencyViewModel
 
 	private let frequencyPrompt: Label = {
-		let label = Label(style: .header2)
+		let label = Label(style: .body1, alignment: .center)
 		label.text = LocalizedStrings.goalCompletionFrequencyPrompt
 		label.numberOfLines = 0
 		return label
 	}()
 
 	private let timesPerWeekLabel: Label = {
-		let label = Label(style: .body)
+		let label = Label(style: .body3)
 		label.text = LocalizedStrings.timesPerWeek
 		return label
 	}()
@@ -28,7 +28,7 @@ final class AddGoalFrequencyViewController: UIViewController {
 	private let timesPerWeekStepper = Stepper()
 
 	private let notesTextLabel: Label = {
-		let label = Label(style: .body)
+		let label = Label(style: .body3)
 		label.text = LocalizedStrings.addNotesPrompt
 		label.numberOfLines = 0
 		return label
@@ -63,8 +63,8 @@ final class AddGoalFrequencyViewController: UIViewController {
 		super.viewWillAppear(animated)
 		NotificationManager.requestNotificationsPermission()
 		navigationController?.setNavigationBarHidden(false, animated: true)
-		InformationHeaderObserver.shouldHideInformationHeader()
 		navigationController?.navigationBar.tintColor = .black
+		InformationHeaderObserver.shouldHideInformationHeader()
 	}
 
 	// MARK: - Setup
@@ -105,7 +105,6 @@ final class AddGoalFrequencyViewController: UIViewController {
 			frequencyPrompt.topAnchor.constraint(equalTo: view.topAnchor, constant: navigationBarHeight + Constraints.gridBlock * 5),
 			frequencyPrompt.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constraints.gridBlock * 8),
 			frequencyPrompt.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constraints.gridBlock * 8),
-			frequencyPrompt.heightAnchor.constraint(equalToConstant: Constraints.gridBlock * 6),
 
 			timesPerWeekLabel.topAnchor.constraint(equalTo: frequencyPrompt.bottomAnchor, constant: Constraints.gridBlock * 5),
 			timesPerWeekLabel.heightAnchor.constraint(equalToConstant: Constraints.gridBlock * 3),

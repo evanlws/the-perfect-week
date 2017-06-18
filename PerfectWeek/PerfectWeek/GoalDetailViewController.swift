@@ -143,37 +143,37 @@ extension GoalDetailViewController {
 
 final class DetailContentView: UIView {
 
-	fileprivate let goalNameLabel = Label(style: .body)
+	fileprivate let goalNameLabel = Label(style: .body2)
 
 	fileprivate let progressView = ProgressView(height: Constraints.gridBlock * 6)
 
 	private let frequencyLabel: Label = {
-		let label = Label(style: .body)
+		let label = Label(style: .body4)
 		label.text = LocalizedStrings.frequency
 		return label
 	}()
 
-	fileprivate let frequencyNumberLabel = Label(style: .body)
+	fileprivate let frequencyNumberLabel = Label(style: .body4)
 
 	private let completionsThisWeekLabel: Label = {
-		let label = Label(style: .body)
+		let label = Label(style: .body4)
 		label.text = LocalizedStrings.completionsThisWeek
 		return label
 	}()
 
-	fileprivate let completionsThisWeekNumberLabel = Label(style: .body)
+	fileprivate let completionsThisWeekNumberLabel = Label(style: .body4)
 
 	private let currentStreakLabel: Label = {
-		let label = Label(style: .body)
+		let label = Label(style: .body4)
 		label.text = LocalizedStrings.currentStreak
 		return label
 	}()
 
-	fileprivate let currentStreakNumberLabel = Label(style: .body)
+	fileprivate let currentStreakNumberLabel = Label(style: .body4)
 
 	fileprivate let goalNotesTextView: UITextView = {
 		let textView = UITextView()
-		textView.font = UIFont.systemFont(ofSize: 17.0)
+		textView.font = UIFont.systemFont(ofSize: 15.0)
 		textView.textColor = .darkGray
 		textView.isEditable = false
 		textView.isSelectable = false
@@ -216,38 +216,38 @@ final class DetailContentView: UIView {
 
 		NSLayoutConstraint.activate([
 			goalNameLabel.centerYAnchor.constraint(equalTo: progressView.centerYAnchor),
-			goalNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10.0),
-			goalNameLabel.rightAnchor.constraint(lessThanOrEqualTo: progressView.leftAnchor),
+			goalNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constraints.gridBlock * 2),
+			goalNameLabel.trailingAnchor.constraint(lessThanOrEqualTo: progressView.leadingAnchor),
 
-			progressView.topAnchor.constraint(equalTo: topAnchor, constant: 10.0),
-			progressView.rightAnchor.constraint(equalTo: rightAnchor, constant: -10.0),
+			progressView.topAnchor.constraint(equalTo: topAnchor, constant: Constraints.gridBlock * 2),
+			progressView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Constraints.gridBlock * 2),
 			progressView.heightAnchor.constraint(equalToConstant: progressView.height),
 			progressView.widthAnchor.constraint(equalTo: progressView.heightAnchor),
 
-			frequencyLabel.topAnchor.constraint(equalTo: progressView.bottomAnchor, constant: 5.0),
-			frequencyLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5.0),
+			frequencyLabel.topAnchor.constraint(equalTo: progressView.bottomAnchor, constant: Constraints.gridBlock),
+			frequencyLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constraints.gridBlock),
 
-			frequencyNumberLabel.topAnchor.constraint(equalTo: progressView.bottomAnchor, constant: 5.0),
-			frequencyNumberLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5.0),
-			frequencyNumberLabel.leadingAnchor.constraint(greaterThanOrEqualTo: frequencyLabel.trailingAnchor, constant: 5.0),
+			frequencyNumberLabel.topAnchor.constraint(equalTo: progressView.bottomAnchor, constant: Constraints.gridBlock),
+			frequencyNumberLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Constraints.gridBlock),
+			frequencyNumberLabel.leadingAnchor.constraint(greaterThanOrEqualTo: frequencyLabel.trailingAnchor, constant: Constraints.gridBlock),
 
-			completionsThisWeekLabel.topAnchor.constraint(equalTo: frequencyLabel.bottomAnchor, constant: 10.0),
-			completionsThisWeekLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5.0),
+			completionsThisWeekLabel.topAnchor.constraint(equalTo: frequencyLabel.bottomAnchor, constant: Constraints.gridBlock),
+			completionsThisWeekLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constraints.gridBlock),
 
-			completionsThisWeekNumberLabel.topAnchor.constraint(equalTo: frequencyLabel.bottomAnchor, constant: 10.0),
-			completionsThisWeekNumberLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5.0),
-			completionsThisWeekNumberLabel.leadingAnchor.constraint(greaterThanOrEqualTo: completionsThisWeekLabel.trailingAnchor, constant: 5.0),
+			completionsThisWeekNumberLabel.topAnchor.constraint(equalTo: frequencyLabel.bottomAnchor, constant: Constraints.gridBlock),
+			completionsThisWeekNumberLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Constraints.gridBlock),
+			completionsThisWeekNumberLabel.leadingAnchor.constraint(greaterThanOrEqualTo: completionsThisWeekLabel.trailingAnchor, constant: Constraints.gridBlock),
 
-			currentStreakLabel.topAnchor.constraint(equalTo: completionsThisWeekLabel.bottomAnchor, constant: 10.0),
-			currentStreakLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5.0),
+			currentStreakLabel.topAnchor.constraint(equalTo: completionsThisWeekLabel.bottomAnchor, constant: Constraints.gridBlock),
+			currentStreakLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constraints.gridBlock),
 
-			currentStreakNumberLabel.topAnchor.constraint(equalTo: completionsThisWeekLabel.bottomAnchor, constant: 10.0),
-			currentStreakNumberLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5.0),
-			currentStreakNumberLabel.leadingAnchor.constraint(greaterThanOrEqualTo: currentStreakLabel.trailingAnchor, constant: 5.0),
+			currentStreakNumberLabel.topAnchor.constraint(equalTo: completionsThisWeekLabel.bottomAnchor, constant: Constraints.gridBlock),
+			currentStreakNumberLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Constraints.gridBlock),
+			currentStreakNumberLabel.leadingAnchor.constraint(greaterThanOrEqualTo: currentStreakLabel.trailingAnchor, constant: Constraints.gridBlock),
 
-			goalNotesTextView.topAnchor.constraint(equalTo: currentStreakLabel.bottomAnchor, constant: 10.0),
-			goalNotesTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5.0),
-			goalNotesTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5.0),
+			goalNotesTextView.topAnchor.constraint(equalTo: currentStreakLabel.bottomAnchor, constant: Constraints.gridBlock),
+			goalNotesTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constraints.gridBlock),
+			goalNotesTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Constraints.gridBlock),
 			goalNotesTextView.bottomAnchor.constraint(greaterThanOrEqualTo: bottomAnchor)
 		])
 	}

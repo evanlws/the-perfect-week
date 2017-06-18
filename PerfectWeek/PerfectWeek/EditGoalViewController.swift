@@ -13,7 +13,7 @@ final class EditGoalViewController: UIViewController {
 	var viewModel: EditGoalViewModel
 
 	private let nameLabel: Label = {
-		let label = Label(style: .body)
+		let label = Label(style: .body3)
 		label.text = LocalizedStrings.name
 		return label
 	}()
@@ -27,7 +27,7 @@ final class EditGoalViewController: UIViewController {
 	}()
 
 	private let timesPerWeekLabel: Label = {
-		let label = Label(style: .body)
+		let label = Label(style: .body3)
 		label.text = LocalizedStrings.timesPerWeek
 		return label
 	}()
@@ -35,7 +35,7 @@ final class EditGoalViewController: UIViewController {
 	private let timesPerWeekStepper = Stepper()
 
 	private let notesTextLabel: Label = {
-		let label = Label(style: .body)
+		let label = Label(style: .body3)
 		label.text = LocalizedStrings.addNotesPrompt
 		label.numberOfLines = 0
 		return label
@@ -84,7 +84,7 @@ final class EditGoalViewController: UIViewController {
 		title = LocalizedStrings.editGoal
 		nameTextField.delegate = self
 		timesPerWeekStepper.delegate = self
-		notesTextView.backgroundColor = .gray
+		notesTextView.backgroundColor = ColorLibrary.BlackAndWhite.gray2
 		notesTextViewButton.setTitle("", for: .normal)
 		notesTextViewButton.addTarget(self, action: #selector(didTapNotesTextViewButton), for: .touchUpInside)
 
