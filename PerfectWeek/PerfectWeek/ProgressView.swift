@@ -59,7 +59,7 @@ class ProgressView: UIView {
 			progressBar.rightAnchor.constraint(equalTo: rightAnchor)
 		])
 
-		heightConstraint = NSLayoutConstraint(item: progressBar, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1.0, constant: 0.0)
+		heightConstraint = NSLayoutConstraint(item: progressBar, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1.0, constant: height)
 		progressBar.addConstraint(heightConstraint!)
 	}
 
