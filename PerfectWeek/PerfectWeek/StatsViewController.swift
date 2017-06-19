@@ -59,6 +59,7 @@ final class StatsViewController: UIViewController {
 		statsTableView.dataSource = self
 		statsTableView.register(StatTableViewCell.self, forCellReuseIdentifier: String(describing: StatTableViewCell.self))
 		statsTableView.alwaysBounceVertical = false
+		statsTableView.allowsSelection = false
 
 		graphReportScrollView.addSubview(graphView)
 		graphReportScrollView.addSubview(reportView)

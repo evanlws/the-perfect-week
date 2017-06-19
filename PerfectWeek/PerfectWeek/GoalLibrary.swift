@@ -11,6 +11,7 @@ import UIKit
 import NotificationCenter
 import UserNotifications
 import UserNotificationsUI
+import Crashlytics
 
 final class GoalLibrary {
 
@@ -44,6 +45,7 @@ final class GoalLibrary {
 	func add(_ newGoal: Goal) {
 		RealmLibrary.shared.add(newGoal) { (success) in
 			if success {
+				Answers.logCustomEvent(withName: "Goal Created", customAttributes: nil)
 				print("Successfully created \(newGoal.description)")
 				NotificationManager.scheduleNotification(for: newGoal)
 			}
@@ -57,13 +59,13 @@ final class GoalLibrary {
 		}
 
 		updateGoal(with: ["objectId": goal.objectId, "progress": goal.progress + 1, "lastCompleted": Date()])
-		if goal.dateAdded > Date().thisWeekSunday() {
-			StatsLibrary.shared.updateStats(reason: .goalCompleted)
-			InformationHeaderObserver.updateInformationHeader()
-		}
+		Answers.logCustomEvent(withName: "Goal Completed", customAttributes: nil)
+		StatsLibrary.shared.updateStats(reason: .goalCompleted)
+		InformationHeaderObserver.updateInformationHeader()
 	}
 
 	func deleteGoalWith(_ goalObjectId: String) {
+		Answers.logCustomEvent(withName: "Goal Deleted", customAttributes: nil)
 		RealmLibrary.shared.deleteGoalWith(goalObjectId)
 	}
 

@@ -104,7 +104,6 @@ final class GoalsViewController: UIViewController, UIGestureRecognizerDelegate {
 extension GoalsViewController {
 
 	func didTapNewGoalButton() {
-		Answers.logCustomEvent(withName: "New Goal Button Tapped", customAttributes: nil)
 		presentAddGoalNameViewController()
 	}
 
@@ -116,7 +115,7 @@ extension GoalsViewController {
 			self.viewModel.complete(goal)
 
 			if let cell = collectionView.cellForItem(at: indexPath) as? GoalCollectionViewCell {
-				cell.progressView.updateProgress(progress: goal.currentProgressPercentage(), animated: true) {
+				cell.progressView.updateProgress(progress: CGFloat(goal.progress + 1) / CGFloat(goal.frequency) * 100.0, animated: true) {
 					self.collectionView.reloadData()
 					InformationHeaderObserver.updateInformationHeader()
 				}
