@@ -24,6 +24,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			Fabric.with([Crashlytics.self])
 		#endif
 
+		let config = Realm.Configuration(
+			schemaVersion: 1,
+			migrationBlock: { _, oldSchemaVersion in
+				if oldSchemaVersion < 1 {}
+		})
+
+		Realm.Configuration.defaultConfiguration = config
+
 		configureTabBar()
 
 		informationHeader = InformationHeader()
