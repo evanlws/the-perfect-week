@@ -19,13 +19,11 @@ final class AddGoalNameViewController: UIViewController {
 		return label
 	}()
 
-	private let nameTextField: UITextField = {
-		let textField = UITextField()
-		textField.borderStyle = .none
+	private let nameTextField: TextField = {
+		let textField = TextField(style: .underline)
 		textField.autocorrectionType = .no
 		textField.returnKeyType = .done
 		textField.textAlignment = .center
-		textField.contentVerticalAlignment = .bottom
 		return textField
 	}()
 
@@ -35,8 +33,6 @@ final class AddGoalNameViewController: UIViewController {
 		button.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
 		return button
 	}()
-
-	var path: UIBezierPath?
 
 	init(viewModel: AddGoalNameViewModel) {
 		self.viewModel = viewModel
@@ -58,21 +54,6 @@ final class AddGoalNameViewController: UIViewController {
 		navigationController?.setNavigationBarHidden(false, animated: true)
 		InformationHeaderObserver.shouldHideInformationHeader()
 		navigationController?.navigationBar.tintColor = .black
-	}
-
-	override func viewDidLayoutSubviews() {
-		super.viewDidLayoutSubviews()
-
-		if path == nil {
-			path = UIBezierPath()
-			path?.move(to: CGPoint(x: 0, y: nameTextField.frame.size.height))
-			path?.addLine(to: CGPoint(x: nameTextField.frame.size.width, y: nameTextField.frame.size.height))
-			let underline = CAShapeLayer()
-			underline.path = path?.cgPath
-			underline.lineWidth = 2.0
-			underline.strokeColor = UIColor.black.cgColor
-			nameTextField.layer.addSublayer(underline)
-		}
 	}
 
 	private func configureViews() {

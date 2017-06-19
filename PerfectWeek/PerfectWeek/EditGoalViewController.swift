@@ -18,9 +18,8 @@ final class EditGoalViewController: UIViewController {
 		return label
 	}()
 
-	private let nameTextField: UITextField = {
-		let textField = UITextField()
-		textField.borderStyle = .line
+	private let nameTextField: TextField = {
+		let textField = TextField(style: .underline)
 		textField.autocorrectionType = .no
 		textField.returnKeyType = .done
 		return textField
@@ -84,7 +83,6 @@ final class EditGoalViewController: UIViewController {
 		title = LocalizedStrings.editGoal
 		nameTextField.delegate = self
 		timesPerWeekStepper.delegate = self
-		notesTextView.backgroundColor = ColorLibrary.BlackAndWhite.gray2
 		notesTextViewButton.setTitle("", for: .normal)
 		notesTextViewButton.addTarget(self, action: #selector(didTapNotesTextViewButton), for: .touchUpInside)
 
@@ -121,29 +119,36 @@ final class EditGoalViewController: UIViewController {
 			nameLabel.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -10),
 			nameLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
 			nameLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 100),
+
 			nameTextField.heightAnchor.constraint(equalToConstant: Label.defaultHeight),
 			nameTextField.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
 			nameTextField.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
 			nameTextField.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10),
+
 			timesPerWeekLabel.heightAnchor.constraint(equalToConstant: Label.defaultHeight),
 			timesPerWeekLabel.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -20),
 			timesPerWeekLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
 			timesPerWeekLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 30),
+
 			timesPerWeekStepper.heightAnchor.constraint(equalToConstant: 100),
 			timesPerWeekStepper.widthAnchor.constraint(equalToConstant: 120),
 			timesPerWeekStepper.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
 			timesPerWeekStepper.topAnchor.constraint(equalTo: timesPerWeekLabel.bottomAnchor, constant: 15),
+
 			notesTextLabel.topAnchor.constraint(equalTo: timesPerWeekStepper.bottomAnchor, constant: 30),
 			notesTextLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
 			notesTextLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
+
 			notesTextView.topAnchor.constraint(equalTo: notesTextLabel.bottomAnchor, constant: 15),
 			notesTextView.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
 			notesTextView.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
 			notesTextView.heightAnchor.constraint(equalToConstant: 150),
+
 			notesTextViewButton.topAnchor.constraint(equalTo: notesTextLabel.bottomAnchor, constant: 15),
 			notesTextViewButton.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
 			notesTextViewButton.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
 			notesTextViewButton.heightAnchor.constraint(equalToConstant: 150),
+
 			saveButton.topAnchor.constraint(equalTo: notesTextView.bottomAnchor, constant: 30),
 			saveButton.heightAnchor.constraint(equalToConstant: Label.defaultHeight),
 			saveButton.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -30),
