@@ -103,10 +103,10 @@ final class AddGoalFrequencyViewController: UIViewController {
 
 		NSLayoutConstraint.activate([
 			frequencyPrompt.topAnchor.constraint(equalTo: view.topAnchor, constant: navigationBarHeight + Constraints.gridBlock * 5),
-			frequencyPrompt.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constraints.gridBlock * 8),
-			frequencyPrompt.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constraints.gridBlock * 8),
+			frequencyPrompt.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constraints.gridBlock * 2),
+			frequencyPrompt.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constraints.gridBlock * 2),
 
-			timesPerWeekLabel.topAnchor.constraint(equalTo: frequencyPrompt.bottomAnchor, constant: Constraints.gridBlock * 5),
+			timesPerWeekLabel.topAnchor.constraint(equalTo: frequencyPrompt.bottomAnchor, constant: Constraints.gridBlock * 3),
 			timesPerWeekLabel.heightAnchor.constraint(equalToConstant: Constraints.gridBlock * 3),
 			timesPerWeekLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constraints.horizontalMargin),
 			timesPerWeekLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constraints.horizontalMargin),
@@ -116,7 +116,7 @@ final class AddGoalFrequencyViewController: UIViewController {
 			timesPerWeekStepper.widthAnchor.constraint(equalToConstant: Constraints.gridBlock * 16),
 			timesPerWeekStepper.heightAnchor.constraint(equalToConstant: Constraints.gridBlock * 10),
 
-			notesTextLabel.topAnchor.constraint(equalTo: timesPerWeekStepper.bottomAnchor, constant: Constraints.gridBlock * 4),
+			notesTextLabel.topAnchor.constraint(equalTo: timesPerWeekStepper.bottomAnchor, constant: Constraints.gridBlock * 3),
 			notesTextLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constraints.horizontalMargin),
 			notesTextLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constraints.horizontalMargin),
 
@@ -130,10 +130,11 @@ final class AddGoalFrequencyViewController: UIViewController {
 			notesTextViewButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constraints.horizontalMargin),
 			notesTextViewButton.heightAnchor.constraint(equalToConstant: Constraints.gridBlock * 10),
 
+			addGoalButton.topAnchor.constraint(equalTo: notesTextView.bottomAnchor, constant: Constraints.gridBlock * 3),
 			addGoalButton.heightAnchor.constraint(equalToConstant: Constraints.gridBlock * 4),
 			addGoalButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constraints.gridBlock * 7),
 			addGoalButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constraints.gridBlock * 7),
-			addGoalButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -Constraints.gridBlock * 11)
+			addGoalButton.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor, constant: -Constraints.gridBlock)
 		])
 	}
 
