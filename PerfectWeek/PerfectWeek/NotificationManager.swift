@@ -42,26 +42,33 @@ class NotificationManager: NSObject {
 		content.sound = .default()
 
 		for dateComponents in weeklyDateComponents(for: goal.frequency, date: date) {
-			scheduleNotification(with: content, dateComponents: dateComponents, goal: goal)
-			let nextWeekDateComponents = nextWeek(dateComponents: dateComponents, date: date)
-			scheduleNotification(with: content, dateComponents: nextWeekDateComponents, goal: goal)
+			scheduleNotification(with: content, dateComponents: dateComponents, goal: goal, date: date)
 		}
 	}
 
-	private static func scheduleNotification(with content: UNMutableNotificationContent, dateComponents: DateComponents, goal: Goal) {
-		let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
-		guard let triggerDate = trigger.nextTriggerDate() else {
-			guardFailureWarning("Trigger has no date")
-			return
+	private static func scheduleNotification(with content: UNMutableNotificationContent, dateComponents: DateComponents, goal: Goal, date: Date) {
+
+		let calendarNotificationTrigger = trigger(with: dateComponents, date: date)
+		guard let triggerDate = calendarNotificationTrigger.nextTriggerDate() else {
+			fatalError(guardFailureWarning("Trigger date is still nil"))
 		}
 
 		let identifier = NotificationParser.generateNotificationIdentifier(date: triggerDate, type: "DEFAULT", objectId: goal.objectId)
-		let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+		let request = UNNotificationRequest(identifier: identifier, content: content, trigger: calendarNotificationTrigger)
 		UNUserNotificationCenter.current().add(request) { (error) in
 			if let error = error {
 				print("Error scheduling a notification \(error)")
 			}
 		}
+	}
+
+	private static func trigger(with dateComponents: DateComponents, date: Date) -> UNCalendarNotificationTrigger {
+		var trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+		while trigger.nextTriggerDate() == nil {
+			trigger = UNCalendarNotificationTrigger(dateMatching: nextWeek(dateComponents: dateComponents, date: date), repeats: false)
+		}
+
+		return trigger
 	}
 
 	private static func nextWeek(dateComponents: DateComponents, date: Date) -> DateComponents {
