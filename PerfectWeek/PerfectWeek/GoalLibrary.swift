@@ -53,7 +53,7 @@ final class GoalLibrary {
 	}
 
 	func complete(_ goal: Goal) {
-		guard !goal.isPerfectGoal(), !goal.wasCompletedToday() else {
+		guard !goal.isPerfectGoal() else {
 			print("\(goal.name) was already completed")
 			return
 		}
