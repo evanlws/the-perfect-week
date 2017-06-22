@@ -17,7 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	var window: UIWindow?
 	var informationHeader: InformationHeader?
-	weak var notificationDelegate = NotificationDelegate()
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
@@ -39,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 		NotificationManager.setupNotificationActions()
 		let center = UNUserNotificationCenter.current()
-		center.delegate = notificationDelegate
+		center.delegate = self
 
 		if UserDefaults.standard.bool(forKey: "thisIsTheFirstLaunch") == false {
 			print("First launch, setting UserDefaults.")
@@ -77,6 +76,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		window?.rootViewController = tabBarController
 
 		window?.makeKeyAndVisible()
+	}
+
+}
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+
+	func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+		completionHandler([])
+	}
+
+	func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+		switch response.actionIdentifier {
+		case UNNotificationDismissActionIdentifier:
+			print("Dismiss action")
+		case UNNotificationDefaultActionIdentifier:
+			print("Default")
+		case NotificationManager.NotificationActionIdentifier.completeAction.rawValue:
+			let goalId = NotificationParser.getObjectId(from: response.notification.request.identifier)
+			if let goal = GoalLibrary.shared.fetchGoal(with: goalId) {
+				GoalLibrary.shared.complete(goal)
+			}
+
+			print("Complete")
+		case NotificationManager.NotificationActionIdentifier.remindMeInAnHourAction.rawValue:
+			print("Remind me in an hour")
+		default:
+			print("Unknown action")
+		}
+
+		completionHandler()
 	}
 
 }

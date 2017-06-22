@@ -34,7 +34,6 @@
 		4F4748591EEE306700022697 /* StatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4748581EEE306700022697 /* StatsViewModel.swift */; };
 		4F47485E1EEF6B5600022697 /* ScrollableGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F47485D1EEF6B5600022697 /* ScrollableGraphView.swift */; };
 		4F491E961E986A9C003BAF0D /* RealmStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F491E951E986A9C003BAF0D /* RealmStats.swift */; };
-		4F5665FE1EFC24560095F57C /* NotificationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5665FD1EFC24560095F57C /* NotificationDelegate.swift */; };
 		4F61472F1EB597A50058BF43 /* InformationHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F61472E1EB597A50058BF43 /* InformationHeader.swift */; };
 		4F67304A1EF74FA800596EA9 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6730491EF74FA800596EA9 /* TextField.swift */; };
 		4F7F5E401EBE2249009A1385 /* InformationHeaderObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7F5E3F1EBE2249009A1385 /* InformationHeaderObserver.swift */; };
@@ -113,7 +112,6 @@
 		4F4748581EEE306700022697 /* StatsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsViewModel.swift; sourceTree = "<group>"; };
 		4F47485D1EEF6B5600022697 /* ScrollableGraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ScrollableGraphView.swift; path = External/ScrollableGraphView.swift; sourceTree = "<group>"; };
 		4F491E951E986A9C003BAF0D /* RealmStats.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmStats.swift; sourceTree = "<group>"; };
-		4F5665FD1EFC24560095F57C /* NotificationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationDelegate.swift; sourceTree = "<group>"; };
 		4F61472E1EB597A50058BF43 /* InformationHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationHeader.swift; sourceTree = "<group>"; };
 		4F6730491EF74FA800596EA9 /* TextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		4F7F5E3F1EBE2249009A1385 /* InformationHeaderObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationHeaderObserver.swift; sourceTree = "<group>"; };
@@ -376,7 +374,6 @@
 			children = (
 				4FBF57DC1EBE6DB8001DA75C /* NotificationManager.swift */,
 				4F17DDFF1ECD4DFD007130BE /* NotificationParser.swift */,
-				4F5665FD1EFC24560095F57C /* NotificationDelegate.swift */,
 			);
 			name = Notifications;
 			sourceTree = "<group>";
@@ -616,7 +613,6 @@
 				4F3AF7C91EC428F800D074CA /* LocalizedStrings.swift in Sources */,
 				4F67304A1EF74FA800596EA9 /* TextField.swift in Sources */,
 				4FEE6B701EE1DA6E0067AE59 /* InformationViewModel.swift in Sources */,
-				4F5665FE1EFC24560095F57C /* NotificationDelegate.swift in Sources */,
 				4F3AF7C01EC14D1900D074CA /* ProgressView.swift in Sources */,
 				4FDFD1011E6D30AC00D33353 /* AddGoalNameViewModel.swift in Sources */,
 				4F2EB1E21E7EF38E00677A3C /* RealmGoal.swift in Sources */,

@@ -67,11 +67,8 @@ class NotificationManager: NSObject {
 			fatalError(guardFailureWarning("Trigger date is still nil"))
 		}
 
-		// TODO: Get rid of this
-		let timeIntervalTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 30, repeats: true)
-
 		let identifier = NotificationParser.generateNotificationIdentifier(date: triggerDate, type: "DEFAULT", objectId: goal.objectId)
-		let request = UNNotificationRequest(identifier: identifier, content: content, trigger: timeIntervalTrigger)
+		let request = UNNotificationRequest(identifier: identifier, content: content, trigger: calendarNotificationTrigger)
 		UNUserNotificationCenter.current().add(request) { (error) in
 			if let error = error {
 				print("Error scheduling a notification \(error)")
