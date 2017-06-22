@@ -46,12 +46,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			NotificationManager.clearAllNotifications()
 		}
 
-//		UNUserNotificationCenter.current().getPendingNotificationRequests { (requests) in
-//			for request in requests {
-//				print(request.identifier)
-//			}
-//		}
-
 		return true
 	}
 
