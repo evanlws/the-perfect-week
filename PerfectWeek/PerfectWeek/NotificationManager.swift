@@ -20,12 +20,25 @@ class NotificationManager: NSObject {
 		case sunday = 1, monday, tuesday, wednesday, thursday, friday, saturday
 	}
 
+	enum NotificationActionIdentifier: String {
+		case completeAction = "CompleteAction"
+		case remindMeInAnHourAction = "RemindMeInAnHour"
+		case reminderCategory = "PerfectWeekReminderCategory"
+	}
+
 	static func requestNotificationsPermission() {
 		UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { (accepted, _) in
 			if !accepted {
 				print("Notification access denied.")
 			}
 		}
+	}
+
+	static func setupNotificationActions() {
+		let completeAction = UNNotificationAction(identifier: NotificationActionIdentifier.completeAction.rawValue, title: LocalizedStrings.completeGoal, options: [])
+		let remindMeOneHourAction = UNNotificationAction(identifier: NotificationActionIdentifier.remindMeInAnHourAction.rawValue, title: LocalizedStrings.remindMeInOneHour, options: [])
+		let category = UNNotificationCategory(identifier: NotificationActionIdentifier.reminderCategory.rawValue, actions: [completeAction, remindMeOneHourAction], intentIdentifiers: [], options: [])
+		UNUserNotificationCenter.current().setNotificationCategories([category])
 	}
 
 	static func clearAllNotifications() {
@@ -37,6 +50,7 @@ class NotificationManager: NSObject {
 		let date = Date()
 
 		let content = UNMutableNotificationContent()
+		content.categoryIdentifier = NotificationActionIdentifier.reminderCategory.rawValue
 		content.title = LocalizedStrings.dontForget
 		content.body = goal.name
 		content.sound = .default()
@@ -53,8 +67,11 @@ class NotificationManager: NSObject {
 			fatalError(guardFailureWarning("Trigger date is still nil"))
 		}
 
+		// TODO: Get rid of this
+		let timeIntervalTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 30, repeats: true)
+
 		let identifier = NotificationParser.generateNotificationIdentifier(date: triggerDate, type: "DEFAULT", objectId: goal.objectId)
-		let request = UNNotificationRequest(identifier: identifier, content: content, trigger: calendarNotificationTrigger)
+		let request = UNNotificationRequest(identifier: identifier, content: content, trigger: timeIntervalTrigger)
 		UNUserNotificationCenter.current().add(request) { (error) in
 			if let error = error {
 				print("Error scheduling a notification \(error)")

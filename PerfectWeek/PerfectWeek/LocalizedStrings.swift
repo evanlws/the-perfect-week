@@ -37,4 +37,5 @@ enum LocalizedStrings {
 	static let addNotesPrompt = NSLocalizedString("ADD_NOTES_PROMPT", value: "Add Notes (optional)", comment: "")
 	static let lastWeekReport = NSLocalizedString("LAST_WEEKS_REPORT", value: "Last Week's Report", comment: "")
 	static let noReportText = NSLocalizedString("NO_REPORT_TEXT", value: "Check back next week for last week's stats!", comment: "")
+	static let remindMeInOneHour = NSLocalizedString("REMIND_ME_IN_ONE_HOUR", value: "Remind me in 1 hr", comment: "")
 }

@@ -72,4 +72,9 @@ final class GoalLibrary {
 	func updateGoal(with values: [String: Any]) {
 		RealmLibrary.shared.updateGoal(with: values)
 	}
+
+	func fetchGoal(with goalId: String) -> Goal? {
+		return RealmLibrary.shared.fetchGoal(with: goalId)
+	}
+
 }

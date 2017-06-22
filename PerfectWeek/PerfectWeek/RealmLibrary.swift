@@ -79,6 +79,15 @@ class RealmLibrary {
 		}
 	}
 
+	func fetchGoal(with goalId: String) -> Goal? {
+		if let realmGoal = realm.object(ofType: RealmGoal.self, forPrimaryKey: goalId) {
+			let goal = GoalConverter.converted(realmGoal)
+			return goal
+		}
+
+		return nil
+	}
+
 	fileprivate func fetchGoals() -> [Goal] {
 		var goals = [Goal]()
 		realm.objects(RealmGoal.self).forEach { goals.append(GoalConverter.converted($0)) }

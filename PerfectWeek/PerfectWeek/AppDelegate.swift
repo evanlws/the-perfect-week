@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	var window: UIWindow?
 	var informationHeader: InformationHeader?
+	weak var notificationDelegate = NotificationDelegate()
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
@@ -35,6 +36,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		configureTabBar()
 
 		informationHeader = InformationHeader()
+
+		NotificationManager.setupNotificationActions()
+		let center = UNUserNotificationCenter.current()
+		center.delegate = notificationDelegate
 
 		if UserDefaults.standard.bool(forKey: "thisIsTheFirstLaunch") == false {
 			print("First launch, setting UserDefaults.")
