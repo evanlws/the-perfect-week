@@ -15,15 +15,19 @@ final class GoalDetailViewController: UIViewController {
 	private let backButton: UIButton = {
 		let button = UIButton(type: .custom)
 		button.setTitle(LocalizedStrings.back, for: .normal)
-		button.setTitleColor(ColorLibrary.UIPalette.primary, for: .normal)
+		button.setTitleColor(ColorLibrary.BlackAndWhite.white, for: .normal)
+		button.backgroundColor = ColorLibrary.UIPalette.accent
+		button.layer.cornerRadius = Constraints.gridBlock
 		button.addTarget(self, action: #selector(didTapBack), for: .touchUpInside)
 		return button
 	}()
 
 	private let editGoalButton: UIButton = {
 		let button = UIButton(type: .custom)
-		button.setTitle(LocalizedStrings.editGoal, for: .normal)
-		button.setTitleColor(ColorLibrary.UIPalette.primary, for: .normal)
+		button.setTitle(LocalizedStrings.edit, for: .normal)
+		button.setTitleColor(ColorLibrary.BlackAndWhite.white, for: .normal)
+		button.backgroundColor = ColorLibrary.UIPalette.accent
+		button.layer.cornerRadius = Constraints.gridBlock
 		button.addTarget(self, action: #selector(didTapEditGoal), for: .touchUpInside)
 		return button
 	}()
@@ -92,9 +96,11 @@ final class GoalDetailViewController: UIViewController {
 		NSLayoutConstraint.activate([
 			backButton.topAnchor.constraint(equalTo: view.topAnchor, constant: InformationHeader.windowSize.height + 10.0),
 			backButton.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
+			backButton.widthAnchor.constraint(equalToConstant: Constraints.gridBlock * 10),
 
 			editGoalButton.topAnchor.constraint(equalTo: view.topAnchor, constant: InformationHeader.windowSize.height + 10.0),
 			editGoalButton.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
+			editGoalButton.widthAnchor.constraint(equalToConstant: Constraints.gridBlock * 10),
 
 			detailContentView.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 10.0),
 			detailContentView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
