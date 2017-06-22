@@ -66,6 +66,12 @@ final class GoalLibrary {
 
 	func deleteGoalWith(_ goalObjectId: String) {
 		Answers.logCustomEvent(withName: "Goal Deleted", customAttributes: nil)
+
+		UNUserNotificationCenter.current().getPendingNotificationRequests { (requests) in
+			let requestIdentifiers = requests.flatMap({ NotificationParser.getObjectId(from: $0.identifier) }).filter({ $0 == goalObjectId })
+			UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: requestIdentifiers)
+		}
+
 		RealmLibrary.shared.deleteGoalWith(goalObjectId)
 	}
 
