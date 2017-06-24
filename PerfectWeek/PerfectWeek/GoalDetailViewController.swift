@@ -45,6 +45,7 @@ final class GoalDetailViewController: UIViewController {
 		view.layer.shadowColor = UIColor.black.cgColor
 		view.layer.shadowOffset = CGSize(width: 0, height: 1)
 		view.layer.shadowOpacity = 1
+		view.layer.cornerRadius = Constraints.gridBlock
 		view.layer.shadowRadius = 1.0
 		view.clipsToBounds = false
 		view.layer.masksToBounds = false
@@ -105,7 +106,7 @@ final class GoalDetailViewController: UIViewController {
 			detailContentView.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 10.0),
 			detailContentView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 			detailContentView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -20.0),
-			detailContentView.heightAnchor.constraint(equalToConstant: 210.0),
+			detailContentView.heightAnchor.constraint(equalToConstant: viewModel.goal.notes?.isBlank ?? true ? 170.0 : 210.0),
 
 			completeGoalButton.topAnchor.constraint(equalTo: detailContentView.bottomAnchor, constant: 30.0),
 			completeGoalButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -254,7 +255,7 @@ final class DetailContentView: UIView {
 			goalNotesTextView.topAnchor.constraint(equalTo: currentStreakLabel.bottomAnchor, constant: Constraints.gridBlock),
 			goalNotesTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constraints.gridBlock),
 			goalNotesTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Constraints.gridBlock),
-			goalNotesTextView.bottomAnchor.constraint(greaterThanOrEqualTo: bottomAnchor)
+			goalNotesTextView.bottomAnchor.constraint(greaterThanOrEqualTo: bottomAnchor, constant: -Constraints.gridBlock)
 		])
 	}
 
