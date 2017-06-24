@@ -39,6 +39,10 @@ final class InformationViewController: UIViewController {
 		return label
 	}()
 
+	private let backgroundView = UIView()
+
+	var displayShadow = true
+
 	init() {
 		super.init(nibName: nil, bundle: nil)
 	}
@@ -55,6 +59,16 @@ final class InformationViewController: UIViewController {
 
 	// MARK: - Setup
 	private func configureViews() {
+		backgroundView.backgroundColor = ColorLibrary.BlackAndWhite.white
+
+		if displayShadow {
+			backgroundView.layer.shadowColor = UIColor.black.cgColor
+			backgroundView.layer.shadowOffset = CGSize(width: 0, height: 1)
+			backgroundView.layer.shadowOpacity = 0.5
+			backgroundView.layer.shadowRadius = 1.5
+		}
+
+		view.addSubview(backgroundView)
 		view.addSubview(progressView)
 		view.addSubview(multiplierLabel)
 		view.addSubview(weekdayLabel)
@@ -68,6 +82,7 @@ final class InformationViewController: UIViewController {
 		weekdayLabel.translatesAutoresizingMaskIntoConstraints = false
 		dateLabel.translatesAutoresizingMaskIntoConstraints = false
 		tipsLabel.translatesAutoresizingMaskIntoConstraints = false
+		backgroundView.translatesAutoresizingMaskIntoConstraints = false
 
 		NSLayoutConstraint.activate([
 			progressView.topAnchor.constraint(equalTo: view.topAnchor, constant: UIApplication.shared.statusBarFrame.size.height + Constraints.gridBlock * 2),
@@ -90,7 +105,12 @@ final class InformationViewController: UIViewController {
 			tipsLabel.topAnchor.constraint(greaterThanOrEqualTo: progressView.bottomAnchor, constant: Constraints.gridBlock),
 			tipsLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: Constraints.gridBlock),
 			tipsLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: Constraints.gridBlock),
-			tipsLabel.heightAnchor.constraint(equalToConstant: view.bounds.size.height / 3)
+			tipsLabel.heightAnchor.constraint(equalToConstant: view.bounds.size.height / 3),
+
+			backgroundView.topAnchor.constraint(equalTo: view.topAnchor),
+			backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+			backgroundView.leftAnchor.constraint(equalTo: view.leftAnchor),
+			backgroundView.rightAnchor.constraint(equalTo: view.rightAnchor)
 		])
 	}
 
