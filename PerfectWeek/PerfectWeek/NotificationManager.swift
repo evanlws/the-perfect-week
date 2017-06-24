@@ -26,6 +26,12 @@ class NotificationManager: NSObject {
 		case reminderCategory = "PerfectWeekReminderCategory"
 	}
 
+	enum NotificationIdentifierType: String {
+		case automatic = "AUTOMATIC"
+		case rescheduled = "RESCHEDULED"
+		case custom = "CUSTOM"
+	}
+
 	static func requestNotificationsPermission() {
 		UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { (accepted, _) in
 			if !accepted {
@@ -56,18 +62,32 @@ class NotificationManager: NSObject {
 		content.sound = .default()
 
 		for dateComponents in weeklyDateComponents(for: goal.frequency, date: date) {
-			scheduleNotification(with: content, dateComponents: dateComponents, goal: goal, date: date)
+			scheduleAutomaticNotification(with: content, dateComponents: dateComponents, goal: goal, date: date)
 		}
 	}
 
-	private static func scheduleNotification(with content: UNMutableNotificationContent, dateComponents: DateComponents, goal: Goal, date: Date) {
+	static func refireNotification(delay: TimeInterval, request: UNNotificationRequest) {
+		let newDate = Date().addingTimeInterval(delay)
+		let objectId = NotificationParser.getObjectId(from: request.identifier)
+		let newNotificationId = NotificationParser.generateNotificationIdentifier(date: newDate, type: NotificationIdentifierType.rescheduled.rawValue, objectId: objectId)
+		let hourDelayTrigger = UNTimeIntervalNotificationTrigger(timeInterval: delay, repeats: false)
+		let request = UNNotificationRequest(identifier: newNotificationId, content: request.content, trigger: hourDelayTrigger)
+
+		UNUserNotificationCenter.current().add(request) { (error) in
+			if let error = error {
+				print("Error scheduling a notification \(error)")
+			}
+		}
+	}
+
+	private static func scheduleAutomaticNotification(with content: UNMutableNotificationContent, dateComponents: DateComponents, goal: Goal, date: Date) {
 
 		let calendarNotificationTrigger = trigger(with: dateComponents, date: date)
 		guard let triggerDate = calendarNotificationTrigger.nextTriggerDate() else {
 			fatalError(guardFailureWarning("Trigger date is still nil"))
 		}
 
-		let identifier = NotificationParser.generateNotificationIdentifier(date: triggerDate, type: "DEFAULT", objectId: goal.objectId)
+		let identifier = NotificationParser.generateNotificationIdentifier(date: triggerDate, type: NotificationIdentifierType.automatic.rawValue, objectId: goal.objectId)
 		let request = UNNotificationRequest(identifier: identifier, content: content, trigger: calendarNotificationTrigger)
 		UNUserNotificationCenter.current().add(request) { (error) in
 			if let error = error {
@@ -88,7 +108,7 @@ class NotificationManager: NSObject {
 	private static func nextWeek(dateComponents: DateComponents, date: Date) -> DateComponents {
 		guard let date = Calendar.current.date(from: dateComponents),
 			let newDate = Calendar.current.date(byAdding: .day, value: 7, to: date) else { fatalError("Could not create date from components") }
-		return Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: newDate)
+		return requiredDateComponents(from: newDate)
 	}
 
 	static func weeklyDateComponents(for frequency: Int, date: Date) -> [DateComponents] {
@@ -133,7 +153,11 @@ class NotificationManager: NSObject {
 	fileprivate static func weekdayComponent(_ dayOfWeek: DayOfWeek, timeOfDay: (hour: Int, minute: Int), date: Date) -> DateComponents {
 		guard let weekdayAddedDate = Calendar.current.date(bySetting: .weekday, value: dayOfWeek.rawValue, of: date),
 			let dateAddedDate = Calendar.current.date(bySettingHour: timeOfDay.hour, minute: timeOfDay.minute, second: 0, of: weekdayAddedDate) else { fatalError(guardFailureWarning("Tried to create a date that didn't exist")) }
-		return Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: dateAddedDate)
+		return requiredDateComponents(from: dateAddedDate)
+	}
+
+	private static func requiredDateComponents(from date: Date) -> DateComponents {
+		return Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: date)
 	}
 
 }

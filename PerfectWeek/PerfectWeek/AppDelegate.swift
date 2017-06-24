@@ -85,7 +85,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 		case UNNotificationDismissActionIdentifier:
 			print("Dismiss action")
 		case UNNotificationDefaultActionIdentifier:
-			print("Default")
+			print("User opened the app")
 		case NotificationManager.NotificationActionIdentifier.completeAction.rawValue:
 			let goalId = NotificationParser.getObjectId(from: response.notification.request.identifier)
 			if let goal = GoalLibrary.shared.fetchGoal(with: goalId) {
@@ -95,6 +95,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 			print("Complete")
 		case NotificationManager.NotificationActionIdentifier.remindMeInAnHourAction.rawValue:
 			print("Remind me in an hour")
+			NotificationManager.refireNotification(delay: 3600, request: response.notification.request)
 		default:
 			print("Unknown action")
 		}
