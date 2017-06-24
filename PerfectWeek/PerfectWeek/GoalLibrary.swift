@@ -26,7 +26,7 @@ final class GoalLibrary {
 	}
 
 	private init() {
-		if Date() > stats.weekEnd {
+		if StatsLibrary.shared.isNewWeek {
 			StatsLibrary.shared.updateStats(reason: .newWeek)
 			NotificationManager.clearAllNotifications()
 			for goal in goals {

@@ -21,6 +21,10 @@ final class StatsLibrary {
 		return RealmLibrary.shared.stats
 	}
 
+	var isNewWeek: Bool {
+		return Date() > stats.weekEnd
+	}
+
 	func updateStats(reason: UpdateReason) {
 		var statsUpdateValues: [String: Any] = ["objectId": stats.objectId]
 
