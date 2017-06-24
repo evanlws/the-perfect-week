@@ -74,6 +74,7 @@ class NotificationManager: NSObject {
 		let request = UNNotificationRequest(identifier: newNotificationId, content: request.content, trigger: hourDelayTrigger)
 
 		UNUserNotificationCenter.current().add(request) { (error) in
+			print("Scheduling notification", newNotificationId)
 			if let error = error {
 				print("Error scheduling a notification \(error)")
 			}
@@ -90,6 +91,7 @@ class NotificationManager: NSObject {
 		let identifier = NotificationParser.generateNotificationIdentifier(date: triggerDate, type: NotificationIdentifierType.automatic.rawValue, objectId: goal.objectId)
 		let request = UNNotificationRequest(identifier: identifier, content: content, trigger: calendarNotificationTrigger)
 		UNUserNotificationCenter.current().add(request) { (error) in
+			print("Scheduling notification", identifier)
 			if let error = error {
 				print("Error scheduling a notification \(error)")
 			}

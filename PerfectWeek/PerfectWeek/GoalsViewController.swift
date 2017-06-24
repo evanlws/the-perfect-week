@@ -38,6 +38,8 @@ final class GoalsViewController: UIViewController, UIGestureRecognizerDelegate {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
+		NotificationCenter.default.addObserver(self, selector: #selector(viewWillAppear(_:)), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
 		configureGestureRecognizer()
 		configureViews()
 		configureConstraints()
@@ -47,6 +49,7 @@ final class GoalsViewController: UIViewController, UIGestureRecognizerDelegate {
 		super.viewWillAppear(animated)
 		navigationController?.setNavigationBarHidden(true, animated: true)
 		InformationHeaderObserver.shouldShowInformationHeader()
+		viewModel.reloadData()
 		collectionView.reloadData()
 	}
 

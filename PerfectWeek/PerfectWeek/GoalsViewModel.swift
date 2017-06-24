@@ -17,16 +17,16 @@ final class GoalsViewModel: NSObject {
 	let numberOfSections = 2
 	private let library = GoalLibrary.shared
 
-	var goalsToComplete: [Goal] {
-		return fetchGoals().filter({ !$0.wasCompletedToday() && !$0.isPerfectGoal() })
-	}
+	var goalsToComplete = [Goal]()
 
-	var goalsCompleted: [Goal] {
-		let goalsToComplete = self.goalsToComplete
-		return fetchGoals().filter({ !goalsToComplete.contains($0) })
-	}
+	var goalsCompleted = [Goal]()
 
 	var addNewGoalButtonCallback: (() -> Void)?
+
+	override init() {
+		super.init()
+		reloadData()
+	}
 
 	private func fetchGoals() -> [Goal] {
 		return library.goals
@@ -34,6 +34,11 @@ final class GoalsViewModel: NSObject {
 
 	func complete(_ goal: Goal) {
 		library.complete(goal)
+	}
+
+	func reloadData() {
+		goalsToComplete = fetchGoals().filter({ !$0.wasCompletedToday() && !$0.isPerfectGoal() })
+		goalsCompleted = fetchGoals().filter({ !goalsToComplete.contains($0) })
 	}
 
 }

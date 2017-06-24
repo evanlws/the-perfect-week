@@ -49,6 +49,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		return true
 	}
 
+	func applicationWillEnterForeground(_ application: UIApplication) {
+		NotificationCenter.default.post(name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
+	}
+
 	private func configureTabBar() {
 		window = UIWindow(frame: UIScreen.main.bounds)
 		window?.backgroundColor = .white
