@@ -8,17 +8,13 @@
 
 import UserNotifications
 
+enum AutomaticTimeOfDay {
+	static let morning: TimeOfDay = (hour: 9, minute: 0)
+	static let afternoon: TimeOfDay = (hour: 12, minute: 0)
+	static let evening: TimeOfDay = (hour: 18, minute: 0)
+}
+
 class NotificationManager: NSObject {
-
-	enum TimeOfDay {
-		static let morning = (hour: 9, minute: 0)
-		static let afternoon = (hour: 12, minute: 0)
-		static let evening = (hour: 18, minute: 0)
-	}
-
-	enum DayOfWeek: Int {
-		case sunday = 1, monday, tuesday, wednesday, thursday, friday, saturday
-	}
 
 	enum NotificationActionIdentifier: String {
 		case completeAction = "CompleteAction"
@@ -52,7 +48,7 @@ class NotificationManager: NSObject {
 		UNUserNotificationCenter.current().removeAllDeliveredNotifications()
 	}
 
-	static func scheduleNotification(for goal: Goal) {
+	static func scheduleNotification(for goal: Goal, notificationComponents: NotificationComponents) {
 		let date = Date()
 
 		let content = UNMutableNotificationContent()
@@ -116,36 +112,36 @@ class NotificationManager: NSObject {
 	static func weeklyDateComponents(for frequency: Int, date: Date) -> [DateComponents] {
 		var dateComponents = [DateComponents]()
 
-		let sunday = weekdayComponent(.sunday, timeOfDay: TimeOfDay.evening, date: date)
-		let monday = weekdayComponent(.monday, timeOfDay: TimeOfDay.morning, date: date)
-		let wednesday = weekdayComponent(.wednesday, timeOfDay: TimeOfDay.afternoon, date: date)
-		let friday = weekdayComponent(.friday, timeOfDay: TimeOfDay.evening, date: date)
-		let saturday = weekdayComponent(.saturday, timeOfDay: TimeOfDay.afternoon, date: date)
+		let sunday = weekdayComponent(.sunday, timeOfDay: AutomaticTimeOfDay.evening, date: date)
+		let monday = weekdayComponent(.monday, timeOfDay: AutomaticTimeOfDay.morning, date: date)
+		let wednesday = weekdayComponent(.wednesday, timeOfDay: AutomaticTimeOfDay.afternoon, date: date)
+		let friday = weekdayComponent(.friday, timeOfDay: AutomaticTimeOfDay.evening, date: date)
+		let saturday = weekdayComponent(.saturday, timeOfDay: AutomaticTimeOfDay.afternoon, date: date)
 
 		switch frequency {
 		case 1:
 			dateComponents.append(contentsOf: [monday, wednesday, friday])
 		case 2:
-			let tuesday = weekdayComponent(.tuesday, timeOfDay: TimeOfDay.morning, date: date)
-			let thursday = weekdayComponent(.thursday, timeOfDay: TimeOfDay.evening, date: date)
+			let tuesday = weekdayComponent(.tuesday, timeOfDay: AutomaticTimeOfDay.morning, date: date)
+			let thursday = weekdayComponent(.thursday, timeOfDay: AutomaticTimeOfDay.evening, date: date)
 			dateComponents.append(contentsOf: [tuesday, thursday])
 		case 3:
 			dateComponents.append(contentsOf: [monday, wednesday, friday])
 		case 4:
-			let tuesday = weekdayComponent(.tuesday, timeOfDay: TimeOfDay.afternoon, date: date)
-			let thursday = weekdayComponent(.thursday, timeOfDay: TimeOfDay.evening, date: date)
+			let tuesday = weekdayComponent(.tuesday, timeOfDay: AutomaticTimeOfDay.afternoon, date: date)
+			let thursday = weekdayComponent(.thursday, timeOfDay: AutomaticTimeOfDay.evening, date: date)
 			dateComponents.append(contentsOf: [sunday, tuesday, thursday, friday])
 		case 5:
-			let tuesday = weekdayComponent(.tuesday, timeOfDay: TimeOfDay.morning, date: date)
-			let thursday = weekdayComponent(.thursday, timeOfDay: TimeOfDay.evening, date: date)
+			let tuesday = weekdayComponent(.tuesday, timeOfDay: AutomaticTimeOfDay.morning, date: date)
+			let thursday = weekdayComponent(.thursday, timeOfDay: AutomaticTimeOfDay.evening, date: date)
 			dateComponents.append(contentsOf: [monday, tuesday, wednesday, thursday, friday])
 		case 6:
-			let tuesday = weekdayComponent(.tuesday, timeOfDay: TimeOfDay.morning, date: date)
-			let thursday = weekdayComponent(.thursday, timeOfDay: TimeOfDay.evening, date: date)
+			let tuesday = weekdayComponent(.tuesday, timeOfDay: AutomaticTimeOfDay.morning, date: date)
+			let thursday = weekdayComponent(.thursday, timeOfDay: AutomaticTimeOfDay.evening, date: date)
 			dateComponents.append(contentsOf: [monday, tuesday, wednesday, thursday, friday, saturday])
 		default:
-			let tuesday = weekdayComponent(.tuesday, timeOfDay: TimeOfDay.morning, date: date)
-			let thursday = weekdayComponent(.thursday, timeOfDay: TimeOfDay.evening, date: date)
+			let tuesday = weekdayComponent(.tuesday, timeOfDay: AutomaticTimeOfDay.morning, date: date)
+			let thursday = weekdayComponent(.thursday, timeOfDay: AutomaticTimeOfDay.evening, date: date)
 			dateComponents.append(contentsOf: [sunday, monday, tuesday, wednesday, thursday, friday, saturday])
 		}
 

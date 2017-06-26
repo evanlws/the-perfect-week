@@ -52,6 +52,9 @@
 		4FCA78DB1ED680B500998A9F /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCA78DA1ED680B500998A9F /* Button.swift */; };
 		4FCA78DD1ED77D1900998A9F /* Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCA78DC1ED77D1900998A9F /* Constraints.swift */; };
 		4FCA78E01ED7AE6000998A9F /* InformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCA78DF1ED7AE6000998A9F /* InformationViewController.swift */; };
+		4FD118561EFFFA0700A31F26 /* NotificationComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD118551EFFFA0700A31F26 /* NotificationComponents.swift */; };
+		4FD118581F000F6000A31F26 /* RealmNotificationComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD118571F000F6000A31F26 /* RealmNotificationComponents.swift */; };
+		4FD1185A1F00131D00A31F26 /* NotificationComponentsConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD118591F00131D00A31F26 /* NotificationComponentsConverter.swift */; };
 		4FD9872F1E989E2F00917F57 /* Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD9872E1E989E2F00917F57 /* Stats.swift */; };
 		4FD987311E98A2C800917F57 /* StatsConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD987301E98A2C700917F57 /* StatsConverter.swift */; };
 		4FDFD0FF1E6CBEB600D33353 /* AddGoalNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDFD0FE1E6CBEB600D33353 /* AddGoalNameViewController.swift */; };
@@ -131,6 +134,9 @@
 		4FCA78DA1ED680B500998A9F /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		4FCA78DC1ED77D1900998A9F /* Constraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constraints.swift; sourceTree = "<group>"; };
 		4FCA78DF1ED7AE6000998A9F /* InformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationViewController.swift; sourceTree = "<group>"; };
+		4FD118551EFFFA0700A31F26 /* NotificationComponents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationComponents.swift; sourceTree = "<group>"; };
+		4FD118571F000F6000A31F26 /* RealmNotificationComponents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmNotificationComponents.swift; sourceTree = "<group>"; };
+		4FD118591F00131D00A31F26 /* NotificationComponentsConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationComponentsConverter.swift; sourceTree = "<group>"; };
 		4FD9872E1E989E2F00917F57 /* Stats.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stats.swift; sourceTree = "<group>"; };
 		4FD987301E98A2C700917F57 /* StatsConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsConverter.swift; sourceTree = "<group>"; };
 		4FDFD0FE1E6CBEB600D33353 /* AddGoalNameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddGoalNameViewController.swift; sourceTree = "<group>"; };
@@ -287,6 +293,7 @@
 				4FCA78D81ED67A8900998A9F /* ColorLibrary.swift */,
 				4FA6DD501E6B3D5300547D33 /* Goal.swift */,
 				4FD9872E1E989E2F00917F57 /* Stats.swift */,
+				4FD118551EFFFA0700A31F26 /* NotificationComponents.swift */,
 				4F3AF7C81EC428F800D074CA /* LocalizedStrings.swift */,
 				4F854E271E9AC0C70038A23F /* Realm */,
 			);
@@ -363,6 +370,8 @@
 				4F854E2E1E9B556C0038A23F /* RealmLibrary.swift */,
 				4F2EB1E31E7EF39800677A3C /* GoalConverter.swift */,
 				4FD987301E98A2C700917F57 /* StatsConverter.swift */,
+				4FD118591F00131D00A31F26 /* NotificationComponentsConverter.swift */,
+				4FD118571F000F6000A31F26 /* RealmNotificationComponents.swift */,
 				4F2EB1E11E7EF38E00677A3C /* RealmGoal.swift */,
 				4F491E951E986A9C003BAF0D /* RealmStats.swift */,
 			);
@@ -459,7 +468,7 @@
 					4F1147C91E58F71600346A1D = {
 						CreatedOnToolsVersion = 8.2;
 						DevelopmentTeam = 7ZE54HDXZR;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 1;
@@ -598,6 +607,7 @@
 				4F933E1A1ED0C390001FF278 /* Logging.swift in Sources */,
 				4F17DE001ECD4DFD007130BE /* NotificationParser.swift in Sources */,
 				4F2F2DF11E8745B500684D02 /* Label.swift in Sources */,
+				4FD118561EFFFA0700A31F26 /* NotificationComponents.swift in Sources */,
 				4FA6DD5E1E6B79DE00547D33 /* GoalsViewModel.swift in Sources */,
 				4FA6DD5C1E6B563800547D33 /* GoalCollectionViewCell.swift in Sources */,
 				4FA6DD601E6B7C5A00547D33 /* GoalLibrary.swift in Sources */,
@@ -617,6 +627,7 @@
 				4FDFD1011E6D30AC00D33353 /* AddGoalNameViewModel.swift in Sources */,
 				4F2EB1E21E7EF38E00677A3C /* RealmGoal.swift in Sources */,
 				4F2EB1E01E7DEE8900677A3C /* Extensions.swift in Sources */,
+				4FD118581F000F6000A31F26 /* RealmNotificationComponents.swift in Sources */,
 				4F47485E1EEF6B5600022697 /* ScrollableGraphView.swift in Sources */,
 				4F4748591EEE306700022697 /* StatsViewModel.swift in Sources */,
 				4F2EB1DA1E787EA500677A3C /* Stepper.swift in Sources */,
@@ -631,6 +642,7 @@
 				4F2EB1DE1E78D23D00677A3C /* AddGoalFrequencyViewModel.swift in Sources */,
 				4F854E2D1E9B55540038A23F /* StatsLibrary.swift in Sources */,
 				4FCA78E01ED7AE6000998A9F /* InformationViewController.swift in Sources */,
+				4FD1185A1F00131D00A31F26 /* NotificationComponentsConverter.swift in Sources */,
 				4F4748561EEE303B00022697 /* StatsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -780,7 +792,7 @@
 				DEBUG_ACTIVITY_MODE = "";
 				"DEBUG_ACTIVITY_MODE[sdk=iphonesimulator*]" = disable;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 7ZE54HDXZR;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SRCROOT)/Carthage/Build/iOS",
 					"$(inherited)",
@@ -792,8 +804,8 @@
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.evanlewis.perfectweek;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "102fc4ec-ef06-4d54-9510-58aa956382aa";
-				PROVISIONING_PROFILE_SPECIFIER = "The Perfect Week Development";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -807,7 +819,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_ACTIVITY_MODE = "";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 7ZE54HDXZR;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SRCROOT)/Carthage/Build/iOS",
 					"$(inherited)",
@@ -819,8 +831,8 @@
 				OTHER_SWIFT_FLAGS = "-D RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = com.evanlewis.perfectweek;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "102fc4ec-ef06-4d54-9510-58aa956382aa";
-				PROVISIONING_PROFILE_SPECIFIER = "The Perfect Week Development";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

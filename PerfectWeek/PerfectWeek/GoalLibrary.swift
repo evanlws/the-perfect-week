@@ -29,6 +29,7 @@ final class GoalLibrary {
 		if StatsLibrary.shared.isNewWeek {
 			StatsLibrary.shared.updateStats(reason: .newWeek)
 			NotificationManager.clearAllNotifications()
+
 			for goal in goals {
 				var currentStreak = 0
 
@@ -37,7 +38,13 @@ final class GoalLibrary {
 				}
 
 				updateGoal(with: ["objectId": goal.objectId, "progress": 0, "currentStreak": currentStreak])
-				NotificationManager.scheduleNotification(for: goal)
+
+				guard let notificationComponents = RealmLibrary.shared.fetchNotificationComponents(with: goal.objectId) else {
+					guardFailureWarning("Could not find notification components")
+					return
+				}
+
+				NotificationManager.scheduleNotification(for: goal, notificationComponents: notificationComponents)
 			}
 		}
 	}
@@ -72,7 +79,8 @@ final class GoalLibrary {
 			UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: requestIdentifiers)
 		}
 
-		RealmLibrary.shared.deleteGoalWith(goalObjectId)
+		RealmLibrary.shared.deleteNotificationComponents(with: goalObjectId)
+		RealmLibrary.shared.deleteGoal(with: goalObjectId)
 	}
 
 	func updateGoal(with values: [String: Any]) {

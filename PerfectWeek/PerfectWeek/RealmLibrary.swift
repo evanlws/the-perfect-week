@@ -13,15 +13,7 @@ class RealmLibrary {
 
 	static let shared = RealmLibrary()
 
-	private let realm: Realm
-
-	var goals: [Goal] {
-		return fetchGoals()
-	}
-
-	var stats: Stats {
-		return fetchStats()
-	}
+	fileprivate let realm: Realm
 
 	private init() {
 		do {
@@ -29,6 +21,24 @@ class RealmLibrary {
 		} catch let error {
 			fatalError("Error: could not initialize Realm \(error.localizedDescription)")
 		}
+	}
+
+}
+
+// MARK: Goals
+extension RealmLibrary {
+
+	var goals: [Goal] {
+		return fetchGoals()
+	}
+
+	func fetchGoal(with goalId: String) -> Goal? {
+		if let realmGoal = realm.object(ofType: RealmGoal.self, forPrimaryKey: goalId) {
+			let goal = GoalConverter.converted(realmGoal)
+			return goal
+		}
+
+		return nil
 	}
 
 	func add(_ goal: Goal, completion: (Bool) -> Void) {
@@ -54,17 +64,7 @@ class RealmLibrary {
 		}
 	}
 
-	func updateStats(with values: [String: Any]) {
-		do {
-			try realm.write {
-				realm.create(RealmStats.self, value: values, update: true)
-			}
-		} catch let error {
-			print("Could not update stats: \(error.localizedDescription)")
-		}
-	}
-
-	func deleteGoalWith(_ goalObjectId: String) {
+	func deleteGoal(with goalObjectId: String) {
 		guard let realmGoal = realm.object(ofType: RealmGoal.self, forPrimaryKey: goalObjectId) else {
 			guardFailureWarning("Could not find object with id")
 			return
@@ -79,19 +79,27 @@ class RealmLibrary {
 		}
 	}
 
-	func fetchGoal(with goalId: String) -> Goal? {
-		if let realmGoal = realm.object(ofType: RealmGoal.self, forPrimaryKey: goalId) {
-			let goal = GoalConverter.converted(realmGoal)
-			return goal
-		}
-
-		return nil
+	fileprivate func fetchGoals() -> [Goal] {
+		return realm.objects(RealmGoal.self).flatMap { GoalConverter.converted($0) }
 	}
 
-	fileprivate func fetchGoals() -> [Goal] {
-		var goals = [Goal]()
-		realm.objects(RealmGoal.self).forEach { goals.append(GoalConverter.converted($0)) }
-		return goals
+}
+
+// MARK: Stats
+extension RealmLibrary {
+
+	var stats: Stats {
+		return fetchStats()
+	}
+
+	func updateStats(with values: [String: Any]) {
+		do {
+			try realm.write {
+				realm.create(RealmStats.self, value: values, update: true)
+			}
+		} catch let error {
+			print("Could not update stats: \(error.localizedDescription)")
+		}
 	}
 
 	fileprivate func fetchStats() -> Stats {
@@ -111,6 +119,43 @@ class RealmLibrary {
 		}
 
 		return newStats
+	}
+
+}
+
+// MARK: NotificationComponents
+extension RealmLibrary {
+
+	var notificationComponents: [NotificationComponents] {
+		return fetchNotificationComponents()
+	}
+
+	func fetchNotificationComponents(with goalId: String) -> NotificationComponents? {
+		if let realmNotificationComponents = realm.object(ofType: RealmNotificationComponents.self, forPrimaryKey: goalId) {
+			let notificationComponents = NotificationComponentsConverter.converted(realmNotificationComponents)
+			return notificationComponents
+		}
+
+		return nil
+	}
+
+	func deleteNotificationComponents(with goalObjectId: String) {
+		guard let realmNotificationComponents = realm.object(ofType: RealmNotificationComponents.self, forPrimaryKey: goalObjectId) else {
+			guardFailureWarning("Could not find object with id")
+			return
+		}
+
+		do {
+			try realm.write {
+				realm.delete(realmNotificationComponents)
+			}
+		} catch {
+			print("Could not delete notification components")
+		}
+	}
+
+	fileprivate func fetchNotificationComponents() -> [NotificationComponents] {
+		return realm.objects(RealmNotificationComponents.self).flatMap { NotificationComponentsConverter.converted($0) }
 	}
 
 }
