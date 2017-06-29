@@ -1,6 +1,0 @@
-excluded: # paths to ignore during linting. Takes precedence over `included`.
-  - Carthage
-  - PerfectWeek/External
-disabled_rules: # rule identifiers to exclude from running
-  - todo
-  - line_length
