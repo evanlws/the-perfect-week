@@ -22,20 +22,37 @@ struct GoalConverter {
 		realmGoal.currentStreak = goal.currentStreak
 		realmGoal.progress = goal.progress
 		realmGoal.lastCompleted = goal.lastCompleted as NSDate?
-
-		realmGoal.extensionName = goal.extensionItem?.name
-		realmGoal.extensionType = RealmOptional(goal.extensionItem?.itemType.rawValue)
+		realmGoal.completionDates = converted(goal.completionDates)
 
 		return realmGoal
 	}
 
+	static func converted(_ completionDates: [Date]) -> List<RealmDate> {
+		let completionDatesList = List<RealmDate>()
+		completionDates.forEach({ date in
+			let realmDate = RealmDate()
+			realmDate.date = date as NSDate
+			completionDatesList.append(realmDate)
+		})
+
+		return completionDatesList
+	}
+
 	// MARK: - RealmGoals to Goals
 	static func converted(_ realmGoal: RealmGoal) -> Goal {
-		let extensionItem = ExtensionItem(name: realmGoal.name, itemType: ExtensionItem.ItemType(rawValue: realmGoal.extensionType.value ?? -1))
-
-		let goal = Goal(objectId: realmGoal.objectId, name: realmGoal.name, frequency: realmGoal.frequency, dateAdded: realmGoal.dateAdded as Date, notes: realmGoal.notes, extensionItem: extensionItem, lastCompleted: realmGoal.lastCompleted as Date?, currentStreak: realmGoal.currentStreak, progress: realmGoal.progress)
+		let goal = Goal(objectId: realmGoal.objectId, name: realmGoal.name, frequency: realmGoal.frequency, dateAdded: realmGoal.dateAdded as Date, notes: realmGoal.notes, lastCompleted: realmGoal.lastCompleted as Date?, currentStreak: realmGoal.currentStreak, progress: realmGoal.progress)
 
 		return goal
+	}
+
+	static func converted(_ realmCompletionDates: List<RealmDate>) -> [Date] {
+		var completionDates = [Date]()
+		realmCompletionDates.forEach({ realmDate in
+			let date = realmDate.date as Date
+			completionDates.append(date)
+		})
+
+		return completionDates
 	}
 
 }

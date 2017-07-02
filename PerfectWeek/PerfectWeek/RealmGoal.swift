@@ -19,6 +19,7 @@ class RealmGoal: Object {
 	dynamic var lastCompleted: NSDate?
 	dynamic var dateAdded = NSDate()
 	dynamic var notes: String?
+	var completionDates = List<RealmDate>()
 
 	// MARK: - Extension
 	var extensionType = RealmOptional<Int>()
@@ -27,5 +28,11 @@ class RealmGoal: Object {
 	override static func primaryKey() -> String? {
 		return "objectId"
 	}
+
+}
+
+class RealmDate: Object {
+
+	dynamic var date = NSDate()
 
 }

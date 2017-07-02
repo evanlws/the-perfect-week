@@ -18,17 +18,17 @@ final class Goal {
 	var dateAdded: Date
 	var notes: String?
 	var lastCompleted: Date?
-	var extensionItem: ExtensionItem?
+	var completionDates: [Date]
 
 	init(objectId: String,
 	     name: String,
 	     frequency: Int,
 	     dateAdded: Date,
 	     notes: String?,
-	     extensionItem: ExtensionItem?,
 	     lastCompleted: Date?,
 	     currentStreak: Int = 0,
-	     progress: Int = 0) {
+	     progress: Int = 0,
+	     completionDates: [Date] = [Date]()) {
 		self.objectId = objectId
 		self.name = name
 		self.frequency = frequency
@@ -37,13 +37,13 @@ final class Goal {
 		self.currentStreak = currentStreak
 		self.progress = progress
 		self.lastCompleted = lastCompleted
-		self.extensionItem = extensionItem
+		self.completionDates = completionDates
 	}
 
 	convenience init?(_ mutableGoal: MutableGoal) {
 		guard let name = mutableGoal.name, let frequency = mutableGoal.frequency else { return nil }
 		let dateAdded = Date()
-		self.init(objectId: mutableGoal.objectId, name: name, frequency: frequency, dateAdded: dateAdded, notes: mutableGoal.notes, extensionItem: mutableGoal.extensionItem, lastCompleted: nil)
+		self.init(objectId: mutableGoal.objectId, name: name, frequency: frequency, dateAdded: dateAdded, notes: mutableGoal.notes, lastCompleted: nil)
 	}
 
 	func wasCompletedToday() -> Bool {
@@ -60,41 +60,9 @@ final class Goal {
 	}
 
 	var description: String {
-		return "\nGoal:\n\tObjectID: \(objectId)\n\tName: \(name)\n\tDate Added: \(String(describing: dateAdded))\n\tLast Completed: \(String(describing: lastCompleted))\n\tFrequency: \(frequency)\n\tNotes: \(String(describing: notes))\n\tProgress: \(progress)\n\tCurrent Streak: \(currentStreak)\n\tExtension: \(String(describing: extensionItem?.description))\n"
+		return "\nGoal:\n\tObjectID: \(objectId)\n\tName: \(name)\n\tDate Added: \(String(describing: dateAdded))\n\tLast Completed: \(String(describing: lastCompleted))\n\tFrequency: \(frequency)\n\tNotes: \(String(describing: notes))\n\tProgress: \(progress)\n\tCurrent Streak: \(currentStreak)\n"
 	}
 
-}
-
-final class ExtensionItem {
-
-	enum ItemType: Int, CustomStringConvertible {
-		case steps, walkingAndRunning, focusSession
-
-		var description: String {
-			switch self {
-			case .steps:
-				return "Steps"
-			case .walkingAndRunning:
-				return "Walking + Running"
-			case .focusSession:
-				return "Focus Session"
-			}
-		}
-	}
-
-	let name: String
-	let itemType: ItemType
-
-	init?(name: String?, itemType: ItemType?) {
-		guard let name = name, let itemType = itemType else { return nil }
-
-		self.name = name
-		self.itemType = itemType
-	}
-
-	var description: String {
-		return "\nExtension:\n\tName: \(name)\n\tItemType: \(itemType.description)\n"
-	}
 }
 
 extension Goal: Equatable {
@@ -153,8 +121,6 @@ struct MutableGoal {
 	}
 
 	var lastCompleted: Date?
-
-	var extensionItem: ExtensionItem?
 
 	// MARK: - Used when creating a goal
 	init(objectId: String) {

@@ -37,6 +37,7 @@ final class GoalLibrary {
 				}
 
 				updateGoal(with: ["objectId": goal.objectId, "progress": 0, "currentStreak": currentStreak])
+				clearCompletionDates(goalObjectId: goal.objectId)
 
 				guard let notificationComponents = RealmLibrary.shared.fetchNotificationComponents(with: goal.objectId) else {
 					guardFailureWarning("Could not find notification components")
@@ -65,7 +66,10 @@ final class GoalLibrary {
 			return
 		}
 
-		updateGoal(with: ["objectId": goal.objectId, "progress": goal.progress + 1, "lastCompleted": Date()])
+		let date = Date()
+
+		updateGoal(with: ["objectId": goal.objectId, "progress": goal.progress + 1, "lastCompleted": date])
+		updateCompletionDates(with: date, goalObjectId: goal.objectId)
 		Answers.logCustomEvent(withName: "Goal Completed", customAttributes: nil)
 		StatsLibrary.shared.updateStats(reason: .goalCompleted)
 		InformationHeaderObserver.updateInformationHeader()
@@ -85,6 +89,14 @@ final class GoalLibrary {
 
 	func updateGoal(with values: [String: Any]) {
 		RealmLibrary.shared.updateGoal(with: values)
+	}
+
+	func updateCompletionDates(with value: Date, goalObjectId: String) {
+		RealmLibrary.shared.updateCompletionDates(with: value, goalObjectId: goalObjectId)
+	}
+
+	func clearCompletionDates(goalObjectId: String) {
+		RealmLibrary.shared.clearCompletionDates(goalObjectId)
 	}
 
 	func fetchGoal(with goalId: String) -> Goal? {

@@ -80,6 +80,41 @@ extension RealmLibrary {
 		}
 	}
 
+	func updateCompletionDates(with value: Date, goalObjectId: String) {
+		guard let realmGoal = realm.object(ofType: RealmGoal.self, forPrimaryKey: goalObjectId) else {
+			guardFailureWarning("Could not find object with id")
+			return
+		}
+
+		let realmDate = RealmDate()
+		realmDate.date = value as NSDate
+
+		do {
+			try realm.write {
+				realmGoal.completionDates.append(realmDate)
+				realm.add(realmGoal, update: true)
+			}
+		} catch let error {
+			print("Could not update goal: \(error.localizedDescription)")
+		}
+	}
+
+	func clearCompletionDates(_ goalObjectId: String) {
+		guard let realmGoal = realm.object(ofType: RealmGoal.self, forPrimaryKey: goalObjectId) else {
+			guardFailureWarning("Could not find object with id")
+			return
+		}
+
+		do {
+			try realm.write {
+				realmGoal.completionDates = List<RealmDate>()
+				realm.add(realmGoal, update: true)
+			}
+		} catch let error {
+			print("Could not update goal: \(error.localizedDescription)")
+		}
+	}
+
 	fileprivate func fetchGoals() -> [Goal] {
 		return realm.objects(RealmGoal.self).flatMap { GoalConverter.converted($0) }
 	}
