@@ -70,6 +70,7 @@ final class GoalLibrary {
 
 		updateGoal(with: ["objectId": goal.objectId, "progress": goal.progress + 1, "lastCompleted": date])
 		updateCompletionDates(with: date, goalObjectId: goal.objectId)
+		NotificationLibrary.shared.adjustNotificationSchedule(for: goal.objectId, completionDates: goal.completionDates)
 		Answers.logCustomEvent(withName: "Goal Completed", customAttributes: nil)
 		StatsLibrary.shared.updateStats(reason: .goalCompleted)
 		InformationHeaderObserver.updateInformationHeader()

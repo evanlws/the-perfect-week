@@ -94,3 +94,13 @@ final class NotificationDateComponents {
 	}
 
 }
+
+extension NotificationDateComponents: Equatable {
+
+	static func == (lhs: NotificationDateComponents, rhs: NotificationDateComponents) -> Bool {
+		return lhs.timeOfDay.hour == rhs.timeOfDay.hour &&
+			lhs.timeOfDay.minute == rhs.timeOfDay.minute &&
+			lhs.dayOfWeek == rhs.dayOfWeek
+	}
+
+}

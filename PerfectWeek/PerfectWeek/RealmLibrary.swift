@@ -95,7 +95,7 @@ extension RealmLibrary {
 				realm.add(realmGoal, update: true)
 			}
 		} catch let error {
-			print("Could not update goal: \(error.localizedDescription)")
+			print("Could not update completion dates: \(error.localizedDescription)")
 		}
 	}
 
@@ -111,7 +111,7 @@ extension RealmLibrary {
 				realm.add(realmGoal, update: true)
 			}
 		} catch let error {
-			print("Could not update goal: \(error.localizedDescription)")
+			print("Could not clear completion dates: \(error.localizedDescription)")
 		}
 	}
 
@@ -186,6 +186,24 @@ extension RealmLibrary {
 		}
 
 		return nil
+	}
+
+	func updateNotificationDateComponents(with value: [NotificationDateComponents], goalObjectId: String) {
+		guard let realmNotificationComponents = realm.object(ofType: RealmNotificationComponents.self, forPrimaryKey: goalObjectId) else {
+			guardFailureWarning("Could not find object with id")
+			return
+		}
+
+		let realmNotificationDateComponents = NotificationComponentsConverter.converted(value)
+
+		do {
+			try realm.write {
+				realmNotificationComponents.realmNotificationDateComponents = realmNotificationDateComponents
+				realm.add(realmNotificationComponents, update: true)
+			}
+		} catch let error {
+			print("Could not update notification components: \(error.localizedDescription)")
+		}
 	}
 
 	func deleteNotificationComponents(with goalObjectId: String) {
