@@ -34,6 +34,7 @@
 		4F4748591EEE306700022697 /* StatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4748581EEE306700022697 /* StatsViewModel.swift */; };
 		4F47485E1EEF6B5600022697 /* ScrollableGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F47485D1EEF6B5600022697 /* ScrollableGraphView.swift */; };
 		4F491E961E986A9C003BAF0D /* RealmStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F491E951E986A9C003BAF0D /* RealmStats.swift */; };
+		4F59A2FF1F07EE85002FEBB8 /* NotificationLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F59A2FE1F07EE85002FEBB8 /* NotificationLibrary.swift */; };
 		4F61472F1EB597A50058BF43 /* InformationHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F61472E1EB597A50058BF43 /* InformationHeader.swift */; };
 		4F67304A1EF74FA800596EA9 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6730491EF74FA800596EA9 /* TextField.swift */; };
 		4F7F5E401EBE2249009A1385 /* InformationHeaderObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7F5E3F1EBE2249009A1385 /* InformationHeaderObserver.swift */; };
@@ -115,6 +116,7 @@
 		4F4748581EEE306700022697 /* StatsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsViewModel.swift; sourceTree = "<group>"; };
 		4F47485D1EEF6B5600022697 /* ScrollableGraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ScrollableGraphView.swift; path = External/ScrollableGraphView.swift; sourceTree = "<group>"; };
 		4F491E951E986A9C003BAF0D /* RealmStats.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmStats.swift; sourceTree = "<group>"; };
+		4F59A2FE1F07EE85002FEBB8 /* NotificationLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationLibrary.swift; sourceTree = "<group>"; };
 		4F61472E1EB597A50058BF43 /* InformationHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationHeader.swift; sourceTree = "<group>"; };
 		4F6730491EF74FA800596EA9 /* TextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		4F7F5E3F1EBE2249009A1385 /* InformationHeaderObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationHeaderObserver.swift; sourceTree = "<group>"; };
@@ -290,6 +292,7 @@
 			children = (
 				4F854E2C1E9B55540038A23F /* StatsLibrary.swift */,
 				4FA6DD5F1E6B7C5A00547D33 /* GoalLibrary.swift */,
+				4F59A2FE1F07EE85002FEBB8 /* NotificationLibrary.swift */,
 				4FCA78D81ED67A8900998A9F /* ColorLibrary.swift */,
 				4FA6DD501E6B3D5300547D33 /* Goal.swift */,
 				4FD9872E1E989E2F00917F57 /* Stats.swift */,
@@ -629,6 +632,7 @@
 				4F2EB1E01E7DEE8900677A3C /* Extensions.swift in Sources */,
 				4FD118581F000F6000A31F26 /* RealmNotificationComponents.swift in Sources */,
 				4F47485E1EEF6B5600022697 /* ScrollableGraphView.swift in Sources */,
+				4F59A2FF1F07EE85002FEBB8 /* NotificationLibrary.swift in Sources */,
 				4F4748591EEE306700022697 /* StatsViewModel.swift in Sources */,
 				4F2EB1DA1E787EA500677A3C /* Stepper.swift in Sources */,
 				4F0AA7AC1ECBDE770029D9AD /* SettingsViewModel.swift in Sources */,

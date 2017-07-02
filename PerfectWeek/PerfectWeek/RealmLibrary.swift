@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Realm
 import RealmSwift
 
 class RealmLibrary {
@@ -128,6 +129,19 @@ extension RealmLibrary {
 
 	var notificationComponents: [NotificationComponents] {
 		return fetchNotificationComponents()
+	}
+
+	func add(_ notificationComponents: NotificationComponents, completion: (Bool) -> Void) {
+		do {
+			try realm.write {
+				realm.add(NotificationComponentsConverter.converted(notificationComponents))
+			}
+		} catch {
+			print("Could not add notification components")
+			completion(false)
+		}
+
+		completion(true)
 	}
 
 	func fetchNotificationComponents(with goalId: String) -> NotificationComponents? {
