@@ -53,8 +53,10 @@ final class GoalLibrary {
 		RealmLibrary.shared.add(newGoal) { (success) in
 			if success {
 				Answers.logCustomEvent(withName: "Goal Created", customAttributes: nil)
-				let notificationComponents = NotificationLibrary.shared.createAutomaticNotificationComponents(for: newGoal)
-				NotificationManager.scheduleNotification(for: newGoal, with: notificationComponents)
+				NotificationLibrary.shared.createAutomaticNotificationComponents(for: newGoal) { notificationComponents in
+					NotificationManager.scheduleNotification(for: newGoal, with: notificationComponents)
+				}
+
 				print("Successfully created \(newGoal.description)")
 			}
 		}

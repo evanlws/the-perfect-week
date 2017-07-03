@@ -14,13 +14,13 @@ final class NotificationLibrary {
 
 	private init() {}
 
-	func createAutomaticNotificationComponents(for goal: Goal) -> NotificationComponents {
+	func createAutomaticNotificationComponents(for goal: Goal, completion: (NotificationComponents) -> Void) {
 		let notificationComponents = NotificationComponents(goalId: goal.objectId, frequency: goal.frequency)
 		RealmLibrary.shared.add(notificationComponents, completion: { (success) in
-			if !success { fatalError() }
+			if success {
+				completion(notificationComponents)
+			}
 		})
-
-		return notificationComponents
 	}
 
 	func adjustNotificationSchedule(for goalObjectId: String, completionDates: [Date]) {

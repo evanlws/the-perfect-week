@@ -15,7 +15,7 @@ struct NotificationComponentsConverter {
 	static func converted(_ notificationComponents: NotificationComponents) -> RealmNotificationComponents {
 		let realmNotificationComponents = RealmNotificationComponents()
 		realmNotificationComponents.objectId = notificationComponents.objectId
-		realmNotificationComponents.goalId = notificationComponents.objectId
+		realmNotificationComponents.goalId = notificationComponents.goalId
 		realmNotificationComponents.realmNotificationDateComponents = converted(notificationComponents.notificationDateComponents)
 		return realmNotificationComponents
 	}
