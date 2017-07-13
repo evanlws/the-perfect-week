@@ -92,15 +92,6 @@ final class GoalsViewController: UIViewController, UIGestureRecognizerDelegate {
 		collectionView.addGestureRecognizer(longPressGestureRecognizer)
 	}
 
-	fileprivate func presentAddGoalNameViewController() {
-		let addGoalNameViewModel = AddGoalNameViewModel(mutableGoal: MutableGoal(objectId: UUID().uuidString))
-		let addGoalNameViewController = AddGoalNameViewController(viewModel: addGoalNameViewModel)
-		let navigationController = UINavigationController(rootViewController: addGoalNameViewController)
-		present(navigationController, animated: true) {
-			self.collectionView.reloadData()
-		}
-	}
-
 }
 
 // MARK: - Actions
@@ -133,6 +124,16 @@ extension GoalsViewController {
 	func presentGoalDetailVC(_ goal: Goal) {
 		let goalDetailViewController = GoalDetailViewController(viewModel: GoalDetailViewModel(goal: goal))
 		navigationController?.pushViewController(goalDetailViewController, animated: true)
+	}
+
+	fileprivate func presentAddGoalNameViewController() {
+		let addGoalNameViewModel = AddGoalNameViewModel(mutableGoal: MutableGoal(objectId: UUID().uuidString))
+		let addGoalNameViewController = AddGoalNameViewController(viewModel: addGoalNameViewModel)
+		let navigationController = UINavigationController(rootViewController: addGoalNameViewController)
+
+		present(navigationController, animated: true) {
+			self.collectionView.reloadData()
+		}
 	}
 
 }

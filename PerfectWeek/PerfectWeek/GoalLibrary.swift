@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 import NotificationCenter
 import UserNotifications
-import UserNotificationsUI
 import Crashlytics
 
 final class GoalLibrary {
@@ -29,6 +28,7 @@ final class GoalLibrary {
 		if StatsLibrary.shared.isNewWeek {
 			StatsLibrary.shared.updateStats(reason: .newWeek)
 			NotificationManager.clearAllNotifications()
+
 			for goal in goals {
 				var currentStreak = 0
 
@@ -37,7 +37,14 @@ final class GoalLibrary {
 				}
 
 				updateGoal(with: ["objectId": goal.objectId, "progress": 0, "currentStreak": currentStreak])
-				NotificationManager.scheduleNotification(for: goal)
+				clearCompletionDates(goalObjectId: goal.objectId)
+
+				guard let notificationComponents = RealmLibrary.shared.fetchNotificationComponents(with: goal.objectId) else {
+					guardFailureWarning("Could not find notification components")
+					return
+				}
+
+				NotificationManager.scheduleNotification(for: goal, with: notificationComponents)
 			}
 		}
 	}
@@ -46,8 +53,11 @@ final class GoalLibrary {
 		RealmLibrary.shared.add(newGoal) { (success) in
 			if success {
 				Answers.logCustomEvent(withName: "Goal Created", customAttributes: nil)
+				NotificationLibrary.shared.createAutomaticNotificationComponents(for: newGoal) { notificationComponents in
+					NotificationManager.scheduleNotification(for: newGoal, with: notificationComponents)
+				}
+
 				print("Successfully created \(newGoal.description)")
-				NotificationManager.scheduleNotification(for: newGoal)
 			}
 		}
 	}
@@ -58,7 +68,11 @@ final class GoalLibrary {
 			return
 		}
 
-		updateGoal(with: ["objectId": goal.objectId, "progress": goal.progress + 1, "lastCompleted": Date()])
+		let date = Date()
+
+		updateGoal(with: ["objectId": goal.objectId, "progress": goal.progress + 1, "lastCompleted": date])
+		updateCompletionDates(with: date, goalObjectId: goal.objectId)
+		NotificationLibrary.shared.adjustNotificationSchedule(for: goal.objectId, completionDates: goal.completionDates)
 		Answers.logCustomEvent(withName: "Goal Completed", customAttributes: nil)
 		StatsLibrary.shared.updateStats(reason: .goalCompleted)
 		InformationHeaderObserver.updateInformationHeader()
@@ -72,11 +86,20 @@ final class GoalLibrary {
 			UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: requestIdentifiers)
 		}
 
-		RealmLibrary.shared.deleteGoalWith(goalObjectId)
+		RealmLibrary.shared.deleteNotificationComponents(with: goalObjectId)
+		RealmLibrary.shared.deleteGoal(with: goalObjectId)
 	}
 
 	func updateGoal(with values: [String: Any]) {
 		RealmLibrary.shared.updateGoal(with: values)
+	}
+
+	func updateCompletionDates(with value: Date, goalObjectId: String) {
+		RealmLibrary.shared.updateCompletionDates(with: value, goalObjectId: goalObjectId)
+	}
+
+	func clearCompletionDates(goalObjectId: String) {
+		RealmLibrary.shared.clearCompletionDates(goalObjectId)
 	}
 
 	func fetchGoal(with goalId: String) -> Goal? {
