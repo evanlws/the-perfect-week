@@ -1,34 +1,67 @@
+# Xcode
+#
+# Sample
+#
 
-*
-!PerfectWeek/
-!PerfectWeek/PerfectWeek/AddGoalCollectionViewCell.swift
-!PerfectWeek/PerfectWeek/AddGoalFrequencyViewController.swift
-!PerfectWeek/PerfectWeek/InformationHeader.swift
-!PerfectWeek/PerfectWeek/AddGoalFrequencyViewModel.swift
-!PerfectWeek/PerfectWeek/InformationHeaderObserver.swift
-!PerfectWeek/PerfectWeek/AddGoalNameViewController.swift
-!PerfectWeek/PerfectWeek/InformationViewController.swift
-!PerfectWeek/PerfectWeek/AddGoalNameViewModel.swift
-!PerfectWeek/PerfectWeek/InformationViewModel.swift
-!PerfectWeek/PerfectWeek/Button.swift
-!PerfectWeek/PerfectWeek/NotificationManager.swift
-!PerfectWeek/PerfectWeek/ColorLibrary.swift
-!PerfectWeek/PerfectWeek/NotificationParser.swift
-!PerfectWeek/PerfectWeek/Constraints.swift
-!PerfectWeek/PerfectWeek/EditGoalViewController.swift
-!PerfectWeek/PerfectWeek/ProgressView.swift
-!PerfectWeek/PerfectWeek/EditGoalViewModel.swift
-!PerfectWeek/PerfectWeek/SettingsViewController.swift
-!PerfectWeek/PerfectWeek/GoalCollectionViewCell.swift
-!PerfectWeek/PerfectWeek/SettingsViewModel.swift
-!PerfectWeek/PerfectWeek/GoalDetailViewController.swift
-!PerfectWeek/PerfectWeek/GoalDetailViewModel.swift
-!PerfectWeek/PerfectWeek/StatsLibrary.swift
-!PerfectWeek/PerfectWeek/GoalLibrary.swift
-!PerfectWeek/PerfectWeek/StatsViewController.swift
-!PerfectWeek/PerfectWeek/GoalsCollectionViewHeader.swift
-!PerfectWeek/PerfectWeek/StatsViewModel.swift
-!PerfectWeek/PerfectWeek/GoalsViewController.swift
-!PerfectWeek/PerfectWeek/Stepper.swift
-!PerfectWeek/PerfectWeek/GoalsViewModel.swift
-!PerfectWeek/PerfectWeek/TextField.swift
+PerfectWeek/*.yml
+PerfectWeek/Cartfile
+PerfectWeek/*.resolved
+PerfectWeek/Carthage/
+PerfectWeek/*.framework
+PerfectWeek/*.xcodeproj
+PerfectWeek/PerfectWeek/*.xcassets
+PerfectWeek/PerfectWeek/*.lproj
+PerfectWeek/PerfectWeek/External/
+PerfectWeek/PerfectWeek/*.plist
+PerfectWeek/PerfectWeek/*.entitlements
+PerfectWeek/PerfectWeek/Logging.swift
+
+PerfectWeek/PerfectWeek/RealmGoal.swift
+PerfectWeek/PerfectWeek/RealmLibrary.swift
+PerfectWeek/PerfectWeek/RealmNotificationComponents.swift
+PerfectWeek/PerfectWeek/RealmStats.swift
+PerfectWeek/PerfectWeek/AppDelegate.swift
+PerfectWeek/PerfectWeek/LocalizedStrings.swift
+
+## Build generated
+build/
+DerivedData/
+
+## Various settings
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata/
+
+## Other
+*.moved-aside
+*.xcuserstate
+.DS_Store
+
+## Obj-C/Swift specific
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+## Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+# Swift Package Manager
+#
+# Add this line if you want to avoid checking in source code from Swift Package Manager dependencies.
+# Packages/
+.build/
+
+# Carthage
+#
+# Add this line if you want to avoid checking in source code from Carthage dependencies.
+Carthage/Checkouts
+Carthage/Build
+PerfectWeek/Carthage/Checkouts/
